@@ -1,0 +1,35 @@
+/* Layout and brand only. Interactive controls use Ant Design components. */
+body { margin: 0; }
+.app-layout { min-height: 100vh; }
+.sidebar { position: sticky !important; top: 0; height: 100vh; }
+.brand { padding: 38px 24px 32px; color: #e5f0dd; font-size: 23px; font-weight: 750; letter-spacing: -1px; }
+.brand-subtitle { display: block; margin-top: 12px; color: #a8bfae !important; font-size: 11px; font-weight: 400; letter-spacing: 3px; }
+.sidebar.ant-layout-sider-collapsed .ant-layout-sider-children { visibility: hidden; }
+.sidebar-action { margin: 0 20px 24px; }
+.sidebar-footer { position: absolute; bottom: 18px; left: 24px; color: #adc2b2; font-size: 11px; line-height: 2; }
+.main-layout { min-width: 0; padding: 0 40px 48px; }
+.page-header { display: flex; align-items: center; justify-content: space-between; padding: 0 !important; border-bottom: 1px solid #e0e5d9; height: 80px; }
+.intro { padding: 38px 0 24px; }
+.intro h1 { margin: 12px 0 !important; font-weight: 650; letter-spacing: -1px; }
+.eyebrow { color: #728e66; font-size: 10px; letter-spacing: 3px; }
+.toolbar { margin-bottom: 28px; }
+.project-title { flex: 1 1 230px; }
+.section-heading { margin-bottom: 18px; }
+.scene-image { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.scene-controls { flex: 1 1 240px; min-width: 0; padding-top: 4px; }
+.scene-card { padding: 8px; }
+.output-panel { background: #edf1e5; }
+.output-panel .ant-card-body { overflow-wrap: anywhere; }
+.output-panel .ant-upload-wrapper { display: block; }
+.audio-status { margin-top: 14px; }
+.audio-preview, .video-preview { width: 100%; }
+.video-preview { max-height: 450px; background: #12151c; border-radius: 6px; }
+.export-spec { margin: 18px 0; font-size: 12px; }
+.loading { padding: 80px; }
+@media (max-width: 991px) { .main-layout { padding: 0 24px 32px; } }
+@media (max-width: 600px) {
+  .main-layout { padding: 0 16px 24px; }
+  .intro h1 { font-size: 28px; }
+  .sidebar-footer { display: none; }
+  .scene-card { padding: 0; }
+}

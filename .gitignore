@@ -23,3 +23,7 @@ Desktop.ini
 /data/
 /.agents/skills/video-shotcraft/
 __pycache__/
+/node_modules/
+/dist/
+/playwright-report/
+/test-results/
