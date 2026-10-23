@@ -18,3 +18,12 @@ Desktop.ini
 
 # Logs
 *.log
+
+# Generated local workspace
+/data/
+/.agents/skills/video-shotcraft/
+__pycache__/
+/node_modules/
+/dist/
+/playwright-report/
+/test-results/
