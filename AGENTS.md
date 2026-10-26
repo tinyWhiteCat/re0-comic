@@ -1,5 +1,11 @@
 # Project guidance
 
+## 回复前的文字检查
+
+每次向用户发送回复前（包括进度说明和最终答复），必须使用项目技能 [humanizer-zh](.agents/skills/humanizer-zh/SKILL.md) 检查草稿。首次使用时读取该技能，后续按已读取的规则执行；修改空话、重复和模板化表达，再核对事实、限定条件、归因和完成状态是否保持准确。检查完成后只发送最终文本，无需展示检查过程；已通顺的文字可以保留。
+
+## 项目约定
+
 本项目是漫画解说视频生成工具。所有应用逻辑和测试必须使用 TypeScript；前端使用 React。
 
 - 技术栈：React + Vite + Ant Design 前端；Node.js + Express + Zod 后端；FFmpeg 合成视频。
