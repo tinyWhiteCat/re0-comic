@@ -21,7 +21,11 @@ Desktop.ini
 
 # Generated local workspace
 /data/
-/source/
+# Track the selected novel chapter; keep other source material local.
+/source/*
+!/source/novel/
+/source/novel/*
+!/source/novel/chapter070/
 /.agents/skills/video-shotcraft/
 __pycache__/
 /node_modules/
