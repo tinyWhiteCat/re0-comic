@@ -46,6 +46,55 @@ npm start
 
 素材、草稿和视频位于忽略目录 `data/<项目编号>/`。保存草稿、导入素材、切换或新建作品时会持久化当前编辑；关闭页面前如有未保存修改会提示。迁移前 Python 版的项目 JSON 和素材文件继续兼容。服务重启会将中断的合成标记为失败，保留草稿供重试。合成期间对应项目锁定修改，其他作品仍可编辑。
 
+## 素材图片无损压缩
+
+```bash
+# 递归压缩 source，输出到 data/source-compressed（必须是尚不存在的目录）
+npm run compress:images
+
+# 试压缩并统计可节省空间，不保存结果
+npm run compress:images -- source --dry-run
+
+# 指定输入与新的输出目录，保留子目录结构及文件名
+npm run compress:images -- source/chapter07/comics --output data/comics-compressed
+
+# 原地替换：仅在结果更小时替换源图片
+npm run compress:images -- source --in-place
+```
+
+PNG/APNG 使用 Node 自带 zlib 重压缩 IDAT 数据，校验 CRC 并核对解压后的数据逐字节一致；不缩放、不改色深、不修改透明像素、不删除元数据。APNG 的其他帧数据保持原样。已有较好压缩的图片可能无法继续缩小，脚本保留原文件。`--level 0–9` 控制 zlib 压缩级别，默认 9；这不会改变画质。为控制内存，单张 PNG 的 IDAT 解压数据上限为 512 MiB，超限计为失败。
+
+JPEG 使用 [jpegtran](https://github.com/libjpeg-turbo/libjpeg-turbo/blob/main/doc/usage.txt) 的 `-copy all -optimize`，保留元数据并优化熵编码，不重新量化。只有处理 JPG/JPEG 时才需要额外安装该命令：macOS 可用 `brew install jpeg-turbo`，Debian/Ubuntu 可用 `sudo apt install libjpeg-turbo-progs`，安装后确保 `jpegtran` 在 PATH 中。
+
+其他格式、文稿和符号链接会跳过，不复制到输出目录。默认保留源文件，输出目录不得已存在或位于输入目录内。原地替换先写临时文件，再原子替换；处理期间发现源文件变化会报错。单个文件失败会继续处理其他图片，最终以非零退出码报告失败；输出目录可能只包含部分成功文件。脚本逐张处理，打印进度及节省空间统计。测试使用临时目录，不改动 `source` 素材。
+
+### 无损 WebP 转换
+
+```bash
+# 安装本地编码器和解码器（macOS）
+brew install webp
+# Debian/Ubuntu：sudo apt install webp
+
+# 递归处理 source，输出到 data/source-webp，保留原图
+npm run compress:webp
+
+# 先试压缩，不保存输出
+npm run compress:webp -- source/chapter07/comics/61 --dry-run
+
+# 指定新的输出目录；调整并行数及压缩耗时
+npm run compress:webp -- source --output data/webp-export --jobs 4 --effort 6
+```
+
+`npm run compress:webp` 等同于 `npm run compress:images -- --format webp`。输出目录必须不存在，且不能位于输入目录内；WebP 模式不支持 `--in-place`。
+
+仅转换静态 PNG（包括扩展名为 `.apng` 的静态图片），使用 `cwebp -lossless -exact`，不缩放、不使用近无损预处理。每张图用 `dwebp` 解码后，与原 PNG 逐像素比较 RGBA，包括完全透明像素中的颜色值；只有校验通过且文件变小时才采用 WebP。输出保留输入目录的层级（包括空目录）和图片名称，只将扩展名替换为 `.webp`，例如 `source/61/page-001.png` → `data/source-webp/61/page-001.webp`。若 PNG/APNG 替换扩展名后重名，或与源目录名称冲突，脚本会在创建输出目录前报错，不自动改名或覆盖。
+
+结果没有变小、16 位 PNG、动画 PNG、任一边超过 16,383 像素或总像素超过 4,000 万时，复制原文件并保留原名称。JPEG 也按原文件复制；已有 WebP 和其他文件会跳过。本模式不保证所有输出都是 WebP。损坏文件或像素校验失败会计为失败，继续处理其余图片，最终返回非零退出码。
+
+默认同时处理 2 张，`--jobs 1–8` 控制并行数；`--effort 0–6` 控制编码耗时，默认 4，数值越大通常越慢，两者都不会降低画质。WebP 可以保留编码器支持的 EXIF、ICC、XMP 元数据，但不承载所有 PNG 专用数据块（例如文本注释）；原 PNG 始终保留，便于归档。无损指尺寸和 RGBA 像素一致，不代表两种文件格式的所有元数据完全相同。
+
+图片压缩脚本测试：`npx vitest run tests/compress-images.test.ts`。其中 WebP 集成测试需要 `cwebp` 和 `dwebp` 在 PATH 中，使用临时素材验证透明像素、原图保护、动画和 16 位图片保留、并发、预览及错误处理。
+
 ## 验证
 
 ```bash
@@ -79,7 +128,7 @@ src/client/     React 界面和 API 客户端
 src/server/     Express API 与 FFmpeg 合成
 src/shared/     共享 Zod 数据模型和 TypeScript 类型
 tests/          后端集成测试和 Playwright 浏览器测试
-scripts/        固定版本技能安装脚本
+scripts/        技能安装与图片压缩脚本
 ```
 
 ## 后续扩展

@@ -21,6 +21,7 @@ Desktop.ini
 
 # Generated local workspace
 /data/
+/source/
 /.agents/skills/video-shotcraft/
 __pycache__/
 /node_modules/
