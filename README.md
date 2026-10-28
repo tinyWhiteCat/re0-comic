@@ -111,6 +111,12 @@ npm run test:e2e
 
 浏览器测试自动启动服务，使用临时数据目录，不复用或覆盖用户数据。默认使用系统 `/usr/bin/chromium`；也可设置 `CHROMIUM_PATH`，或运行 `npx playwright install chromium` 使用 Playwright 浏览器。
 
+## Humanizer-zh 文本润色
+
+项目已内置 [Humanizer-zh](.agents/skills/humanizer-zh/SKILL.md)，来源为 [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh)。2026-10-28 已核对本地技能文件与上游提交 `f4518a8eab97b8bfebc66a89d34320a89bef6930` 一致，技能、许可证及配套资料随项目保存，无需另装运行依赖。
+
+[AGENTS.md](AGENTS.md) 要求后续生成的回复、解说稿、台词、字幕、页面文案和文档都先用该技能润色，再交付或写入文件。润色须保留事实、剧情、专名和原意。这是 Agent 的写作流程要求，网页端尚未接入自动润色服务。
+
 ## video-shotcraft 技能
 
 项目级安装目录：`.agents/skills/video-shotcraft/`。固定上游提交：`43bd349a136651865ecfa6ea1cf012f6e957d304`。
