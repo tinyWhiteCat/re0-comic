@@ -144,7 +144,7 @@ export function Workbench() {
       <Paragraph className="sidebar-footer">从一格漫画，到一个故事。<br />本地保存 · 自由创作</Paragraph>
     </Layout.Sider>
     <Layout className="main-layout">
-      <Layout.Header className="page-header"><Text type="secondary">创作空间 / <Text strong>故事编排</Text></Text><Tag color="green">本地工作台</Tag></Layout.Header>
+      <Layout.Header className="page-header"><Text type="secondary">创作空间 / <Text strong>故事编排</Text></Text><Space><Button href="/gallery" icon={<FileImageOutlined />}>故事画廊</Button><Tag color="green">本地工作台</Tag></Space></Layout.Header>
       <Layout.Content className="page-content">
         <div className="intro"><Text className="eyebrow">YOUR PANELS, YOUR STORY</Text><Title level={1}>让画面，讲出故事。</Title><Paragraph type="secondary">导入漫画，写下解说，编排你的下一支视频。</Paragraph></div>
         {loading ? <Flex justify="center" className="loading"><Spin size="large" /></Flex> : loadError ? <Alert type="error" title="无法加载作品" description={loadError} action={<Button onClick={() => void load()}>重试</Button>} /> : !project ?

@@ -145,6 +145,7 @@ export async function createApp(options: { dataDir: string; webDir?: string }) {
   });
   app.use('/api', (_req, res) => { res.status(404).json({ error: '未知接口' }); });
   if (options.webDir) app.use(express.static(options.webDir));
+  if (options.webDir) app.get(['/gallery', '/gallery/'], (_req, res) => { res.sendFile(path.resolve(options.webDir!, 'index.html')); });
   const errorHandler: ErrorRequestHandler = (error: unknown, _req, res, _next) => {
     if (error instanceof z.ZodError) { res.status(400).json({ error: error.issues[0]?.message ?? '请求无效' }); return; }
     if (error instanceof HttpError) { res.status(error.status).json({ error: error.message }); return; }
