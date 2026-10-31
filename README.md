@@ -111,6 +111,24 @@ npm run test:e2e
 
 浏览器测试自动启动服务，使用临时数据目录，不复用或覆盖用户数据。默认使用系统 `/usr/bin/chromium`；也可设置 `CHROMIUM_PATH`，或运行 `npx playwright install chromium` 使用 Playwright 浏览器。
 
+## Re:0 第七章漫画视频技能
+
+项目内置 [re0-arc7-comic-video](.agents/skills/re0-arc7-comic-video/SKILL.md)，将第一节制作中确认的要求整理为后续各节可复用的流程：原著与解说衔接、彩色关键分镜及人体结构检查、晓晓配音和读音修正、固定底部中英字幕、逐镜缓慢推进、背景音乐与动作音效、Re:0 风格片尾、封面简介及文叔叔交付。
+
+制作顺序固定为：**生成分镜稿 → 用户确认 → 制作视频 → 完整交付**。分镜稿包含编号彩图、逐镜台词、转场与预计时长；未获用户明确确认前，不开始正式配音、混音或视频渲染。已有同版本确认可沿用，实质性的图文修改需复核受影响内容。
+
+每期完整制作默认交付 **视频、两张封面图和视频简介**：1080p 成片、4:3（1280×960）封面、16:9（1280×720）封面，以及可用于 B站和 YouTube 的 `description.txt`。两张封面使用已确认文案，分别适配构图；字幕、口播及音频来源一并归档。
+
+可以这样调用：
+
+```text
+使用 $re0-arc7-comic-video 制作第七章第二节，先完成彩色分镜和解说稿。
+使用 $re0-arc7-comic-video 检查本期图文与原著的对应关系。
+使用 $re0-arc7-comic-video 把已确认的图稿和台词制作成视频并交付。
+```
+
+技能附有[单节任务模板](.agents/skills/re0-arc7-comic-video/templates/episode-brief.md)、[验收清单](.agents/skills/re0-arc7-comic-video/references/quality-checklist.md)和[脚本适用范围](.agents/skills/re0-arc7-comic-video/references/production-pipeline.md)。现有部分脚本仍专用于第一节，制作新节前需要适配；该技能提供 Agent 工作流程，不表示网页已有一键生成整章视频的功能。技能文件随仓库保存，无需额外安装。
+
 ## Humanizer-zh 文本润色
 
 项目已内置 [Humanizer-zh](.agents/skills/humanizer-zh/SKILL.md)，来源为 [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh)。2026-10-28 已核对本地技能文件与上游提交 `f4518a8eab97b8bfebc66a89d34320a89bef6930` 一致，技能、许可证及配套资料随项目保存，无需另装运行依赖。
