@@ -20,7 +20,7 @@ Desktop.ini
 *.log
 
 # Generated local workspace
-# Track chapter07 character assets; keep other local data ignored.
+# Track curated chapter07 setting assets; keep other local data ignored.
 /data/*
 !/data/source-webp/
 /data/source-webp/*
@@ -29,6 +29,7 @@ Desktop.ini
 !/data/source-webp/chapter07/settings/
 /data/source-webp/chapter07/settings/*
 !/data/source-webp/chapter07/settings/characters/
+!/data/source-webp/chapter07/settings/flags/
 # Track the selected novel chapter; keep other source material local.
 /source/*
 !/source/novel/
