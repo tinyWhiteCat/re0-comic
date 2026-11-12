@@ -1,5 +1,5 @@
 // Explicit catalog: only selected, committed artwork is published.
-export type Artwork = { id: string; title: string; category: 'original' | 'comic'; src: string };
+export type Artwork = { id: string; title: string; category: 'original' | 'prop' | 'comic'; src: string };
 import art0 from '../../data/source-webp/chapter07/settings/characters/sheets/01-subaru.webp?url';
 import art1 from '../../data/source-webp/chapter07/settings/characters/sheets/01a-natsumi.webp?url';
 import art2 from '../../data/source-webp/chapter07/settings/characters/sheets/01b-subaru-child.webp?url';
@@ -61,6 +61,7 @@ import art57 from '../../data/source-webp/chapter07/settings/characters/sheets/5
 import art58 from '../../data/source-webp/chapter07/settings/characters/sheets/53-clind.webp?url';
 import art59 from '../../data/source-webp/chapter07/settings/characters/sheets/54-mezoreia.webp?url';
 import art60 from '../../data/source-webp/chapter07/settings/characters/sheets/55-shaula-scorpion.webp?url';
+import swordWolfDagger from '../../data/source-webp/chapter07/settings/props/sheets/01-sword-wolf-dagger.png?url';
 export const artworks: Artwork[] = [
   { id: '01-subaru', title: 'Subaru', category: 'original', src: art0 },
   { id: '01a-natsumi', title: 'Natsumi', category: 'original', src: art1 },
@@ -123,4 +124,5 @@ export const artworks: Artwork[] = [
   { id: '53-clind', title: 'Clind', category: 'original', src: art58 },
   { id: '54-mezoreia', title: 'Mezoreia', category: 'original', src: art59 },
   { id: '55-shaula-scorpion', title: 'Shaula Scorpion', category: 'original', src: art60 },
+  { id: 'P01-sword-wolf-dagger', title: '剑狼短刀（小刀统一设定）', category: 'prop', src: swordWolfDagger },
 ];

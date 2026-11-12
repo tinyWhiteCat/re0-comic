@@ -5,6 +5,8 @@ import { artworks, type Artwork } from './artworks';
 import './gallery.css';
 
 const pageSize = 12;
+const categoryLabels: Record<Artwork['category'], string> = { original: '角色原画', prop: '道具设定', comic: '漫画彩图' };
+const kindLabels: Record<Artwork['category'], string> = { original: '角色设定', prop: '道具设定', comic: '漫画彩图' };
 
 export function Gallery() {
   const [category, setCategory] = useState<Artwork['category']>('original');
@@ -35,9 +37,9 @@ export function Gallery() {
         <div className="gallery-intro-copy">
           <div className="gallery-kicker">CHAPTER 07 <span>／</span> VISUAL COLLECTION</div>
           <h1 id="gallery-title">故事的另一面，<br /><em>藏在画里。</em></h1>
-          <p>从角色的轮廓，到故事里的每一帧。<br />在这里，翻阅第七章的原画与漫画彩图。</p>
+          <p>从角色的轮廓，到故事里的每一帧。<br />在这里，翻阅第七章的角色原画、道具设定与漫画彩图。</p>
           <Button type="primary" size="large" href="#collection" icon={<ArrowRightOutlined />} iconPlacement="end">浏览画作</Button>
-          <div className="gallery-summary"><strong>{artworks.filter(item => item.category === 'original').length}</strong> 张角色原画 <span>·</span> 漫画彩图待收录</div>
+          <div className="gallery-summary"><strong>{artworks.filter(item => item.category === 'original').length}</strong> 张角色原画 <span>·</span> {artworks.filter(item => item.category === 'prop').length} 张道具设定 <span>·</span> 漫画彩图待收录</div>
         </div>
         <figure className="gallery-feature">
           <div className="gallery-feature-label"><span>CHARACTER STUDY</span><span>NO. 01</span></div>
@@ -53,18 +55,19 @@ export function Gallery() {
         <div className="gallery-controls">
           <Segmented<Artwork['category']> aria-label="画作分类" value={category} onChange={value => { setCategory(value); setQuery(''); setPage(1); setPreview(null); }} options={[
             { value: 'original', label: '角色原画', icon: <PictureOutlined /> },
+            { value: 'prop', label: '道具设定', icon: <PictureOutlined /> },
             { value: 'comic', label: '漫画彩图', icon: <BookOutlined /> },
           ]} />
-          <div className="gallery-search"><Input aria-label="搜索画作" placeholder="搜索角色英文名或编号" prefix={<SearchOutlined />} allowClear value={query} onChange={event => { setQuery(event.target.value); setPage(1); }} /><Select aria-label="画作排序" value={sort} onChange={value => { setSort(value); setPage(1); }} options={[{ value: 'number', label: '编号顺序' }, { value: 'name', label: '名称 A–Z' }]} /></div>
+          <div className="gallery-search"><Input aria-label="搜索画作" placeholder="搜索角色、道具名称或编号" prefix={<SearchOutlined />} allowClear value={query} onChange={event => { setQuery(event.target.value); setPage(1); }} /><Select aria-label="画作排序" value={sort} onChange={value => { setSort(value); setPage(1); }} options={[{ value: 'number', label: '编号顺序' }, { value: 'name', label: '名称 A–Z' }]} /></div>
         </div>
-        <div className="gallery-result-count" aria-live="polite">{category === 'original' ? '角色原画' : '漫画彩图'} <span> / {filtered.length} 张</span><span>点击画作，查看完整细节</span></div>
+        <div className="gallery-result-count" aria-live="polite">{categoryLabels[category]} <span> / {filtered.length} 张</span><span>点击画作，查看完整细节</span></div>
         {visible.length ? <div className="gallery-grid">
           {visible.map((item, index) => <article className="art-card" key={item.id}>
             <Button type="text" className="art-image" onClick={() => setPreview((page - 1) * pageSize + index)} aria-label={`查看 ${item.title}`}>
-              <img src={item.src} alt={`${item.title} ${item.category === 'original' ? '角色原画' : '漫画彩图'}`} loading="lazy" decoding="async" />
+              <img src={item.src} alt={`${item.title} ${categoryLabels[item.category]}`} loading="lazy" decoding="async" />
               <span className="art-open">查看大图 ↗</span>
             </Button>
-            <div className="art-caption"><div><span className="art-number">NO. {item.id.split('-')[0].toUpperCase()}</span><h3>{item.title}</h3></div><span className="art-kind">{item.category === 'original' ? '角色设定' : '漫画彩图'}</span></div>
+            <div className="art-caption"><div><span className="art-number">NO. {item.id.split('-')[0].toUpperCase()}</span><h3>{item.title}</h3></div><span className="art-kind">{kindLabels[item.category]}</span></div>
           </article>)}
         </div> : <div className="gallery-empty"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={collection.length ? '没有找到匹配的画作，试试其他名字或编号。' : '漫画彩图尚未收录。后续将在这里按顺序展示故事画面。'}>{query && <Button onClick={() => { setQuery(''); setPage(1); }}>清除搜索</Button>}</Empty></div>}
         {filtered.length > pageSize && <Pagination className="gallery-pagination" current={page} total={filtered.length} pageSize={pageSize} showSizeChanger={false} onChange={value => { setPage(value); document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' }); }} />}

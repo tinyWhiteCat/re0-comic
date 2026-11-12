@@ -40,3 +40,5 @@
 ## 故事分镜的连续性
 
 故事分镜默认按原文顺序展开，先交代本节开场、地点和人物位置。不要为了悬念自行把中段提到开头；跨场景要交代时间关系，人物位置或动作发生明显变化时补足关键画面。保留原文有意省略的过程，不用虚构情节填补。
+
+角色与道具先查[设定集索引](data/source-webp/chapter07/settings/README.md)。2026-11-12，用户要求将第9节v2的小刀收入设定集；后续出现同一把剑狼短刀时，统一引用[道具多视图](data/source-webp/chapter07/settings/props/sheets/01-sword-wolf-dagger.png)和[制作说明](data/source-webp/chapter07/settings/props/01-sword-wolf-dagger.md)，保持刀刃、握柄、护手、柄尾及比例。伤势左右按角色身体判断，不能随画面转向换肩；第9节的右肩伤与后背新伤分开核对。本次设定入库不代表第9节完整分镜已获确认。
