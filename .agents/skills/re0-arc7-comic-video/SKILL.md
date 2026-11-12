@@ -22,6 +22,7 @@ description: 制作或修订Re:0第七章帝国篇漫画解说视频。按原著
 | 依赖、重试、失效与交接 | [执行规则](references/execution.md)：当前问题涉及的段落 |
 | 原著依据、人物认知和演出分类 | [原著对应](references/source-fidelity.md)：plan阶段；实质变更再查相关镜 |
 | 帝国旗视觉设定与参考图 | [旗帜设定](../../../docs/settings/chapter070/imperial-flag.md)：相关分镜/封面生成前实际查看正面图和场景母图；不把项目金绣装饰说成原著事实 |
+| 小刀统一外形与连续性 | [剑狼短刀设定](../../../data/source-webp/chapter07/settings/props/01-sword-wolf-dagger.md)：出现同一把刀时实际查看P01多视图，保持棕皮短柄、扁圆黄铜柄尾、短护手与短直刃；按本节状态核对伤势 |
 | 片头品牌读法与缓存标识 | [独立读法规则](references/intro-contract.json)：voice阶段合成或复用前用 `scripts/check-re0-intro.ts` 校验，源音与成片另核真实读法；细节查[片头检查](references/production-pipeline.md#片头读法与缓存检查) |
 | 创作品味和少量可看正例 | [风格参考](references/style-reference.md)：本阶段相关条目，不强套旧场景 |
 | 家具遮挡、道具、身体受限、高处扑击 | [最终案例](references/confirmed-cases.md)：生成前按风险读，不等失败才查 |
@@ -30,5 +31,7 @@ description: 制作或修订Re:0第七章帝国篇漫画解说视频。按原著
 | 创作决策与资料指针 | [短任务模板](templates/episode-brief.md)：只填未在JSON中的信息 |
 
 历史资料只在现有接口不明或排错时按需查看：[旧脚本接口](references/production-pipeline.md)、[第一节基线](references/section01-baseline.md)、[第二节复盘](references/section02-lessons.md)、[第三节返修史](references/section03-storyboard-lessons.md)、[旧交付经验](references/delivery-history.md)。第四、五节的具体问题按需查[第四节返修](references/section04-revision-lessons.md)与[第五节返修](references/section05-revision-lessons.md)：包括跨镜伤势、箭的旧伤与透视、托抱/背负、水深、展示标题、河水和咳水声、句末声调。生成前的短规则已并入风险案例和当前阶段验收，不默认加载整篇返修史。当前规则和最终用户确认优先，不把旧待确认方案、旧参数或旧平台默认带回新节。
+
+第9节的刀伤透视、包扎、体态、牢笼与追逐空间问题见[第九节返修](references/section09-storyboard-lessons.md)。该稿尚待用户确认；小刀设定入库不等于完整分镜获批。
 
 新增应用逻辑/脚本用TypeScript，前端React与Ant Design。已有同目的工具先核对接口再复用；只有新增镜头动效才读取video-shotcraft相应配方，不加载整套产品宣传流程。阶段/原著结构脚本只验证记录与文件，不判断剧情、图像或听感正确；未实际查看/试听不声称已完成。

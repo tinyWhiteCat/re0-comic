@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "collection": "chapter07-props",
+  "items": [
+    {
+      "id": "P01-sword-wolf-dagger",
+      "name": "剑狼短刀（小刀统一设定）",
+      "status": "registered",
+      "image": "sheets/01-sword-wolf-dagger.png",
+      "notes": "01-sword-wolf-dagger.md",
+      "sha256": "4113e7be2ff29255e23a5acfb86c4c2bf76486ec749e60942cd036a5a4035299",
+      "bytes": 1637833,
+      "width": 1754,
+      "height": 897,
+      "viewCount": 3,
+      "viewNote": "同一把小刀的两侧与三分之四视角，并非三把刀。",
+      "origin": {
+        "episode": "chapter070-section09",
+        "storyboardVersion": "v2",
+        "sourceImageName": "dagger-canonical.png",
+        "sourcePreservedByteForByte": true
+      },
+      "registration": {
+        "date": "2026-11-12",
+        "userQuote": "把小刀加到设定集里去，方便后续制作时参考",
+        "scope": "把现有小刀参考图与制作说明收入设定集，作为后续绘制的统一参考。",
+        "episodeStoryboardApprovalGranted": false
+      },
+      "design": {
+        "blade": "短直双刃钢刃，尖头，刀根小型剑狼纹样",
+        "grip": "深棕皮革缠绕短直柄",
+        "guard": "朴素黄铜短护手，端部圆润",
+        "pommel": "扁圆黄铜柄尾",
+        "productionDimensionsCm": { "overall": 23, "grip": 9, "blade": 13, "guardWidth": 4.5 },
+        "dimensionNote": "本项目绘图比例基准，数值约数，不是原著明确尺寸。"
+      },
+      "sourceAnchors": ["02.md:627", "06.md:353", "09.md:201—227", "09.md:535", "09.md:817—823"]
+    }
+  ]
+}

@@ -30,6 +30,8 @@ Desktop.ini
 /data/source-webp/chapter07/settings/*
 !/data/source-webp/chapter07/settings/characters/
 !/data/source-webp/chapter07/settings/flags/
+!/data/source-webp/chapter07/settings/props/
+!/data/source-webp/chapter07/settings/README.md
 # Track the selected novel chapter; keep other source material local.
 /source/*
 !/source/novel/
