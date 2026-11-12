@@ -5,6 +5,7 @@
 | 类别 | 入口 | 说明 |
 | --- | --- | --- |
 | 角色 | [角色设定图](characters/sheets/) | 正常、幼年、女装等变体按剧情选择。 |
+| 旗帜 | [帝国旗资产清单](flags/manifest.json) · [视觉说明](../../../../docs/settings/chapter070/imperial-flag.md) | 沿用蓝底、剑贯黑狼、金色月桂环等项目设定，医帐红旗按原文区分。 |
 | 道具 P01 | [剑狼短刀多视图](props/sheets/01-sword-wolf-dagger.png) · [制作说明](props/01-sword-wolf-dagger.md) | 本项目小刀的统一外形参考，沿用第9节分镜v2；包括比例与伤势连续性。 |
 
 道具索引及文件哈希保存在 [props/manifest.json](props/manifest.json)。画廊 `/gallery` 的“道具设定”分类可查看和放大已收录的道具图。

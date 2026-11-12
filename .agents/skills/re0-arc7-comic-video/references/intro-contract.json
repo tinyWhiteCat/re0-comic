@@ -1,0 +1,37 @@
+{
+  "version": "literal-re0-v2",
+  "recordedDate": "2026-11-11",
+  "sourceRequirement": "片头直接念RE0，不能展开成中文作品名。",
+  "userMessage": "现在开头还是会念从零开始，而不是直接念RE0，看下为什么",
+  "displayText": "Re:0 帝国篇原著解说。",
+  "allowedSpeechTexts": [
+    "RE0，帝国篇原著解说。",
+    "RE0，帝国篇原住解说。",
+    "R E 零，帝国篇原著解说。",
+    "R E 零，帝国篇原住解说。",
+    "Re zero，帝国篇原著解说。",
+    "Re zero，帝国篇原住解说。",
+    "R E zero，帝国篇原著解说。",
+    "R E zero，帝国篇原住解说。"
+  ],
+  "forbiddenSpeechFragments": [
+    "从零开始",
+    "从零開始"
+  ],
+  "pronunciationNotes": [
+    "RE0原写法与R E 零拼读稿均只用于直接读品牌名；最终采用的输入须单独记录。",
+    "2026-11-11修复时增加Re zero和R E zero作为品牌内部的英语拼读辅助。它们仍直接读RE0，不增加或展开作品中文名；实际音频仍须独立核验，显示稿不变。",
+    "原著至原住属于词组读音辅助，字幕仍保留原著，不授权把整句改成其他作品名称。",
+    "输入列入允许项不代表生成音频的读法已经核验；声音证据须另行绑定真实音频哈希。"
+  ],
+  "cacheIdentityRequirements": [
+    "policyVersionAndHash",
+    "displayText",
+    "speechText",
+    "model",
+    "voice",
+    "allSynthesisParameters",
+    "actualAudioSha256"
+  ],
+  "audioVerificationRequirement": "以实际音频的原始ASR转写或可用音频感知、真人听辨核对RE0与原著；不得把期望稿回填结果当作识别证据，也不得用声线批准代替片头内容及读法核对。"
+}
