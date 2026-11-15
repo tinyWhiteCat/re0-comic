@@ -139,6 +139,8 @@ npm run test:e2e
 
 技能附有[单节任务模板](.agents/skills/re0-arc7-comic-video/templates/episode-brief.md)、[验收清单](.agents/skills/re0-arc7-comic-video/references/quality-checklist.md)和[脚本适用范围](.agents/skills/re0-arc7-comic-video/references/production-pipeline.md)。现有部分脚本仍专用于第一节，制作新节前需要适配；该技能提供 Agent 工作流程，不表示网页已有一键生成整章视频的功能。技能文件随仓库保存，无需额外安装。
 
+[可复用的制作方法](.agents/skills/re0-arc7-comic-video/references/production-lessons.md)涵盖验收标准、共同参考、空间透视、返修防退化、语义配音、连续性、成片检查及交付安排，已接入阶段规则和任务模板。按当前阶段读取，旧样音、旧参数和单节经验不覆盖后续用户纠正。
+
 ## Humanizer-zh 文本润色
 
 项目已内置 [Humanizer-zh](.agents/skills/humanizer-zh/SKILL.md)，来源为 [op7418/Humanizer-zh](https://github.com/op7418/Humanizer-zh)。2026-10-28 已核对本地技能文件与上游提交 `f4518a8eab97b8bfebc66a89d34320a89bef6930` 一致，技能、许可证及配套资料随项目保存，无需另装运行依赖。

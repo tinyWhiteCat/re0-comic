@@ -25,6 +25,17 @@ describe('RE0 intro prevention', () => {
     legacy.groups[0].text = '从零开始，帝国篇原住解说。';
     expect(() => validateIntroPlan(legacy, actualPolicy)).toThrow(/Chinese title expansion/);
   });
+  it('keeps the later letter-and-Chinese-zero rule when merging older contracts', async () => {
+    const actualPolicy = await loadIntroContract();
+    expect(actualPolicy.displayText).toBe('RE 0，帝国篇原著解说。');
+    const current = plan();
+    current.groups[0].text = 'Are E 零，帝国篇原住解说。';
+    expect(() => validateIntroPlan(current, actualPolicy)).not.toThrow();
+    for (const text of ['R，E，零，帝国篇原住解说。', 'R E zero，帝国篇原住解说。', 'Re zero，帝国篇原住解说。']) {
+      current.groups[0].text = text;
+      expect(() => validateIntroPlan(current, actualPolicy)).toThrow(/not allowed/);
+    }
+  });
   it('rejects the delivered regression even when the subtitle still says Re:0', () => {
     const current = plan();
     current.groups[0].text = '从零开始，帝国篇原住解说。';
