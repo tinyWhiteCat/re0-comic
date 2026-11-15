@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "id": "vollachia-imperial-flag",
+  "version": "vollachia-imperial-flag-v1",
+  "title": "佛拉基亚帝国旗帜",
+  "status": "adopted-project-design",
+  "pathBase": "repository-root",
+  "specification": "docs/settings/chapter070/imperial-flag.md",
+  "adoption": {
+    "date": "2026-11-10",
+    "timezone": "Asia/Shanghai",
+    "userMessage": "把国旗形象沉淀到项目的设定里",
+    "scope": "flag-visual-setting-only",
+    "doesNotApproveEpisodeVideo": true
+  },
+  "defaultUse": [
+    "后续帝国篇分镜中的帝国旗",
+    "封面和相关视觉素材中的帝国旗"
+  ],
+  "referencePriority": [
+    "adopted-scene",
+    "front-sheet"
+  ],
+  "assets": [
+    {
+      "role": "front-sheet",
+      "purpose": "独立正面工作参考",
+      "path": "data/source-webp/chapter07/settings/flags/sheets/vollachia-imperial-flag-v1.webp",
+      "mediaType": "image/webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 2216658,
+      "sha256": "9303285562f0ac8f99e6ce9e8aa6225d7d7aabf48e821f639db3fb8ed3fe82fb",
+      "rgbaSha256": "61daa91722c231b80085cec131c4e0d0d8b64e049abfd3afc74bc754beee8ce8",
+      "losslessRgbaVerified": true,
+      "localInput": "data/productions/chapter070/section06/flag-setting-reference/front.png",
+      "inputSha256": "870bdb5dfcb99f5ef132c3c96880e04537d3e5572e6bf0c86cac385c68cf6ca4"
+    },
+    {
+      "role": "adopted-scene",
+      "purpose": "第六节已采用场景母图",
+      "path": "data/source-webp/chapter07/settings/flags/references/chapter070-section06-shot13.webp",
+      "mediaType": "image/webp",
+      "width": 1671,
+      "height": 941,
+      "bytes": 1930674,
+      "sha256": "0570c8ac52ce06c09e0c0c9be5fcd563a95617f20d938158a81e6a3ae1527a1e",
+      "rgbaSha256": "08e37d8b90af6d6b896bfeeb633b67ea663cfab7327d4e585270f1e4a7d3eabc",
+      "losslessRgbaVerified": true,
+      "localInput": "data/productions/chapter070/section06/storyboard-v3/images/shot-13.png",
+      "inputSha256": "db8eaa2d11632d7ebe364b87f57d93a69a8032ce0747ea9bc713899ac96c8347"
+    }
+  ],
+  "novelEvidence": {
+    "file": "source/novel/chapter070/06.md",
+    "sha256": "17bc30fa308791cf68d11054cb920a7f04b0a97590499b99c545c4c22a94786a",
+    "lines": [
+      [
+        367,
+        381
+      ]
+    ],
+    "explicitFeatures": [
+      "蓝色旗帜",
+      "中央黑狼",
+      "利剑贯穿黑狼"
+    ]
+  },
+  "projectArtDirection": {
+    "base": "深钴蓝提花丝缎",
+    "emblem": "正面黑狼朝左，银色直剑竖穿狼身，柄上尖下",
+    "ornament": [
+      "金色月桂环",
+      "双道金线绣边",
+      "四角金卷草",
+      "左、右及底边短金流苏"
+    ],
+    "officialDimensionsOrColorCodesSpecified": false,
+    "declaredAsNovelCanon": false
+  },
+  "productionRules": [
+    "生成前实际查看并引用正面图与场景母图",
+    "场景有疑义时以已采用场景母图为准",
+    "风向、透视和褶皱可变，徽记与主要装饰保持一致",
+    "背面视图允许随布面翻转，须符合机位",
+    "中远景可减细节，保留蓝底、剑狼和金色边缘",
+    "医帐普通红旗不套用帝国纹饰",
+    "物件上的剑狼徽记不自动套用整面旗帜的装饰"
+  ],
+  "provenance": {
+    "adoptedScene": "data/productions/chapter070/section06/storyboard-v3/images/shot-13.png",
+    "adoptedSceneSha256": "db8eaa2d11632d7ebe364b87f57d93a69a8032ce0747ea9bc713899ac96c8347",
+    "unchangedFrom": "chapter070-section06-storyboard-v2-shot13",
+    "frontSheetInput": "data/productions/chapter070/section06/flag-setting-reference/front.png",
+    "frontSheetGeneratedSource": "/workspace/generated_images/exec-55a979d1-3199-477a-bc71-bdd887d308bf.png",
+    "frontSheetPurpose": "从已采用场景母图整理的正面工作参考，延续同一旗帜设计"
+  }
+}

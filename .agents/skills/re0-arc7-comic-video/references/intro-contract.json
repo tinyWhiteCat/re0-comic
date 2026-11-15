@@ -1,0 +1,36 @@
+{
+  "version": "literal-re0-v3",
+  "recordedDate": "2026-11-15",
+  "sourceRequirement": "片头R、E各读英文字母名，0读中文零，按正常台词速度连读，不念冒号，不展开作品中文名。",
+  "userMessage": "不对，开头应该念 RE 0 的字母和数字，另外还有一个问题：06A 台词和分镜没有什么关系",
+  "displayText": "RE 0，帝国篇原著解说。",
+  "allowedSpeechTexts": [
+    "RE0，帝国篇原著解说。",
+    "RE0，帝国篇原住解说。",
+    "R E 零，帝国篇原著解说。",
+    "R E 零，帝国篇原住解说。",
+    "Are E 零，帝国篇原著解说。",
+    "Are E 零，帝国篇原住解说。"
+  ],
+  "forbiddenSpeechFragments": [
+    "从零开始",
+    "从零開始"
+  ],
+  "pronunciationNotes": [
+    "RE0原写法与R E 零拼读稿均只用于直接读品牌名；最终采用的输入须单独记录。",
+    "后续用户明确0读中文零，旧zero候选不作新制作输入；Are仅作为R字母名的发音辅助，仍须核对实际声音，不能读成独立英语单词。",
+    "发音、词内速度和词间停顿分别检查。旧短样的读音肯定不覆盖后续节奏纠正，禁止默认复用慢速逐字报读录音。",
+    "原著至原住属于词组读音辅助，字幕仍保留原著，不授权把整句改成其他作品名称。",
+    "输入列入允许项不代表生成音频的读法已经核验；声音证据须另行绑定真实音频哈希。"
+  ],
+  "cacheIdentityRequirements": [
+    "policyVersionAndHash",
+    "displayText",
+    "speechText",
+    "model",
+    "voice",
+    "allSynthesisParameters",
+    "actualAudioSha256"
+  ],
+  "audioVerificationRequirement": "以实际音频的原始ASR转写或可用音频感知、真人听辨核对RE0与原著；不得把期望稿回填结果当作识别证据，也不得用声线批准代替片头内容及读法核对。"
+}

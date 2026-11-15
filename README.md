@@ -2,7 +2,13 @@
 
 漫画解说视频生成工具：导入漫画图片 → 编辑逐镜头解说和时长 → 导入配音 → 导出带中文字幕的 MP4。
 
-故事画廊位于 `/gallery`，也可从工作台右上角进入。展示已收录的第七章角色原画，支持英文名称或编号搜索、排序、分页与大图预览，并预留漫画彩图分类。图片清单位于 `src/client/artworks.ts`，通过静态导入随构建打包；新增已授权图片时，在清单中添加资源、标题、唯一编号和分类（`original` 原画、`comic` 漫画彩图），不会自动公开本地素材目录。
+故事画廊位于 `/gallery`，也可从工作台右上角进入。展示已收录的第七章角色原画和道具设定，支持名称或编号搜索、排序、分页与大图预览，并预留漫画彩图分类。图片清单位于 `src/client/artworks.ts`，通过静态导入随构建打包；新增已授权图片时，在清单中添加资源、标题、唯一编号和分类（`original` 角色原画、`prop` 道具设定、`comic` 漫画彩图），不会自动公开本地素材目录。
+
+制作参考从[设定集索引](data/source-webp/chapter07/settings/README.md)进入。剑狼短刀已收录统一多视图和[制作说明](data/source-webp/chapter07/settings/props/01-sword-wolf-dagger.md)，后续绘制同一把小刀时直接引用。
+
+## 第七章视觉设定
+
+可复用的视觉设定见[第七章设定索引](docs/settings/chapter070/README.md)。[佛拉基亚帝国旗帜](docs/settings/chapter070/imperial-flag.md)沿用第六节已采用的深蓝金绣设计，保存独立正面图、场景母图、设计说明和资产清单，供后续分镜与封面统一引用。
 
 ## 技术栈
 
@@ -113,11 +119,15 @@ npm run test:e2e
 
 ## Re:0 第七章漫画视频技能
 
-项目内置 [re0-arc7-comic-video](.agents/skills/re0-arc7-comic-video/SKILL.md)，将第一节制作中确认的要求整理为后续各节可复用的流程：原著与解说衔接、彩色关键分镜及人体结构检查、晓晓配音和读音修正、固定底部中英字幕、逐镜缓慢推进、背景音乐与动作音效、Re:0 风格片尾、封面简介及文叔叔交付。
+项目内置 [re0-arc7-comic-video](.agents/skills/re0-arc7-comic-video/SKILL.md)，将制作中确认的要求整理为后续各节可复用的流程：原著与解说衔接、彩色关键分镜及人体结构检查、已确认音色配音和读音修正、固定底部中英字幕、逐镜缓慢推进、背景音乐与动作音效、Re:0 风格片尾、封面简介、Wormhole视频链接和按授权发送的素材邮件交付。
 
 制作顺序固定为：**生成分镜稿 → 用户确认 → 制作视频 → 完整交付**。分镜稿包含编号彩图、逐镜台词、转场与预计时长；未获用户明确确认前，不开始正式配音、混音或视频渲染。已有同版本确认可沿用，实质性的图文修改需复核受影响内容。
 
 每期完整制作默认交付 **视频、两张封面图和视频简介**：1080p 成片、4:3（1280×960）封面、16:9（1280×720）封面，以及可用于 B站和 YouTube 的 `description.txt`。两张封面使用已确认文案，分别适配构图；字幕、口播及音频来源一并归档。
+
+用户已确认后续视频默认使用 [Wormhole](https://wormhole.app/) 上传，并于2026年11月11日要求视频及配套文件统一沿用此平台。核验后在聊天中给完整分享链接（含 `#` 解密片段，如有），不再发送视频或视频链接邮件；通过新匿名上下文接收并核对解密后文件的SHA-256，有效期与下载限制按当次页面记录。只有不含视频的素材 ZIP 发到会话中已授权的邮箱；同一素材已有发送接受回执时不重复发送。平台限制、保留期和预览能力以当次实测为准，网站上传成功不等于网页工作台已集成该服务。文叔叔、Litterbox 和此前双邮件交付的历史经验见[交付参考](.agents/skills/re0-arc7-comic-video/references/delivery-and-publishing.md)。
+
+片头品牌直接念“RE0”，显示稿、实际口播和缓存复用按[独立读法规则](.agents/skills/re0-arc7-comic-video/references/intro-contract.json)检查。`scripts/check-re0-intro.ts` 在合成或复用前校验计划、读音映射及缓存标识；源音频和成片开场另做真实声音核对。声线批准与片头内容、读法核对分别记录，相同请求及音频的有效检查可跨节复用。
 
 可以这样调用：
 
@@ -128,6 +138,8 @@ npm run test:e2e
 ```
 
 技能附有[单节任务模板](.agents/skills/re0-arc7-comic-video/templates/episode-brief.md)、[验收清单](.agents/skills/re0-arc7-comic-video/references/quality-checklist.md)和[脚本适用范围](.agents/skills/re0-arc7-comic-video/references/production-pipeline.md)。现有部分脚本仍专用于第一节，制作新节前需要适配；该技能提供 Agent 工作流程，不表示网页已有一键生成整章视频的功能。技能文件随仓库保存，无需额外安装。
+
+[可复用的制作方法](.agents/skills/re0-arc7-comic-video/references/production-lessons.md)涵盖验收标准、共同参考、空间透视、返修防退化、语义配音、连续性、成片检查及交付安排，已接入阶段规则和任务模板。按当前阶段读取，旧样音、旧参数和单节经验不覆盖后续用户纠正。
 
 ## Humanizer-zh 文本润色
 
