@@ -1,6 +1,6 @@
 ---
 name: re0-arc7-comic-video
-description: 制作或修订Re:0第七章帝国篇漫画解说视频。按原著与角色设定生成彩色分镜，用户确认后制作配音、双语字幕、运镜和声音，交付1080p视频、两种封面与简介；按阶段读取，只返修受影响内容。
+description: 制作或修订Re:0第七章帝国篇漫画解说视频。按原著与设定生成分镜，确认后制作配音、字幕、运镜与声音；视频用Wormhole，两个平台的标题、简介、两种封面和tags用Gmail交付。按阶段读取，只返修受影响内容。
 ---
 
 # Re:0 第七章漫画解说视频
@@ -24,6 +24,8 @@ description: 制作或修订Re:0第七章帝国篇漫画解说视频。按原著
 
 用户本轮明确要求优先。原著准确、人物状态与人体成立、关键信息可读和声音安全等核心要求优先于装饰或近似目标；运镜幅度、字幕参考位置等随实际构图取舍，记录采用依据，数值规格仍查唯一的默认规格。
 
+完整交付分两路：视频通过Wormhole，发布素材通过Gmail。素材必须有B站与YouTube各一份视频标题、内容简介、4:3与16:9封面、视频tags；标题格式与清单以[默认规格](references/production-defaults.md)为准，操作与实际发送状态按[交付操作](references/delivery-and-publishing.md)记录。本轮只更新规则时，不据此重寄历史素材。
+
 ## 资料归属
 
 | 规则 | 唯一维护位置；何时读取 |
@@ -45,5 +47,7 @@ description: 制作或修订Re:0第七章帝国篇漫画解说视频。按原著
 历史资料只在现有接口不明或排错时按需查看：[旧脚本接口](references/production-pipeline.md)、[第一节基线](references/section01-baseline.md)、[第二节复盘](references/section02-lessons.md)、[第三节返修史](references/section03-storyboard-lessons.md)、[旧交付经验](references/delivery-history.md)。第四、五节的具体问题按需查[第四节返修](references/section04-revision-lessons.md)与[第五节返修](references/section05-revision-lessons.md)：包括跨镜伤势、箭的旧伤与透视、托抱/背负、水深、展示标题、河水和咳水声、句末声调。生成前的短规则已并入风险案例和当前阶段验收，不默认加载整篇返修史。当前规则和最终用户确认优先，不把旧待确认方案、旧参数或旧平台默认带回新节。
 
 第9节的刀伤透视、包扎、体态、牢笼与追逐空间问题见[第九节返修](references/section09-storyboard-lessons.md)。该稿尚待用户确认；小刀设定入库不等于完整分镜获批。
+
+第10节已获用户成片确认；其伤情、牢笼、全cue遮手、真实焦点与听审证据问题见[第10节复盘](../../../docs/productions/chapter070/section10/retrospective.md)。按当前阶段检查并复用有效证据，不把该节的镜数、字号或音效增益变成新节固定值。
 
 新增应用逻辑/脚本用TypeScript，前端React与Ant Design。已有同目的工具先核对接口再复用；只有新增镜头动效才读取video-shotcraft相应配方，不加载整套产品宣传流程。阶段/原著结构脚本只验证记录与文件，不判断剧情、图像或听感正确；未实际查看/试听不声称已完成。

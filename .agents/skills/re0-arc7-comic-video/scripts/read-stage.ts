@@ -14,7 +14,7 @@ export const routes: Record<string, Route> = {
   review: { defaults: ['运镜与视频', '字幕', '片头', '片尾', '人声处理'], docs: [['quality-checklist.md', ['成片终检']], ['execution.md', ['证据复用与交接']]] },
   covers: { defaults: ['封面与简介'], docs: [['quality-checklist.md', ['封面与简介']]], style: { rows: ['封面与标题'], sections: ['封面与标题：人物冲突与悬念'] } },
   package: { defaults: ['交付', '封面与简介'], docs: [['quality-checklist.md', ['打包与交付']], ['delivery-and-publishing.md', ['打包']]] },
-  delivery: { defaults: ['交付'], docs: [['delivery-and-publishing.md', ['上传与核验', '仅素材邮件', '完成交付']]] },
+  delivery: { defaults: ['交付', '封面与简介'], docs: [['delivery-and-publishing.md', ['上传与核验', '仅素材邮件', '完成交付']]] },
 };
 const risks: Record<string, string> = { space: '家具背后与观察视线', props: '刀、鞭与佩戴状态', body: '身体受限与整体比例', fall: '高处扑击与动作方向' };
 export function section(text: string, heading: string) {
