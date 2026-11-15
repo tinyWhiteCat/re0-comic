@@ -10,9 +10,18 @@ description: 制作或修订Re:0第七章帝国篇漫画解说视频。按原著
 ## 最短执行入口
 
 1. 先读本节current-storyboard/current-video指针和production-state摘要，确定版本、授权范围、变化组与下一阶段；新节尚无状态时初始化，不遍历历代目录。旧节只有manifest.json时，沿其currentVideo、adoptedStoryboard、pronunciationPatch等字段定位实际采用项，不补造缺失的批准或通过状态。
-2. plan阶段实际通读目标原著与必要前文，其他阶段按来源锚点读相关段落。只加载当前阶段规则：`npx tsx .agents/skills/re0-arc7-comic-video/scripts/read-stage.ts <阶段>`。支持plan、storyboard、voice、alignment、visuals、sound、render、review、covers、package、delivery；已读且未变的内容不重复调用。条件案例用`--risk space|props|body|fall`，只展开命中的条目；局部返修加`--repair`，查读取体积用`--stats`（字节数，不是token账单）。
+2. plan阶段实际通读目标原著与必要前文，其他阶段按来源锚点读相关段落。只加载当前阶段规则：`npx tsx .agents/skills/re0-arc7-comic-video/scripts/read-stage.ts <阶段>`。支持plan、storyboard、voice、alignment、visuals、sound、render、review、covers、package、delivery；已读且未变的内容不重复调用。条件案例用`--risk space|props|body|fall`，只展开命中的条目；局部返修或中断恢复加`--repair`，查读取体积用`--stats`（字节数，不是token账单）。
 3. 通过阶段工具check/run/freeze维持唯一状态；首次配置或报错才读[工具说明](references/state-tool.md)。图文必须获用户明确确认后才正式配音；配音冻结后才做正式对齐、混音和渲染。沉默、自查通过不代替用户批准，同版本已有批准直接复用。
 4. 每阶段只记录输出、变化、阻塞与证据路径。反馈返修只重开受影响阶段，检查与缓存复用按[执行规则](references/execution.md)。默认单执行者，需要独立终检时集中一次，不按岗位扩散上下文。
+
+## 通用制作方法
+
+- 共享设定集中记录，逐镜引用适用的剧情状态与变化；检查画面先整体后局部。依据与参考按[原著对应](references/source-fidelity.md#本节只建立一次的资料)保存，检查顺序见[分镜验收](references/quality-checklist.md#分镜)。
+- 分镜确认前联检构图、正式文字与计划运镜；代表性小样只覆盖新增或变化的风险，复用同条件下已验证的结果。小样范围遵守[阶段依赖](references/execution.md#阶段依赖)，不增加例行确认。
+- 先定位出错环节，再按[变更影响](references/execution.md#变更影响)限定返工范围；缓存复用核对内容、参数和实际文件哈希，保留已经通过的部分。
+- 保存可恢复的产物与证据，中断后先盘点实际完成情况；技术测量、看图/听审、用户确认和真实交付分别记录。具体按[证据复用与交接](references/execution.md#证据复用与交接)执行。
+
+用户本轮明确要求优先。原著准确、人物状态与人体成立、关键信息可读和声音安全等核心要求优先于装饰或近似目标；运镜幅度、字幕参考位置等随实际构图取舍，记录采用依据，数值规格仍查唯一的默认规格。
 
 ## 资料归属
 
