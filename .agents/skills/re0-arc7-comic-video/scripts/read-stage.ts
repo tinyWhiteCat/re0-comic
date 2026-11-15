@@ -4,8 +4,8 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 type Route = { defaults: string[]; docs: Array<[string, string[]]>; style?: { rows: string[]; sections: string[] } };
 export const routes: Record<string, Route> = {
-  plan: { defaults: ['图稿与故事', '审稿', '封面与简介'], docs: [['source-fidelity.md', ['本节只建立一次的资料', '每镜五项信息', '两次检查，各有范围']], ['execution.md', ['阶段依赖']]], style: { rows: ['自然解说与情绪衔接'], sections: ['解说：原因接动作，冲突带情绪'] } },
-  storyboard: { defaults: ['图稿与故事', '审稿'], docs: [['source-fidelity.md', ['本节只建立一次的资料', '两次检查，各有范围', '结构检查工具']], ['execution.md', ['阶段依赖']], ['quality-checklist.md', ['分镜']]], style: { rows: ['日常/回忆彩图', '对话/人物关系彩图', '动作/冲击彩图'], sections: ['彩图：动画插画质感与可读的动作'] } },
+  plan: { defaults: ['图稿与故事', '审稿', '封面与简介'], docs: [['source-fidelity.md', ['本节只建立一次的资料', '每镜五项信息', '两次检查，各有范围']], ['execution.md', ['阶段依赖', '生成前先固定约束']]], style: { rows: ['自然解说与情绪衔接'], sections: ['解说：原因接动作，冲突带情绪'] } },
+  storyboard: { defaults: ['图稿与故事', '审稿'], docs: [['source-fidelity.md', ['本节只建立一次的资料', '两次检查，各有范围', '结构检查工具']], ['execution.md', ['阶段依赖', '生成前先固定约束']], ['quality-checklist.md', ['分镜']]], style: { rows: ['日常/回忆彩图', '对话/人物关系彩图', '动作/冲击彩图'], sections: ['彩图：动画插画质感与可读的动作'] } },
   voice: { defaults: ['声线', '人声处理', '读音', '片头'], docs: [['execution.md', ['有限语音返修']], ['quality-checklist.md', ['配音']]], style: { rows: ['已确认音色', '已确认RE0连读'], sections: ['声音：保留已确认自然说话方式'] } },
   alignment: { defaults: ['字幕', '读音'], docs: [['quality-checklist.md', ['对齐']]] },
   visuals: { defaults: ['运镜与视频', '字幕', '片头', '片尾'], docs: [['quality-checklist.md', ['画面与混音']]], style: { rows: ['字幕与片头片尾实现'], sections: ['运镜、字幕与片头片尾'] } },
