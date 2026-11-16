@@ -31,7 +31,7 @@ description: 制作或修订Re:0第七章帝国篇漫画解说视频。按原著
 
 策划和分镜阶段自动读取[生成前约束](references/execution.md#生成前先固定约束)，返修与中断恢复通过 `--repair` 读取[变更影响](references/execution.md#变更影响)与[证据复用规则](references/execution.md#证据复用与交接)，各阶段按[验收清单](references/quality-checklist.md)检查。[任务摘要模板](templates/episode-brief.md)记录固定设定、变化状态、试做结论与返修保留项；已有依据只引用，不重复抄写。
 
-完整交付分两路：视频通过Wormhole，发布素材通过Gmail。素材必须有B站与YouTube各一份视频标题、内容简介、4:3与16:9封面、视频tags；标题格式与清单以[默认规格](references/production-defaults.md)为准，操作与实际发送状态按[交付操作](references/delivery-and-publishing.md)记录。本轮只更新规则时，不据此重寄历史素材。
+完整交付分两路：视频通过Wormhole，发布素材通过Gmail。面向用户的素材ZIP默认仅含两张封面和一份发布文案，共三个文件；两平台标题、简介、tags和必要署名集中在文案中。具体清单和格式以[默认规格](references/production-defaults.md)为准；制作资料内部归档，只有用户明确索取时另附。操作与真实发送状态按[交付操作](references/delivery-and-publishing.md)记录。本轮只整理规则时，不据此重寄历史素材。
 
 ## 资料归属
 
