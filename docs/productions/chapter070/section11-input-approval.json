@@ -1,0 +1,246 @@
+{
+  "version": "section11-v4-input-approval-and-authorized-shot21-amendment",
+  "status": "approved-for-video",
+  "recordedAt": "2026-11-15T06:54:41.209Z",
+  "userMessage": "21的分镜我希望不用这么规则，在视频播放的时候，子分镜可以依次快速出现，记住这些内容，结合项目的约束和要求，开始制作视频吧",
+  "approvalScope": "V4第01至32镜图文与制作成片；第21镜按当前消息直接授权改为自由子分镜并依次快速显现。",
+  "authorizedShot21Amendment": {
+    "contentUnchanged": true,
+    "freeformLayout": true,
+    "sequentialRapidReveal": true,
+    "separateStoryboardApprovalRequired": false,
+    "newPixels": "以正式生产manifest中的最终图稿哈希为准，不能用V4旧图哈希冒充新图。"
+  },
+  "source": {
+    "path": "/workspace/re0-comic/source/novel/chapter070/11.md",
+    "sha256": "778e5885c4d192ee1870993b40b69a5ae327b981586cd861f8b780234c21359c"
+  },
+  "storyboard": {
+    "file": "data/productions/chapter070/section11/storyboard-v4/storyboard-draft.json",
+    "sha256": "d74a137c82d4033034069258e5e854e1af9d0e804a3c4bba30bb9ca9480a73f6"
+  },
+  "images": [
+    {
+      "id": "01",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-01.png",
+      "sha256": "fecda27fa2d1c3ffe7123de148a289bfc13de4069ea98d6f9d10201642a7d490",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "02",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-02.png",
+      "sha256": "a8c6cea26418a8f5f82f41862bf07acba110b59074e809e62baf0111cd59e7db",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "03",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-03.png",
+      "sha256": "4d2736aeebbec2012a2f8303350bfa4a8f9a82c359e681dfbeb930b015dc6623",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "04",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-04.png",
+      "sha256": "3026af0ad6259afd8f9782b973aec5d51e0d9269496b019c13d970f75596c80a",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "05",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-05.png",
+      "sha256": "8e94be04e81c951c9f83cd96c96ba397b1e32751590152a3da059d9b7da7f73a",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "06",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-06.png",
+      "sha256": "b9a4c912be63284769c6c9aa60047e45b0c696262a0e646e94f281173c84a8c2",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "07",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-07.png",
+      "sha256": "eb1cb149dbae6a661f659d9fe2c03bf0ff89a410ffe0f1a443f9e26806d616c4",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "08",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-08.png",
+      "sha256": "e9e4deb77df9101c5b696fb135597c08350faa2a0f5ae88347092ce524d23540",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "09",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-09.png",
+      "sha256": "6a0b99c9e834e9889b6f30ce6bb6435a2a28d663f9cbd416afc113e6148312d3",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "10",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-10.png",
+      "sha256": "4806d08f964466db667e04721bc66aa341c6ac4aaa9c2c4527dc46e92f3f05aa",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "11",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-11.png",
+      "sha256": "3071bd9c3ba62ee7db8574c539c537c5a76a4c7032c4e7ab637cf99ce0af6bc6",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "12",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-12.png",
+      "sha256": "08816062b93a15a4aa4aea5e080c3f5336c84498d5345a837e21d19f4a0f0276",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "13",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-13.png",
+      "sha256": "9590be2b6057c2bfaeb2c5340a25e5afaf06dd092a0cc36e5f2cd54f84d78781",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "14",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-14.png",
+      "sha256": "d8cb803294e83a72409c6236eb4adeaf67b8a3002a34fb7be2ec707853564cee",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "15",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-15.png",
+      "sha256": "b0af8e152aeb9fe84985aa196b0f2a0875375dedec525743f7ba36f3e5e1cce8",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "16",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-16.png",
+      "sha256": "34f07939f35a5a5051885ae22b1632f50e993b78af2ac1319015b076948ba7d1",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "17",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-17.png",
+      "sha256": "d5dfb77ac2e00c2beaf12d9105692ed677453be4de2f034a0b10da94eff9a723",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "18",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-18.png",
+      "sha256": "d21a17be1477c02e55882cdad4a77ec26489230dc74c3aaf9f00ae5d3ffc2ccd",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "19",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-19.png",
+      "sha256": "0e2ce3bb23f96f7b2bebe00b746957a399f8bd549aaac75884be28f33e6ce307",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "20",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-20.png",
+      "sha256": "d2a5d5c6f125985618b18fd9b94da950ef60cfac6103aafb0e2a5ab670d9f07a",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "21",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-21.png",
+      "sha256": "b1dae557840e849da1ee2d365f2a9605134f6cd544dd9652bed0367057c4c77f",
+      "productionReplacementAuthorized": true
+    },
+    {
+      "id": "22",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-22.png",
+      "sha256": "80721c99ec263ec9999a7eddf7d79b501b2c8c65bb5fd1dcca48b8670d92cc6a",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "23",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-23.png",
+      "sha256": "81da6ee2caf3fa7e08d53000f012718b17014054e95290cfe70c79ec5c5b8f3e",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "24",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-24.png",
+      "sha256": "56c7a4e02de54c814beb4f9fed6ebe2669e22994bad968f060883298bf40e2f4",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "25",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-25.png",
+      "sha256": "35ca2f9f59d5eb70fcbf81f68d1a12f487a54b41e9f57093de02043e4cd55c72",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "26",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-26.png",
+      "sha256": "4f5aec06ee77727c5590af42f6fc3702a6c14619416f52de4033230b0fae1522",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "27",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-27.png",
+      "sha256": "e46274a648d926c06fbb20476b2388cf6afd093d57111ac9ba672e342bab8db8",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "28",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-28.png",
+      "sha256": "6afecda818c20f290d976f34da649d313917ba70853409c72f644aa5c4a920c1",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "29",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-29.png",
+      "sha256": "3c47f904904907605266a616f003e3935a96ba3fdd617650aedc6a5bcd0a414d",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "30",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-30.png",
+      "sha256": "045d7091c47cb0d13ecdd1c1a7af358202ae9080f3d211068170878bae62798b",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "31",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-31.png",
+      "sha256": "e645a437c8c070ce13f1f4113e2f5b7ef54fc7927a669f850a215798b6d4e654",
+      "productionReplacementAuthorized": false
+    },
+    {
+      "id": "32",
+      "file": "data/productions/chapter070/section11/storyboard-v4/images/shot-32.png",
+      "sha256": "7b1c21f483713d74579cd4b8b6c434287db19e66e956f31141b5f513a53e5268",
+      "productionReplacementAuthorized": false
+    }
+  ],
+  "reviewPdf": {
+    "file": "section11-storyboard-v4.pdf",
+    "bytes": 9690330,
+    "sha256": "70e245ac5f30d7cc1667758adc6079fb987f958eff5f2981282d575e86cc7d9a"
+  },
+  "originalApprovalRecord": {
+    "file": "/workspace/work/section11-video/storyboard-approval.json",
+    "sha256": "d324b2e882233c9e6eb2ced1c36dd8786fc4be814db46ba631dc1199f21c4699"
+  },
+  "coverTitleApproval": {
+    "status": "approved",
+    "userMessage": "我觉得直接叫 血命之仪 就行",
+    "mainTitle": "血命之仪",
+    "series": "Re:0 帝国篇",
+    "episode": "第11节",
+    "scope": "4:3和16:9两版封面的主标题；独立于已记录的分镜批准。",
+    "recordedAt": "2026-11-15T07:01:31.941Z"
+  },
+  "deliveryPlatform": {
+    "name": "Wormhole",
+    "scope": "本会话第11节交付覆盖项目文叔叔默认值；不推断所有未来任务的全局变更。"
+  },
+  "voiceDecision": {
+    "model": "mimo-v2.5-tts",
+    "voice": "冰糖",
+    "defaultSpeed": true,
+    "sourceRecord": "data/productions/chapter070/section02/video-v4-bingtang/storyboard-approval.json",
+    "sourceRecordScope": "第二节的明确试听确认",
+    "currentScope": "第11节生产沿用最近明确确认声线，不把第二节原话改记成全局默认。"
+  }
+}
