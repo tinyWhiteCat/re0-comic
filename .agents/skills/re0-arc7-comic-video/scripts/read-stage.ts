@@ -6,15 +6,15 @@ type Route = { defaults: string[]; docs: Array<[string, string[]]>; style?: { ro
 export const routes: Record<string, Route> = {
   plan: { defaults: ['图稿与故事', '审稿', '封面与简介'], docs: [['source-fidelity.md', ['本节只建立一次的资料', '每镜五项信息', '两次检查，各有范围']], ['execution.md', ['阶段依赖', '生成前先固定约束']]], style: { rows: ['自然解说与情绪衔接'], sections: ['解说：原因接动作，冲突带情绪'] } },
   storyboard: { defaults: ['图稿与故事', '审稿'], docs: [['source-fidelity.md', ['本节只建立一次的资料', '两次检查，各有范围', '结构检查工具']], ['execution.md', ['阶段依赖', '生成前先固定约束']], ['quality-checklist.md', ['分镜']]], style: { rows: ['日常/回忆彩图', '对话/人物关系彩图', '动作/冲击彩图'], sections: ['彩图：动画插画质感与可读的动作'] } },
-  voice: { defaults: ['声线', '人声处理', '读音', '片头'], docs: [['execution.md', ['有限语音返修']], ['quality-checklist.md', ['配音']]], style: { rows: ['已确认音色', '已确认RE0连读'], sections: ['声音：保留已确认自然说话方式'] } },
+  voice: { defaults: ['声线', '人声处理', '读音', '片头'], docs: [['execution.md', ['有限语音返修']], ['quality-checklist.md', ['配音']], ['delivery-and-publishing.md', ['短样交付']]], style: { rows: ['已确认音色', '已确认RE0连读'], sections: ['声音：保留已确认自然说话方式'] } },
   alignment: { defaults: ['字幕', '读音'], docs: [['quality-checklist.md', ['对齐']]] },
-  visuals: { defaults: ['运镜与视频', '字幕', '片头', '片尾'], docs: [['quality-checklist.md', ['画面与混音']]], style: { rows: ['字幕与片头片尾实现'], sections: ['运镜、字幕与片头片尾'] } },
-  sound: { defaults: ['配乐音效', '人声处理'], docs: [['quality-checklist.md', ['画面与混音']]], style: { rows: ['已确认音色'], sections: ['声音：保留已确认自然说话方式'] } },
-  render: { defaults: ['运镜与视频', '字幕', '片头', '片尾', '人声处理'], docs: [['quality-checklist.md', ['画面与混音', '成片终检']]] },
-  review: { defaults: ['运镜与视频', '字幕', '片头', '片尾', '人声处理'], docs: [['quality-checklist.md', ['成片终检']], ['execution.md', ['证据复用与交接']]] },
+  visuals: { defaults: ['运镜与视频', '字幕', '片头', '片尾'], docs: [['quality-checklist.md', ['画面与动效']]], style: { rows: ['字幕与片头片尾实现'], sections: ['运镜、字幕与片头片尾'] } },
+  sound: { defaults: ['配乐音效', '人声处理'], docs: [['quality-checklist.md', ['音效选材与混音']], ['delivery-and-publishing.md', ['短样交付']]], style: { rows: ['已确认音色'], sections: ['声音：保留已确认自然说话方式'] } },
+  render: { defaults: ['运镜与视频', '字幕', '片头', '片尾', '人声处理'], docs: [['quality-checklist.md', ['画面与动效', '音效选材与混音', '成片终检']]] },
+  review: { defaults: ['运镜与视频', '字幕', '片头', '片尾', '人声处理'], docs: [['quality-checklist.md', ['成片终检', '音效选材与混音']], ['execution.md', ['证据复用与交接']]] },
   covers: { defaults: ['封面与简介'], docs: [['quality-checklist.md', ['封面与简介']]], style: { rows: ['封面与标题'], sections: ['封面与标题：人物冲突与悬念'] } },
   package: { defaults: ['交付', '封面与简介'], docs: [['quality-checklist.md', ['打包与交付']], ['delivery-and-publishing.md', ['打包']]] },
-  delivery: { defaults: ['交付', '封面与简介'], docs: [['delivery-and-publishing.md', ['上传与核验', '仅素材邮件', '完成交付']]] },
+  delivery: { defaults: ['交付', '封面与简介'], docs: [['delivery-and-publishing.md', ['短样交付', '上传与核验', '仅素材邮件', '完成交付']]] },
 };
 const risks: Record<string, string> = { space: '家具背后与观察视线', props: '刀、鞭与佩戴状态', body: '身体受限与整体比例', fall: '高处扑击与动作方向' };
 export function section(text: string, heading: string) {
