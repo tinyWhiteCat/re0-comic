@@ -1,10 +1,12 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import request from 'supertest';
-import { mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { mkdtemp, readFile, readdir, rm, stat, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { createApp } from '../src/server/app';
 import { run } from '../src/server/media';
+import type { CameraPlanner } from '../src/server/openai-camera';
 import type { Project } from '../src/shared/project';
 
 let dataDir: string;
@@ -98,5 +100,65 @@ describe('comic narration workflow', () => {
     const restarted = await createApp({ dataDir });
     const { body } = await request(restarted.app).get('/api/projects');
     expect(body[0]).toMatchObject({ ...project, status: 'failed', error: '服务已重启，请重新合成' });
+  });
+
+  it('reports missing OpenAI configuration without starting a render', async () => {
+    const project = await createWithImage();
+    await request(service.app).get('/api/render-options').expect(200, { openai: { configured: false, model: null } });
+    await request(service.app).post(`/api/projects/${project.id}/render`).send({ provider: 'openai' }).expect(503);
+    await request(service.app).get('/api/projects').expect(200, [project]);
+  });
+
+  it('exports an OpenAI plan through the normal render route and reuses it only for matching inputs', async () => {
+    const plan = vi.fn<CameraPlanner>(async (_directory, project) => ({
+      shots: project.scenes.map((_, index) => ({ index, camera: 'push_in', focusX: .4, focusY: .5, transition: 'cut' })),
+    }));
+    const model = 'gpt-6.1-sol';
+    service = await createApp({ dataDir, openai: { model, plan } });
+    const project = await createWithImage();
+    const route = `/api/projects/${project.id}`;
+    project.scenes[0] = { ...project.scenes[0], text: '已经确认的解说。', duration: .5 };
+    await request(service.app).get('/api/render-options').expect(200, { openai: { configured: true, model } });
+    await request(service.app).post(`${route}/save`).send(project).expect(200);
+    const directory = path.join(dataDir, project.id);
+    const { size, mtimeMs, ctimeMs } = await stat(path.join(directory, project.scenes[0].image));
+    const lowEffortSignature = createHash('sha256')
+      .update(JSON.stringify([1, model, project.ratio, project.scenes, [[size, mtimeMs, ctimeMs]]])).digest('hex');
+    await writeFile(path.join(directory, 'openai-camera-plan.json'), JSON.stringify({
+      signature: lowEffortSignature,
+      plan: { shots: [{ index: 0, camera: 'hold', focusX: .5, focusY: .5, transition: 'cut' }] },
+    }));
+    const render = async (provider: 'local' | 'openai') => {
+      const { body } = await request(service.app).post(`${route}/render`).send({ provider }).expect(200);
+      expect(body).toMatchObject({ status: 'rendering', renderProvider: provider });
+      await service.waitForJobs();
+      const { body: [result] } = await request(service.app).get('/api/projects').expect(200);
+      expect(result.status, result.error).toBe('done');
+      expect(result.scenes).toEqual(project.scenes);
+    };
+    await render('openai');
+    await render('openai');
+    await render('local');
+    expect(plan).toHaveBeenCalledTimes(1);
+    project.scenes[0].text = '重新确认的解说。';
+    await request(service.app).post(`${route}/save`).send(project).expect(200);
+    await render('openai');
+    expect(plan).toHaveBeenCalledTimes(2);
+    const video = path.join(dataDir, project.id, 'render.mp4');
+    await run('ffmpeg', ['-v', 'error', '-xerror', '-i', video, '-f', 'null', '-']);
+    await request(service.app).get(`/files/${project.id}/openai-camera-plan.json`).expect(400);
+  });
+
+  it('marks an invalid OpenAI plan as failed without exporting a video', async () => {
+    service = await createApp({ dataDir, openai: {
+      model: 'gpt-5.4-mini',
+      plan: async () => ({ shots: [{ index: 2, camera: 'hold', focusX: .5, focusY: .5, transition: 'cut' }] }),
+    } });
+    const project = await createWithImage();
+    await request(service.app).post(`/api/projects/${project.id}/render`).send({ provider: 'openai' }).expect(200);
+    await service.waitForJobs();
+    const { body: [result] } = await request(service.app).get('/api/projects').expect(200);
+    expect(result).toMatchObject({ status: 'failed', error: expect.stringContaining('分镜顺序不符') });
+    await request(service.app).get(`/files/${project.id}/render.mp4`).expect(404);
   });
 });

@@ -1,10 +1,12 @@
 import express, { type ErrorRequestHandler } from 'express';
-import { randomUUID } from 'node:crypto';
-import { access, mkdir, readFile, readdir, rename, unlink, writeFile } from 'node:fs/promises';
+import { createHash, randomUUID } from 'node:crypto';
+import { access, mkdir, readFile, readdir, rename, stat, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { z } from 'zod';
-import { projectSchema, saveSchema, type Project } from '../shared/project.js';
+import { cameraPlanSchema, type CameraPlan } from '../shared/camera.js';
+import { projectSchema, renderProviderSchema, saveSchema, type Project } from '../shared/project.js';
 import { renderVideo, validateMedia } from './media.js';
+import { openAICameraProfile, type CameraPlanner } from './openai-camera.js';
 
 class HttpError extends Error {
   constructor(public status: number, message: string) { super(message); }
@@ -15,9 +17,11 @@ const uploadSchema = z.object({
   extension: z.enum(['png', 'jpg', 'jpeg', 'webp', 'mp3', 'wav', 'm4a']),
   content: z.string().min(4).refine(value => value.length % 4 === 0 && !/[^A-Za-z0-9+/=]/.test(value), '无效的 Base64 文件'),
 });
+const renderSchema = z.object({ provider: renderProviderSchema.default('local') });
+const cachedPlanSchema = z.object({ signature: z.string(), plan: cameraPlanSchema });
 
-export async function createApp(options: { dataDir: string; webDir?: string }) {
-  const { dataDir } = options;
+export async function createApp(options: { dataDir: string; webDir?: string; openai?: { model: string; plan: CameraPlanner } }) {
+  const { dataDir, openai } = options;
   await mkdir(dataDir, { recursive: true });
   const app = express();
   app.disable('x-powered-by');
@@ -53,6 +57,25 @@ export async function createApp(options: { dataDir: string; webDir?: string }) {
       catch { throw new HttpError(400, '项目素材不存在，请重新导入'); }
     }
   }
+  async function planCamera(dir: string, project: Project): Promise<CameraPlan> {
+    if (!openai) throw new Error('服务器尚未配置 OPENAI_API_KEY');
+    const assets = await Promise.all(project.scenes.map(async ({ image }) => {
+      const { size, mtimeMs, ctimeMs } = await stat(path.join(dir, image));
+      return [size, mtimeMs, ctimeMs];
+    }));
+    const signature = createHash('sha256')
+      .update(JSON.stringify([openAICameraProfile(openai.model).cacheRevision, openai.model, project.ratio, project.scenes, assets]))
+      .digest('hex');
+    const cache = path.join(dir, 'openai-camera-plan.json');
+    const fits = (plan: CameraPlan) => plan.shots.length === project.scenes.length && plan.shots.every((shot, index) => shot.index === index);
+    const cached = await readFile(cache, 'utf8').then(text => cachedPlanSchema.safeParse(JSON.parse(text))).catch(() => null);
+    if (cached?.success && cached.data.signature === signature && fits(cached.data.plan)) return cached.data.plan;
+    const result = cameraPlanSchema.safeParse(await openai.plan(dir, project));
+    if (!result.success || !fits(result.data)) throw new Error('OpenAI 返回的运镜方案无效或分镜顺序不符，请重试');
+    await writeFile(`${cache}.tmp`, JSON.stringify({ signature, plan: result.data }), 'utf8');
+    await rename(`${cache}.tmp`, cache);
+    return result.data;
+  }
   // Live encoders do not survive a service restart. Preserve interrupted drafts.
   for (const project of await list()) {
     if (project.status === 'rendering') await save({ ...project, status: 'failed', error: '服务已重启，请重新合成' });
@@ -67,6 +90,9 @@ export async function createApp(options: { dataDir: string; webDir?: string }) {
   });
   app.use(express.json({ limit: '40mb' }));
   app.get('/api/health', (_req, res) => { res.json({ status: 'ok' }); });
+  app.get('/api/render-options', (_req, res) => {
+    res.json({ openai: { configured: !!openai, model: openai?.model ?? null } });
+  });
   app.get('/api/projects', async (_req, res) => { res.json(await list()); });
   app.post('/api/projects', async (req, res) => {
     const { title } = z.object({ title: z.string().max(100).default('未命名作品') }).parse(req.body);
@@ -83,7 +109,7 @@ export async function createApp(options: { dataDir: string; webDir?: string }) {
       switch (req.params.action) {
         case 'save': {
           const { removeAudio, ...values } = saveSchema.parse(req.body);
-          project = { ...project, ...values, audio: removeAudio ? null : project.audio, status: 'draft', error: null };
+          project = { ...project, ...values, audio: removeAudio ? null : project.audio, status: 'draft', renderProvider: undefined, error: null };
           await checkAssets(project);
           break;
         }
@@ -103,13 +129,17 @@ export async function createApp(options: { dataDir: string; webDir?: string }) {
           if (isImage) project.scenes.push({ image: name, text: '', duration: 4 });
           else project.audio = name;
           project.status = 'draft';
+          project.renderProvider = undefined;
           project.error = null;
           break;
         }
         case 'render': {
+          const { provider } = renderSchema.parse(req.body ?? {});
+          if (provider === 'openai' && !openai) throw new HttpError(503, '服务器尚未配置 OPENAI_API_KEY');
           if (!project.scenes.length) throw new HttpError(400, '请至少添加一个分镜');
           await checkAssets(project);
           project.status = 'rendering';
+          project.renderProvider = provider;
           project.error = null;
           break;
         }
@@ -120,7 +150,11 @@ export async function createApp(options: { dataDir: string; webDir?: string }) {
         const snapshot = structuredClone(project);
         const job = (async () => {
           let error: string | null = null;
-          try { await renderVideo(directory(id), snapshot); }
+          try {
+            const dir = directory(id);
+            const plan = snapshot.renderProvider === 'openai' ? await planCamera(dir, snapshot) : undefined;
+            await renderVideo(dir, snapshot, plan);
+          }
           catch (cause) { error = cause instanceof Error ? cause.message : '合成失败'; }
           await serialize(id, async () => {
             const latest = await read(id);
