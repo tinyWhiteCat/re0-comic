@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
-  Alert, App, Button, Card, Col, Divider, Empty, Flex, Input, Layout, Menu,
+  Alert, App, Button, Card, Col, Divider, Empty, Flex, Input, Layout, Menu, Popconfirm,
   Row, Select, Space, Spin, Statistic, Tag, Typography, Upload,
   type UploadProps,
 } from 'antd';
@@ -8,7 +8,7 @@ import {
   AudioOutlined, DownloadOutlined, FileImageOutlined, PlayCircleOutlined,
   PlusOutlined, SaveOutlined, VideoCameraOutlined,
 } from '@ant-design/icons';
-import type { Project, Scene } from '../shared/project';
+import type { Project, RenderOptions, RenderProvider, Scene } from '../shared/project';
 import { api, mediaUrl } from './api';
 import { SceneCard } from './SceneCard';
 
@@ -20,6 +20,7 @@ export function Workbench() {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [openAi, setOpenAi] = useState<RenderOptions['openai'] | 'unavailable' | null>(null);
   const current = useRef<Project | null>(null);
   const dirty = useRef(false);
   const actionLock = useRef(false);
@@ -27,6 +28,10 @@ export function Workbench() {
   const pendingUploads = useRef(0);
   const rendering = project?.status === 'rendering';
   const locked = busy || rendering;
+  const openAiRendering = rendering && project?.renderProvider === 'openai';
+  const openAiConfigured = openAi !== 'unavailable' && openAi?.configured === true;
+  const renderDisabled = busy || !project?.scenes.length;
+  const openAiDisabled = renderDisabled || rendering || !openAiConfigured;
 
   function select(value: Project) {
     current.current = value;
@@ -66,6 +71,15 @@ export function Workbench() {
   }
   useEffect(() => { void load(); }, []);
   useEffect(() => {
+    let active = true;
+    void api.renderOptions().then(({ openai }) => {
+      if (active) setOpenAi(openai);
+    }).catch(() => {
+      if (active) setOpenAi('unavailable');
+    });
+    return () => { active = false; };
+  }, []);
+  useEffect(() => {
     if (!rendering || !project) return;
     const id = project.id;
     const timer = window.setInterval(() => {
@@ -88,6 +102,11 @@ export function Workbench() {
     await persist();
     select(await api.create(`新作品 ${projects.length + 1}`));
     dirty.current = false;
+  });
+  const render = (provider?: RenderProvider) => act(async () => {
+    if (current.current?.status === 'rendering') return;
+    const saved = await persist();
+    if (saved) select(await api.render(saved.id, provider));
   });
   const upload: UploadProps['customRequest'] = options => {
     const file = options.file as File;
@@ -153,10 +172,22 @@ export function Workbench() {
               <Input aria-label="作品名称" value={project.title} maxLength={100} size="large" disabled={locked} className="project-title" onChange={event => edit({ title: event.target.value })} />
               <Select aria-label="视频画幅" value={project.ratio} disabled={locked} options={[{ value: 'portrait', label: '9:16 · 竖屏' }, { value: 'landscape', label: '16:9 · 横屏' }]} onChange={ratio => edit({ ratio })} style={{ width: 145 }} />
               <Button icon={<SaveOutlined />} disabled={locked} onClick={() => void act(async () => { await persist(); void message.success('草稿已保存'); })}>保存草稿</Button>
-              <Button type="primary" icon={<PlayCircleOutlined />} loading={rendering} disabled={busy || project.scenes.length === 0} onClick={() => void act(async () => {
-                const saved = await persist();
-                if (saved) select(await api.render(saved.id));
-              })}>合成视频</Button>
+              <Button type="primary" icon={<PlayCircleOutlined />} loading={rendering && !openAiRendering} disabled={renderDisabled || openAiRendering} onClick={() => void render()}>合成视频</Button>
+              <Popconfirm
+                key={project.id}
+                title="用 OpenAI 规划运镜和剪辑？"
+                description="当前的分镜图和解说会发送给 OpenAI。视频由本地 FFmpeg 合成。"
+                okText="用当前分镜编排并合成"
+                cancelText="取消"
+                placement="bottomRight"
+                disabled={openAiDisabled}
+                okButtonProps={{ disabled: openAiDisabled }}
+                onConfirm={() => render('openai')}
+              >
+                <Button loading={openAiRendering} disabled={openAiDisabled}>OpenAI 运镜合成</Button>
+              </Popconfirm>
+              {openAi === 'unavailable' ? <Text type="secondary" style={{ flexBasis: '100%' }}>暂时无法读取 OpenAI 配置。</Text> : openAi && !openAi.configured &&
+                <Text type="secondary" style={{ flexBasis: '100%' }}>在服务端设置 <Text code>OPENAI_API_KEY</Text> 后可使用 OpenAI 运镜合成。</Text>}
             </Flex>
             <Row gutter={[24, 24]}>
               <Col xs={24} xl={17}>
@@ -176,7 +207,7 @@ export function Workbench() {
                 <Divider />
                 <Statistic title="预计时长" value={project.scenes.reduce((total, scene) => total + scene.duration, 0)} precision={1} suffix="秒" />
                 <Paragraph type="secondary" className="export-spec">720p / 24 fps / MP4<br />自动生成并烧录中文字幕</Paragraph>
-                {rendering && <Alert type="info" title="正在合成视频" description="可以切换到其他作品，完成后回来下载。" showIcon icon={<Spin size="small" />} />}
+                {rendering && <Alert type="info" title={openAiRendering ? '正在规划运镜并合成视频' : '正在合成视频'} description="可以切换到其他作品，完成后回来下载。" showIcon icon={<Spin size="small" />} />}
                 {project.status === 'failed' && <Alert type="error" title="合成失败" description={project.error} showIcon />}
                 {project.status === 'done' && <Space orientation="vertical" style={{ width: '100%' }}>
                   <video key={project.id} aria-label="成片预览" controls preload="metadata" src={mediaUrl(project.id, 'render.mp4')} className="video-preview" />

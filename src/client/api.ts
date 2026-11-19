@@ -1,4 +1,4 @@
-import { projectSchema, type Project, type SaveProject } from '../shared/project';
+import { projectSchema, renderOptionsSchema, type Project, type RenderOptions, type RenderProvider, type SaveProject } from '../shared/project';
 
 async function request(url: string, body?: unknown): Promise<unknown> {
   const response = await fetch(url, body === undefined ? undefined : {
@@ -19,8 +19,11 @@ export const api = {
   async save(id: string, values: SaveProject): Promise<Project> {
     return projectSchema.parse(await request(endpoint(id, 'save'), values));
   },
-  async render(id: string): Promise<Project> {
-    return projectSchema.parse(await request(endpoint(id, 'render'), {}));
+  async renderOptions(): Promise<RenderOptions> {
+    return renderOptionsSchema.parse(await request('/api/render-options'));
+  },
+  async render(id: string, provider?: RenderProvider): Promise<Project> {
+    return projectSchema.parse(await request(endpoint(id, 'render'), provider === 'openai' ? { provider } : {}));
   },
   async upload(id: string, file: File): Promise<Project> {
     const content = await new Promise<string>((resolve, reject) => {
