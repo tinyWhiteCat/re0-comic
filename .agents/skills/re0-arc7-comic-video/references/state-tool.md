@@ -45,7 +45,9 @@ npx tsx .agents/skills/re0-arc7-comic-video/scripts/production-state.ts run data
 }
 ```
 
-`files` 必须覆盖该阶段配置的每个输入和输出。storyboard与covers还需 `userApproved: true` 和非空 `approvalReference`，指向真实用户批准记录；不得由代理自查替代。其他阶段也需passed、无未解决项及文件绑定。voice的 `actualListening: false` 如实说明仅做技术/识别检查，不等于已经听审；读音仍有实质疑点时不能清空未解决项。
+`files` 覆盖该阶段配置的每个输入和输出。storyboard 与 covers 都要填写 `userApproved: true` 和真实的 `approvalReference`。分镜引用当前完整图文的用户确认；封面引用用户确认或明确指定主标题的记录，用户另要求先审图时补上当前图稿批准。各阶段均需 passed、无未解决项及文件绑定。voice 的 `actualListening: false` 表示仅完成技术/识别检查；仍有实质读音疑点就保留未解决项。
+
+状态工具验证依赖、阶段证据及文件指纹。默认发布包的内容约束另执行[打包检查](delivery-and-publishing.md#打包)；历史阶段有效只代表已登记证据仍匹配。
 
 ```bash
 npx tsx .agents/skills/re0-arc7-comic-video/scripts/production-state.ts freeze data/productions/chapter070/sectionNN/production-state.json voice audio/voice-review.json

@@ -1,76 +1,34 @@
 ---
 name: re0-arc7-comic-video
-description: 制作或修订Re:0第七章帝国篇漫画解说视频。按原著与设定生成分镜，确认后制作配音、字幕、运镜与声音；视频用Wormhole，两个平台的标题、简介、两种封面和tags用Gmail交付。按阶段读取，只返修受影响内容。
+description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原著与设定生成分镜，确认后制作配音、字幕、运镜和声音。按阶段验收，视频与发布素材分别交付。
 ---
 
 # Re:0 第七章漫画解说视频
 
-用户当前要求优先，只执行本次范围。遵守仓库AGENTS.md；Humanizer-zh首次使用时读一次，已在上下文中则复用。原著在`source/novel/chapter070/`（分支节号按目录顺序），角色原画在`data/source-webp/chapter07/settings/characters/sheets/`；媒体、原音、缓存、私有回执存忽略目录`data/productions/chapter070/`，不提交素材或密钥。
+遵守仓库 AGENTS.md，使用 Humanizer-zh 润色自然语言。先执行用户本轮明确的范围与要求，再查本节采用版本和同范围批准，最后使用当前默认规格。历史案例用于理解或复现，对新节的镜号、音源、剪辑参数及交付渠道均以当期依据为准。对批准稿的剧情、镜头顺序、主要画面或台词含义有实质改动时，重新确认受影响内容。
 
-## 最短执行入口
+## 执行入口
 
-1. 先读本节current-storyboard/current-video指针和production-state摘要，确定版本、授权范围、变化组与下一阶段；新节尚无状态时初始化，不遍历历代目录。旧节只有manifest.json时，沿其currentVideo、adoptedStoryboard、pronunciationPatch等字段定位实际采用项，不补造缺失的批准或通过状态。
-2. plan阶段实际通读目标原著与必要前文，其他阶段按来源锚点读相关段落。只加载当前阶段规则：`npx tsx .agents/skills/re0-arc7-comic-video/scripts/read-stage.ts <阶段>`。支持plan、storyboard、voice、alignment、visuals、sound、render、review、covers、package、delivery；已读且未变的内容不重复调用。条件案例用`--risk space|props|body|fall`，只展开命中的条目；局部返修或中断恢复加`--repair`，查读取体积用`--stats`（字节数，不是token账单）。
-3. 通过阶段工具check/run/freeze维持唯一状态；首次配置或报错才读[工具说明](references/state-tool.md)。图文必须获用户明确确认后才正式配音；配音冻结后才做正式对齐、混音和渲染。沉默、自查通过不代替用户批准，同版本已有批准直接复用。
-4. 每阶段只记录输出、变化、阻塞与证据路径。反馈返修只重开受影响阶段，检查与缓存复用按[执行规则](references/execution.md)。默认单执行者，需要独立终检时集中一次，不按岗位扩散上下文。
+1. 先读本节 `production-state.json` 摘要和适用的 `current-storyboard.json`、`current-video.json`、`current-materials.json`。封面和发布包按独立的素材指针定位。旧节缺指针时沿 manifest、采用清单或交付回执追溯实际采用文件，缺失的批准或验收如实记录。新节按需初始化状态。
+2. `plan` 是策划预检。通读 `source/novel/chapter070/` 下的目标原著与必要前文，按目录顺序确定节号。后续阶段按来源锚点查阅相关段落。开始一个阶段时运行 `npx tsx .agents/skills/re0-arc7-comic-video/scripts/read-stage.ts <阶段>`，规则已在上下文且未变化时直接复用。风险案例用 `--risk space|props|body|fall`，返修与恢复用 `--repair`，读取体积用 `--stats`。
+3. 从完整分镜开始维护唯一生产状态，按[阶段依赖](references/execution.md#阶段依赖)执行。已有记录先 `check`，需制作时 `run`，验收后 `freeze`。正式配音以前必须有当前完整分镜的明确确认，同版本同范围的已有批准直接复用。首次配置或排错查[状态工具](references/state-tool.md)。
+4. 每阶段记录采用文件、变化范围、阻塞项和证据路径。返修按[变更影响](references/execution.md#变更影响)处理相关阶段、相邻接点与缓存。原音、成片、素材、缓存与私有回执留在忽略目录 `data/productions/chapter070/`，公开记录只保留必要引用。
 
-## 通用制作原则
+## 阶段交接
 
-以下作为各集制作的默认方法；具体角色状态、道具形制、镜号和演出方案按当前原著、设定与用户要求确定。这里保留入口摘要，细则在对应阶段文件维护。
-
-1. **设定成为生成依据。** 生成前实际查看适用的角色、道具、标志和场景参考，按[原著对应](references/source-fidelity.md#本节只建立一次的资料)集中记录版本与共享约束，主体与背景共用同一依据。
-2. **固定特征与变化状态分开。** 本段外形与身份保持一致；伤势、污损、持有物、行动能力和认知随事件更新，出画不重置状态。
-3. **结构关系先于细节。** 先确认比例、支撑受力、接触、遮挡和距离，再做纹理与光效；侧别和道具归属按身体与场景判断，随镜头角度变化核对投影。
-4. **按事件链检查连续性。** 连看动作发生前、接触或命中、可见后果和后续状态，核对前后镜交接及原著因果。
-5. **演出目标落实到声画。** 将压迫、虚弱、警惕等目标转成可观察的尺度、姿态、表情、光影和声音层次，保持本镜重点清楚。
-6. **高风险部分先试做。** 仅对本期新增或变化的风险做代表性验证，同条件下的有效证据直接复用；分镜确认前联检构图、正式文字与计划运镜，小样范围遵守[阶段依赖](references/execution.md#阶段依赖)，不增加例行确认。
-7. **局部修改同时验收保留项。** 先定位出错环节，明确改动范围与基线，再对照目标修改、非目标内容及相邻接点，处理误加物件、人体变化和时序漂移。
-8. **分层制作，验收实际产物。** 图像、旁白、音效、字幕和机位按依赖与实际文件哈希复用，持久保存产物与证据，中断后先盘点完成情况；最终看实际运镜、字幕、编码音轨与接收文件，分别记录技术检查、看图、听审及用户批准。
-
-用户本轮明确要求优先。原著准确、人物状态与人体成立、关键信息可读和声音安全等核心要求优先于装饰或近似目标；运镜幅度、字幕参考位置等随实际构图取舍，记录采用依据，数值规格仍查唯一的默认规格。
-
-策划和分镜阶段自动读取[生成前约束](references/execution.md#生成前先固定约束)，返修与中断恢复通过 `--repair` 读取[变更影响](references/execution.md#变更影响)与[证据复用规则](references/execution.md#证据复用与交接)，各阶段按[验收清单](references/quality-checklist.md)检查。[任务摘要模板](templates/episode-brief.md)记录固定设定、变化状态、试做结论与返修保留项；已有依据只引用，不重复抄写。
-
-完整交付分两路：视频通过Wormhole，发布素材通过Gmail。面向用户的素材ZIP默认仅含两张封面和一份发布文案，共三个文件；两平台标题、简介、tags和必要署名集中在文案中。具体清单和格式以[默认规格](references/production-defaults.md)为准；制作资料内部归档，只有用户明确索取时另附。操作与真实发送状态按[交付操作](references/delivery-and-publishing.md)记录。本轮只整理规则时，不据此重寄历史素材。
-
-## 各阶段必查项
-
-以下要求直接用于后续制作，不依赖重新打开某一节复盘。开始当前阶段时按表执行，结果写入已有分镜状态、语音记录或QA，不另建重复报告；不适用的项目注明依据，已知实质错误修复后再冻结。
-
-| 阶段 | 必须检查的内容与记录 |
+| 阶段 | 产物与通过条件 |
 | --- | --- |
-| plan / storyboard | 将伤侧与手指活动能力、当前服装、武器形制/归属、怪物结构和一次性效果区间落实到共享参考与逐镜状态。复杂动作核支点、触发、瞄准、路径、实际落点及邻镜威胁位置；多子分镜规划阅读与递现顺序。按[分镜清单](references/quality-checklist.md#分镜)核原图和计划裁切，不能为修伤侧镜像整图。 |
-| voice | 按当前读音表检查片头连读、姓名、声调和完整声尾，显示稿与TTS输入分开；片尾字标不自动变成口播。需要用户评价时先按[短样交付](references/delivery-and-publishing.md#短样交付)提供真实试听入口；同录音已有批准直接复用。 |
-| visuals | 按[画面与动效](references/quality-checklist.md#画面与动效)看实际首中末与效果发生帧，保留手指、箭尖、剑轴和接触点；火焰轨迹与命中结果不改剧情，后续子分镜不提前显现，一次性红眼等不扩散。 |
-| sound | 按[音效选材与混音](references/quality-checklist.md#音效选材与混音)核物种感、体量、情绪和事件力度。先判断选材，再核时点、遮蔽和声量；需要选声时统一条件单独播放并加入同一段旁白，不以来源标签或响度数值认定自然。 |
-| render / review | 终检覆盖最终编码的声画与用户反馈项，技术、看图、实际试听、证据继承及用户批准分开登记；音效选材与混音检查随阶段自动读取。已知错误不能因解码或ASR通过而放行，未实际听审不能标为听感通过。 |
-| package / delivery | 按[默认三文件清单](references/production-defaults.md)核实际ZIP条目及文案，必要署名并入简介；制作资料留内部。交付遵守最新范围，短样可听入口、视频真实下载、邮件发送和用户接受分别记录，不因内部资料更新重寄未变包。 |
+| plan / storyboard | 明确原著事件、人物认知及每镜状态，设置主要动作和注意重点。交审完整编号彩色分镜、逐镜台词、转场与估时，连同字幕和计划裁切查可读性。见[原著对应](references/source-fidelity.md)与[分镜清单](references/quality-checklist.md#分镜)。 |
+| voice / alignment | 先润色跨句承接、人称与语气，再按完整语义组合成。按片头合同和词组读音核实际音频，反复错读逐处排查。冻结采用音后对齐实测时间，核目标词前后停顿及所属分句。见[配音](references/quality-checklist.md#配音)与[对齐](references/quality-checklist.md#对齐)。 |
+| visuals / sound | 分别按实音对齐生成底片、动效和混音。新动效先做真实镜头短样，营火核火舌、遮挡、光照与运动。脚步、笑声、火声等按本节实际事件锚定，开场保留清晰口播。见[画面与动效](references/quality-checklist.md#画面与动效)与[音效选材与混音](references/quality-checklist.md#音效选材与混音)。 |
+| render / review | 检查最终编码的实际镜头、字幕、品牌片头、片尾字标和音轨。检查覆盖范围、实际听审、技术证据和用户批准分别登记。见[成片终检](references/quality-checklist.md#成片终检)。 |
+| covers | 先锁定同一剧情切入点和采用标题，再独立排版 4:3 和 16:9。对照同系列采用参考，并排检查缩略图与原尺寸字形；改单字时核相邻笔画和底图。见[风格参考](references/style-reference.md)和[封面清单](references/quality-checklist.md#封面与简介)。 |
+| package / delivery | 核实际 ZIP 与文案。完整交付的视频走 Wormhole，发布素材走 Gmail；局部任务按授权更新相应指针。见[默认规格](references/production-defaults.md)与[交付操作](references/delivery-and-publishing.md)。 |
 
-返修先核目标和保留项，再查邻镜与受影响声画接点；范围与证据继承按[执行规则](references/execution.md)。本节特定音源、增益、镜号和用户视觉改编只在相应案例中复现，不自动变成新节固定要求。这些是执行与验收要求，不代表脚本能够自动判断人体、叙事或听感。
+## 规则与参考
 
-## 资料归属
-
-| 规则 | 唯一维护位置；何时读取 |
-| --- | --- |
-| 数值规格、声线与交付偏好 | [默认规格](references/production-defaults.md)：按阶段提取对应行 |
-| 通用制作方法、依赖、返修与交接 | [执行规则](references/execution.md)：plan/storyboard读取生成前约束，返修读取变更影响，其余按当前问题读取 |
-| 原著依据、人物认知和演出分类 | [原著对应](references/source-fidelity.md)：plan阶段；实质变更再查相关镜 |
-| 帝国旗视觉设定与参考图 | [旗帜设定](../../../docs/settings/chapter070/imperial-flag.md)：相关分镜/封面生成前实际查看正面图和场景母图；不把项目金绣装饰说成原著事实 |
-| 小刀统一外形与连续性 | [剑狼短刀设定](../../../data/source-webp/chapter07/settings/props/01-sword-wolf-dagger.md)：出现同一把刀时实际查看P01多视图，保持棕皮短柄、扁圆黄铜柄尾、短护手与短直刃；按本节状态核对伤势 |
-| 左手三指伤的软绷带 | [伤手参考](references/subaru-left-hand-bandage.md)：相关状态出场时实际查看并引用，解剖左手中指、无名指、小指及手掌包扎，拇指食指裸露、右手裸露，不画夹板 |
-| 片头品牌读法与缓存标识 | [独立读法规则](references/intro-contract.json)：voice阶段合成或复用前用 `scripts/check-re0-intro.ts` 校验，源音与成片另核真实读法；细节查[片头检查](references/production-pipeline.md#片头读法与缓存检查) |
-| 创作品味和少量可看正例 | [风格参考](references/style-reference.md)：本阶段相关条目，不强套旧场景 |
-| 家具遮挡、道具、身体受限、高处扑击 | [最终案例](references/confirmed-cases.md)：生成前按风险读，不等失败才查 |
-| 阶段通过标准与证据继承 | [验收清单](references/quality-checklist.md)：当前阶段一节 |
-| 上传、匿名下载和素材邮件步骤 | [交付操作](references/delivery-and-publishing.md)：delivery阶段 |
-| 创作决策与资料指针 | [短任务模板](templates/episode-brief.md)：只填未在JSON中的信息 |
-
-历史资料只在现有接口不明或排错时按需查看：[旧脚本接口](references/production-pipeline.md)、[第一节基线](references/section01-baseline.md)、[第二节复盘](references/section02-lessons.md)、[第三节返修史](references/section03-storyboard-lessons.md)、[旧交付经验](references/delivery-history.md)。第四、五节的具体问题按需查[第四节返修](references/section04-revision-lessons.md)与[第五节返修](references/section05-revision-lessons.md)：包括跨镜伤势、箭的旧伤与透视、托抱/背负、水深、展示标题、河水和咳水声、句末声调。生成前的短规则已并入风险案例和当前阶段验收，不默认加载整篇返修史。当前规则和最终用户确认优先，不把旧待确认方案、旧参数或旧平台默认带回新节。
-
-第9节的刀伤、包扎、体态、牢笼、国旗、巨蛇声画及合成交付问题见[第九节制作复盘](references/section09-storyboard-lessons.md)。分镜v4已获用户确认，视频v2已交付；后续从本节当前指针核对采用版本和确认范围，不把交付写成用户已验收成片。
-
-第10节已获用户成片确认；其伤情、牢笼、全cue遮手、真实焦点与听审证据问题见[第10节复盘](../../../docs/productions/chapter070/section10/retrospective.md)。按当前阶段检查并复用有效证据，不把该节的镜数、字号或音效增益变成新节固定值。
-
-第11节的怪物形态、动作因果、自由子分镜、魔法轨迹、片头连读和音效选声问题见[第11节复盘](../../../docs/productions/chapter070/section11/retrospective.md)。V4视频已交付，片头语速与D选声分别获批，整片接受与代理实际听审另记；本节特定设计不作所有章节默认值。通用检查已并入对应阶段，无需每次展开整篇复盘。
-
-新增应用逻辑/脚本用TypeScript，前端React与Ant Design。已有同目的工具先核对接口再复用；只有新增镜头动效才读取video-shotcraft相应配方，不加载整套产品宣传流程。阶段/原著结构脚本只验证记录与文件，不判断剧情、图像或听感正确；未实际查看/试听不声称已完成。
+- [默认规格](references/production-defaults.md)维护参数、声线与发布格式。片头固定品牌口播和显示稿以[片头合同](references/intro-contract.json)为准；合成或复用前运行 [片头检查](references/production-pipeline.md#片头读法与缓存检查)。视觉标志、节名、封面主标题和两平台发布标题各按相应用途采用。
+- 分镜生成先实际查看适用的[设定索引](../../../data/source-webp/chapter07/settings/README.md)。帝国旗按[项目旗帜](../../../docs/settings/chapter070/imperial-flag.md)，同一把短刀按[剑狼短刀](../../../data/source-webp/chapter07/settings/props/01-sword-wolf-dagger.md)，昴左手受伤时按[软绷带](references/subaru-left-hand-bandage.md)。优先落实接触、侧别、支撑、遮挡与状态变化，再处理光效与纹理。高风险姿态查[最终案例](references/confirmed-cases.md)。
+- [任务摘要模板](templates/episode-brief.md)记录创作决策、固定设定和逐镜变化。已有事实用原路径引用。[执行规则](references/execution.md)管理短样、返修、证据、复用与中断恢复；[验收清单](references/quality-checklist.md)管理阶段通过条件。
+- 有镜头动效需求时按需查看 video-shotcraft 的相关配方。[制作脚本参考](references/production-pipeline.md)的历史脚本先核路径和接口再复用。阶段与结构工具验证记录及文件；语义、图义、字形和听感由相应实查判断。
+- 具体历史问题按需查[制作心得](references/production-lessons.md)、[旧交付经验](references/delivery-history.md)、[第9节复盘](references/section09-storyboard-lessons.md)、[第10节复盘](../../../docs/productions/chapter070/section10/retrospective.md)、[第11节复盘](../../../docs/productions/chapter070/section11/retrospective.md)、[第12节复盘](../../../docs/productions/chapter070/section12/retrospective.md)和[第13节复盘](../../../docs/productions/chapter070/section13/retrospective.md)。通用做法已归入各阶段。

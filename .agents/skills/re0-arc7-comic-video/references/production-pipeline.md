@@ -12,6 +12,8 @@
 
 应用逻辑、制作脚本和测试使用 TypeScript。需要扩展操作界面时，使用 React、Vite 和 Ant Design，先检查组件库已有能力。当前合成由 FFmpeg 完成，不要求迁移到 Remotion。
 
+网页工作台可用已确认分镜调用 OpenAI 规划运镜与转场，由本地 FFmpeg 输出 720p 视频，可用于运镜预览。完整节制作按技能的 1080p 规格、实音对齐及阶段验收交付。工作台的模型、凭据和接口见[项目 README](../../../../README.md#使用-openai-编排运镜和转场)。
+
 ```bash
 node --version
 command -v ffmpeg ffprobe
@@ -21,7 +23,7 @@ fc-match 'DejaVu Sans'
 
 `package.json` 要求 Node.js `>=22.12.0`。依赖缺失时运行 `npm ci`；已有依赖无需为每次制片重装。FFmpeg 需要 H.264/AAC 编码及 libass 字幕支持。运行云端语音或上传之前，按当前环境规则检查网络；保留已有代理和证书设置。
 
-当前新制作使用 `src/server/narration/mimo.ts` 与 `scripts/mimo-tts.ts`，按用户确认显式指定MiMo冰糖参数，接入方式见[MiMo说明](../../../../docs/mimo-tts.md)。历史 `src/server/narration/edge.ts` 依赖 `msedge-tts`，通过 Microsoft Edge Read Aloud 联网合成，用于旧版复现；这些服务不代表蕾姆或声优声纹克隆。服务失败应保留已有音轨并明确报错，不自动切换声音。
+新制作按[默认规格](production-defaults.md)显式指定 MiMo 冰糖和默认语速。按本期可用的 MiMo 实现准备请求并留档，历史 MiMo CLI 与服务示例见[MiMo说明](../../../../docs/mimo-tts.md)，先核路径与接口。Edge 用于旧版复现。服务失败时保留已有音轨并记录错误。
 
 云环境的凭据就绪状态按当前环境技能核验。网络密钥可能由代理注入，环境变量为占位值不能单独证明密钥缺失；保留代理和CA信任，核对服务目标及实际请求结果，不打印密钥值。
 
@@ -114,21 +116,22 @@ npx tsx scripts/repair-chapter-intro-pronunciation.ts
 2. 先准备本节原著映射、角色参考、逐镜稿、英文字幕、配音分组、焦点和声音事件。保存实际原著路径与 SHA-256。
 3. 在 TypeScript 中把上述脚本残留的章节路径、片头文本及音轨、镜头数量、声音事件、片尾和输出文件名改为明确配置。检查所有写入点，保证不会写回第一节。修改完成前不声称“已支持任意章节”。
 4. 当前 `prepare-chapter-expressive.ts` 的 `speechText` 只能调整标点和空白，不能通过改写显示文本塞入同音字。需要发音别名时，将 `pronunciationOverrides` 正式接入调用；字幕继续保留原字。
-5. 按“生成完整图文分镜稿 → 交付用户审阅 → 等待用户明确确认当前版本 → 语音 → 真实时间码 → 声音混合 → 镜头与字幕渲染 → 检查与打包”的顺序执行。剧情或图文发生实质修改时，重新确认受影响内容。文字或语音时长变化后，重算受影响的字幕、音效和镜头时间，不沿用旧时间码。
+5. 按[阶段依赖](execution.md#阶段依赖)运行。文字或语音时长变化后，依[变更影响](execution.md#变更影响)重算对应字幕、音效与镜头时间。
 6. 用户确认分镜稿后，先渲染关键镜头和片尾连接处，技术检查通过再出完整成片。参数 `--preview shot-20` 属于现有 renderer；本节的实际镜头 ID 需从时间线读取。
 
 ## 音画实现要点
 
 ### 片头读法与缓存检查
 
-片头品牌直接念“RE0”。当前独立规则是 `references/intro-contract.json`，其中显示稿与允许的实际TTS输入分别列出；规则按最新用户要求维护，不能从待检查的配音计划自动生成。`原著 → 原住` 只能作为这一个词组的读音辅助，不能带出整句作品名替换。
+固定品牌口播使用 R、E 的字母名和中文“零”。[片头合同](intro-contract.json)给出品牌短句的显示稿和可用 TTS 文本。显示保留“原著”，这一词组的口播可用“原住”辅助读音。品牌视觉字标与节名分别上屏，用户另要求口播节名时放入独立语义组。
 
-制作本期计划后、正式合成或选择缓存之前，执行只读前置检查。以下路径中的节号和版本按本期实际目录替换：
+制作计划及即将发送的真实请求正文后，在合成或选择缓存前执行只读前置检查。请求 JSON 保存实际 `{ endpoint, body }`，凭据通过服务认证渠道传入。以下节号与版本按本期替换。
 
 ```bash
 npx tsx scripts/check-re0-intro.ts \
   --plan data/productions/chapter070/sectionNN/video-vN/mimo-plan.json \
-  --direction data/productions/chapter070/sectionNN/video-vN/voice-direction.json
+  --direction data/productions/chapter070/sectionNN/video-vN/voice-direction.json \
+  --request-context data/productions/chapter070/sectionNN/video-vN/tts/records/intro-request.json
 ```
 
 校验失败须先修正本期计划或代码，不能跳过检查继续合成。检查实际变换后的口播，不能只看字幕写着 `Re:0` 就通过。复用片头时使用同一检查入口的缓存参数，核对当前请求、独立规则及真实音频哈希；具体参数见 `npx tsx scripts/check-re0-intro.ts --help`。
@@ -137,7 +140,7 @@ npx tsx scripts/check-re0-intro.ts \
 
 内容核对另存 `tts/records/intro-content-verification.json`，至少绑定独立规则哈希、实际音频SHA-256、核验方法、品牌与“原著”的核对结果，以及原始证据文件及其SHA-256。ASR方法读取真实识别文本，不能读取 `expectedSpeechText` 代替；听辨方法如实登记实际听审。该文件只能在完成真实检查后创建。待核验的合成断点作为候选保留，补齐证据后才可作为已验证片头复用；校验器只检查证据与音频、规则的对应关系，不自行生成“已听审”结论。
 
-缓存校验使用 `--cache-record`、`--cache-audio`、`--request-context` 和 `--content-verification` 四个参数。请求上下文保存本次实际 `{ endpoint, body }`，`body` 包含服务收到的模型、口播消息及音频参数。内容记录字段为 `policySha256`、`audioSha256`、`method`、`literalBrandVerified`、`yuanZhuVerified`、`evidenceFile`、`evidenceSha256`。`raw-asr` 证据保存音频哈希、真实 `recognizedText` 和一致的 `rawResult.text`；`listening` 证据须如实记录 `actualListening` 与两项具体读法检查。结果为已核对时才写对应通过字段，不能把模板中的期望文本填成真实证据。
+缓存校验沿用以上请求上下文，再传入 `--cache-record`、`--cache-audio` 和 `--content-verification`。内容记录字段为 `policySha256`、`audioSha256`、`method`、`literalBrandVerified`、`yuanZhuVerified`、`evidenceFile`、`evidenceSha256`。`evidenceFile` 相对于内容记录 JSON 所在目录，亦可用绝对路径。`raw-asr` 保存音频哈希、真实 `recognizedText` 和一致的 `rawResult.text`。转写成 `0` 时，该字符只能提供品牌身份线索，若语言读法仍存疑就补听辨或声学证据。`listening` 如实记录 `actualListening` 和两项具体读法检查。
 
 `policySha256` 使用前置检查命令输出的规范化JSON哈希，不能混用规则文件原始字节的哈希；若需登记来源文件字节哈希，另列字段。`identitySha256` 则绑定规则、两份文本及完整请求参数。
 
@@ -145,7 +148,7 @@ npx tsx scripts/check-re0-intro.ts \
 
 ### 其他音画要求
 
-- 2026-11-02 的后续确认将新制作默认改为 MiMo 冰糖原始音色和默认语速，见[样音与参数记录](../../../../docs/voice-profiles/mimo-bingtang-default.md)。通过 `npm run voice:mimo` 显式指定 `mimo-v2.5-tts` 与 `voice: 冰糖`；顶层及每组均不传 `style`，正文不加括号语气或速度标签，不使用克隆参考音频。通用 CLI 省略音色时仍为茉莉，历史 A 描述和晓晓命令仅用于复现。
+- 2026-11-02 的后续确认将新制作默认改为 MiMo 冰糖原始音色和默认语速，见[样音与参数记录](../../../../docs/voice-profiles/mimo-bingtang-default.md)。通过本期可用的 MiMo 入口显式指定 `mimo-v2.5-tts` 与 `voice: 冰糖`；顶层及每组均不传 `style`，正文不加括号语气或速度标签，不使用克隆参考音频。通用 CLI 省略音色时仍为茉莉，历史 A 描述和晓晓命令仅用于复现。
 - MiMo 不返回逐词时间；清单只有实际分组时长，正式字幕需要另行对齐。现有晓晓脚本保留用于旧成片复现，其 `zh-CN-XiaoxiaoNeural`、语速 `0.97` 和原生语速、音高、音量设置不直接套给 MiMo。Edge 不支持情绪 style 标签。两条流程都按完整语义组连续合成，不按每条字幕重启。
 - 历史 Edge 合成脚本遇到服务合并字幕边界时会拆组重试。应查看实际生成组数和日志；若破坏连续性，调整标点或分组再合成，不能把“计划组数”冒充“实际组数”。
 - 冰糖使用服务默认音高和语速，保留 API 原样音频；制作流程转换采样格式时保持内容和时长。历史 Edge 正文分组中的轻微原生音高设置不套用到冰糖。人声只用固定增益调音量，不加后期移调、时间拉伸、均衡、降噪或压缩；成片目标约 `-18 LUFS`、真峰值不高于 `-2 dBTP`，峰值约束优先。
@@ -158,7 +161,7 @@ npx tsx scripts/check-re0-intro.ts \
 
 用户只改一张图、一个读音或标题时，先确认影响范围。保留已确认原稿和母版；图像修复只换受影响素材并重算缓存，语音修复优先只换相应分组。替换后时长不同就重排后续时序；仅在可验证的静音接点且时长保持一致时沿用现有时间线。
 
-对读法或节奏返修，先用短样核验问题；用户要求试听或当前读法、节奏仍需用户选择时，再交付短样确认，其他情况按已有授权执行。用户已批准的同一录音可直接复用。第二节最终片头使用已确认的4.32秒源音，本轮没有新的TTS请求。保留试听MP3、API原样WAV、制作WAV各自的哈希和转换关系，按批准记录选取无损源，不重新合成同一句，也不覆盖此前待确认或ASR检查记录。节号、文字或声线变了，应生成并检查新的录音。
+对读法或节奏返修，先用短样核验问题；用户要求试听或当前读法、节奏仍需用户选择时，再交付短样确认，其他情况按已有授权执行。用户已批准的同一录音可直接复用。第二节最终片头使用已确认的4.32秒源音，本轮没有新的TTS请求。保留试听MP3、API原样WAV、制作WAV各自的哈希和转换关系，按批准记录选取无损源，不重新合成同一句，也不覆盖此前待确认或ASR检查记录。口播文字或声线发生变化时生成并检查新录音；只上屏的节号或节名变化更新画面。
 
 片段长度变化时按以下顺序处理：
 

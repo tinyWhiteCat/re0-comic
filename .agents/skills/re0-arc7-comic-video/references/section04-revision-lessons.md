@@ -60,7 +60,7 @@ FFmpeg时间戳、缓存和失败即停止的要求见[制作脚本参考](produ
 | --- | --- |
 | 新声线确认 | `data/productions/chapter070/section02/video-v4-bingtang/brief.md` |
 | 较早的视频邮件附件准备方案 | `data/productions/chapter070/section02/video-v4-bingtang/direct-email/setup.md`、同目录 `prepared-plan.json`；后来实际视频采用Litterbox直链，不把该计划当成最终方案 |
-| 实际收到的Litterbox视频链接和独立素材交付 | Gmail消息 `1a19bee1f7aec838`（2026-11-02视频链接）、`1a1a03f142db14cd`（2026-11-03第三节素材附件）；正文证据见[交付参考](delivery-and-publishing.md) |
+| 实际收到的 Litterbox 视频链接和独立素材交付 | 历史送达时间见[旧交付经验](delivery-history.md)，消息与回执按私有交付记录核对。 |
 | 15镜左右手修正 | `data/productions/chapter070/section04/patch-v2-shot15-hands/manifest.json` |
 | 19镜遗漏与补修依据 | `data/productions/chapter070/section04/patch-v3-shot19-hand/manifest.json` |
 | 最终采用与复用清单 | `data/productions/chapter070/section04/video-v2-bingtang/storyboard-approval.json`、`reuse-manifest.json` |

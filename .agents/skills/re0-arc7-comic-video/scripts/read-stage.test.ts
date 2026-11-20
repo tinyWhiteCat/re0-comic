@@ -37,6 +37,22 @@ test('risk lookup and repair are opt-in and deduplicated', async () => {
   assert.equal(r.sections.some(s => s.topic === '刀、鞭与佩戴状态'), false);
   assert.equal(r.sections.filter(s => s.topic === '变更影响').length, 1);
 });
+test('routes the section 13 checks to the stages that can act on them', async () => {
+  const cases = {
+    storyboard: [/\| 字幕 \|/, /\| 运镜与视频 \|/, /助词是否自然/],
+    voice: [/节号、节名和片尾字标只上屏/, /每一处/],
+    alignment: [/宾语“雷姆”应随“拉了拉”收句/],
+    visuals: [/营火先在本期实际镜头做连播短样/],
+    sound: [/从片头到正文的短样/],
+    review: [/连续播放最终编码中新增或改过的代表镜头/, /片尾入场至结束/],
+    covers: [/出图前实际查看用户提供或本项目已采用/, /两种比例共用主标题和故事重心/, /单字返修/],
+    package: [/check-release-package\.ts/, /current-materials\.json/],
+  };
+  for (const [stage, checks] of Object.entries(cases)) {
+    const { text } = await buildContext(stage);
+    for (const check of checks) assert.match(text, check, stage);
+  }
+});
 test('section boundaries exclude later topics; missing routing keys fail loudly', async () => {
   assert.equal(section('## A\na\n## B\nb\n', 'A'), '## A\na');
   assert.throws(() => section('## A\na', 'B'));

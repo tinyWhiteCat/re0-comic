@@ -108,6 +108,12 @@ describe('RE0 intro prevention', () => {
     const evidenceBytes = Buffer.from(JSON.stringify({ sha256: sha256(audio), recognizedText: '从零开始帝国篇原著解说', expectedSpeechText: identity.speechText }));
     expect(() => validateIntroCache(identity, record, audio, { ...verification, evidenceSha256: sha256(evidenceBytes) }, evidenceBytes)).toThrow(/Raw ASR does not independently verify/);
   });
+  it('rejects cached evidence transcribed with explicit English zero', () => {
+    const { identity, record, verification } = fixture();
+    const recognizedText = 'R E zero，帝国篇原著解说。';
+    const evidenceBytes = Buffer.from(JSON.stringify({ sha256: sha256(audio), recognizedText, rawResult: { text: recognizedText } }));
+    expect(() => validateIntroCache(identity, record, audio, { ...verification, evidenceSha256: sha256(evidenceBytes) }, evidenceBytes)).toThrow(/Raw ASR does not independently verify/);
+  });
   it('requires real listening evidence instead of generating a listening claim', () => {
     const { identity, record, verification } = fixture();
     const bytes = Buffer.from(JSON.stringify({ sha256: sha256(audio), actualListening: false, literalBrandVerified: true, yuanZhuVerified: true }));

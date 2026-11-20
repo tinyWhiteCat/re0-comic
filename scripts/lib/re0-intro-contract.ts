@@ -129,7 +129,8 @@ export function validateIntroCache(identity: IntroIdentity, recordValue: unknown
   if ((evidence.audioSha256 ?? evidence.sha256) !== actual) throw new Error('Independent intro source evidence refers to another audio');
   if (verification.method === 'raw-asr') {
     const recognized = string(evidence.recognizedText, 'Raw ASR recognizedText').normalize('NFKC').replace(/[\s\p{P}]/gu, '').toLowerCase();
-    if (!/^re(?:0|零|zero)帝国篇原[著住]解说$/.test(recognized)) throw new Error('Raw ASR does not independently verify the literal RE0 and yuan-zhu reading');
+    // A normalized digit is compatible with a Chinese reading; explicit English "zero" is not.
+    if (!/^re(?:0|零)帝国篇原[著住]解说$/.test(recognized)) throw new Error('Raw ASR does not independently verify the literal RE0 and yuan-zhu reading');
     const rawText = object(evidence.rawResult, 'Raw ASR source result').text;
     if (string(rawText, 'Raw ASR result text').normalize('NFKC').replace(/[\s\p{P}]/gu, '').toLowerCase() !== recognized) throw new Error('Raw ASR recognizedText differs from the source result');
   } else if (verification.method === 'listening') {
