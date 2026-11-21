@@ -16,7 +16,17 @@ export const routes: Record<string, Route> = {
   package: { defaults: ['交付', '封面与简介'], docs: [['quality-checklist.md', ['打包与交付']], ['delivery-and-publishing.md', ['打包']]] },
   delivery: { defaults: ['交付', '封面与简介'], docs: [['delivery-and-publishing.md', ['短样交付', '上传与核验', '仅素材邮件', '完成交付']]] },
 };
-const risks: Record<string, string> = { space: '家具背后与观察视线', props: '刀、鞭与佩戴状态', body: '身体受限与整体比例', fall: '高处扑击与动作方向' };
+const risks: Record<string, [file: string, topic: string]> = {
+  space: ['confirmed-cases.md', '家具背后与观察视线'],
+  props: ['confirmed-cases.md', '刀、鞭与佩戴状态'],
+  body: ['confirmed-cases.md', '身体受限与整体比例'],
+  fall: ['confirmed-cases.md', '高处扑击与动作方向'],
+  continuity: ['production-lessons.md', '跨镜道具与场景连续性'],
+  action: ['production-lessons.md', '连续动作与人物轮廓'],
+  effects: ['production-lessons.md', '局部动效短样'],
+  seams: ['production-lessons.md', '镜头接缝与旁白衔接'],
+  cover: ['production-lessons.md', '封面悬念与整套题字'],
+};
 export function section(text: string, heading: string) {
   const lines = text.split('\n'), start = lines.indexOf('## ' + heading);
   if (start < 0) throw Error(`Missing section: ${heading}`);
@@ -31,7 +41,8 @@ export function tableRows(text: string, wanted: string[]) {
 }
 export async function buildContext(stage: string, options: { risks?: string[]; repair?: boolean } = {}) {
   const route = routes[stage]; if (!route) throw Error(`Unknown stage: ${stage}`);
-  for (const risk of options.risks ?? []) if (!risks[risk]) throw Error(`Unknown risk: ${risk}`);
+  const selectedRisks = new Set(options.risks);
+  for (const risk of selectedRisks) if (!Object.hasOwn(risks, risk)) throw Error(`Unknown risk: ${risk}`);
   const cache = new Map<string, Promise<string>>();
   const load = (name: string) => { if (!cache.has(name)) cache.set(name, readFile(path.join(root, 'references', name), 'utf8')); return cache.get(name)!; };
   const chunks: Array<{ file: string; topic: string; text: string }> = [];
@@ -45,9 +56,11 @@ export async function buildContext(stage: string, options: { risks?: string[]; r
     add('style-reference.md', '参考来源与确认边界', references.includes('S3/') ? intro + '\n\n' + references : references);
     for (const topic of route.style.sections) add('style-reference.md', topic, section(text, topic));
   }
-  if (options.risks?.length) {
-    const text = await load('confirmed-cases.md'); add('confirmed-cases.md', '版本与依据', section(text, '版本与依据'));
-    for (const risk of options.risks) add('confirmed-cases.md', risks[risk], section(text, risks[risk]));
+  for (const risk of selectedRisks) {
+    const [file, topic] = risks[risk];
+    const text = await load(file);
+    if (file === 'confirmed-cases.md') add(file, '版本与依据', section(text, '版本与依据'));
+    add(file, topic, section(text, topic));
   }
   if (options.repair) for (const topic of ['变更影响', '证据复用与交接']) add('execution.md', topic, section(await load('execution.md'), topic));
   const text = `# 当前阶段：${stage}\n\n以下只摘取当前阶段资料；并非独立批准或语义验收。原著/原画仍须实际查看。已读且未变的内容复用，失败才展开相关日志。\n\n` + chunks.map(c => `来源：references/${c.file} · ${c.topic}\n\n${c.text}`).join('\n\n');
@@ -55,7 +68,7 @@ export async function buildContext(stage: string, options: { risks?: string[]; r
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const args = process.argv.slice(2), stage = args.shift();
-  if (!stage || stage === '--help') console.log(`Usage: read-stage.ts STAGE [--risk space|props|body|fall] [--repair] [--stats]\nStages: ${Object.keys(routes).join(', ')}\nOutputs only selected rules. --stats reports bytes/sections without loading content into the conversation; not a token meter.`);
+  if (!stage || stage === '--help') console.log(`Usage: read-stage.ts STAGE [--risk TOPIC]... [--repair] [--stats]\nStages: ${Object.keys(routes).join(', ')}\nRisk topics: ${Object.keys(risks).join(', ')}\nOutputs only selected rules. --stats reports bytes/sections without loading content into the conversation; not a token meter.`);
   else {
     const selected: string[] = []; let repair = false, stats = false, error = '';
     while (args.length) { const a = args.shift(); if (a === '--risk' && args[0] && !args[0].startsWith('--')) selected.push(args.shift()!); else if (a === '--repair') repair = true; else if (a === '--stats') stats = true; else { error = `Invalid argument: ${a}`; break; } }

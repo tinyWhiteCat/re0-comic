@@ -32,9 +32,11 @@ test('sound and final review include listening checks without pulling them into 
 });
 test('risk lookup and repair are opt-in and deduplicated', async () => {
   const base = await buildContext('storyboard'); assert.doesNotMatch(base.text, /v4虽露出背板/);
-  const r = await buildContext('storyboard', { risks: ['space', 'space'], repair: true });
+  const r = await buildContext('storyboard', { risks: ['space', 'continuity', 'space', 'continuity'], repair: true });
   assert.match(r.text, /柜体靠墙原位/); assert.equal(r.sections.filter(s => s.topic === '家具背后与观察视线').length, 1);
   assert.equal(r.sections.some(s => s.topic === '刀、鞭与佩戴状态'), false);
+  assert.equal(r.sections.filter(s => s.topic === '版本与依据').length, 1);
+  assert.equal(r.sections.filter(s => s.topic === '跨镜道具与场景连续性').length, 1);
   assert.equal(r.sections.filter(s => s.topic === '变更影响').length, 1);
 });
 test('routes the section 13 checks to the stages that can act on them', async () => {
@@ -51,6 +53,22 @@ test('routes the section 13 checks to the stages that can act on them', async ()
   for (const [stage, checks] of Object.entries(cases)) {
     const { text } = await buildContext(stage);
     for (const check of checks) assert.match(text, check, stage);
+  }
+});
+test('each production risk adds only the requested lesson to the stage context', async () => {
+  const topics = [
+    ['storyboard', 'continuity', '跨镜道具与场景连续性'],
+    ['visuals', 'action', '连续动作与人物轮廓'],
+    ['visuals', 'effects', '局部动效短样'],
+    ['review', 'seams', '镜头接缝与旁白衔接'],
+    ['covers', 'cover', '封面悬念与整套题字'],
+  ];
+  for (const [stage, risk, topic] of topics) {
+    const result = await buildContext(stage, { risks: [risk] });
+    const lessons = result.sections.filter(s => s.file === 'production-lessons.md');
+    assert.deepEqual(lessons.map(s => s.topic), [topic]);
+    assert.ok(result.text.includes(`## ${topic}\n`), risk);
+    assert.ok(!result.sections.some(s => s.file === 'confirmed-cases.md'), risk);
   }
 });
 test('section boundaries exclude later topics; missing routing keys fail loudly', async () => {
