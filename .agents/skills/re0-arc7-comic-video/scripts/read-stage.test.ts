@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildContext, routes, section } from './read-stage.js';
+import { buildContext, buildLesson, routes, section } from './read-stage.js';
 test('every route resolves real headings and stays within a bounded context size', async () => {
   for (const stage of Object.keys(routes)) {
     const result = await buildContext(stage); assert.ok(result.bytes < 16000, `${stage}: ${result.bytes}`);
@@ -75,4 +75,22 @@ test('section boundaries exclude later topics; missing routing keys fail loudly'
   assert.equal(section('## A\na\n## B\nb\n', 'A'), '## A\na');
   assert.throws(() => section('## A\na', 'B'));
   await assert.rejects(buildContext('unknown')); await assert.rejects(buildContext('plan', { risks: ['unknown'] }));
+});
+
+test('lesson lookup reads only selected guidance and any applicable defaults', async () => {
+  const cases = {
+    continuity: ['跨镜道具与场景连续性', /沿出场镜号复查/],
+    motion: ['运镜与表情', /起点和落点/],
+    'image-quality': ['画面模糊与压缩块', /最大裁切.*最终MP4/],
+    pronunciation: ['有限语音返修', /实测停顿处接回/],
+    outro: ['片尾放置与抽查', /右下角淡入/],
+    covers: ['封面悬念与整套题字', /ImageGen 生成标题字/],
+  } as const;
+  for (const [topic, [heading, check]] of Object.entries(cases)) {
+    const result = await buildLesson(topic);
+    assert.match(result.text, check, topic);
+    assert.equal(result.sections.filter(s => s.file !== 'production-defaults.md').length, 1, topic);
+    assert.ok(result.sections.some(s => s.topic.includes(heading)), topic);
+  }
+  await assert.rejects(buildLesson('toString'), /Unknown lesson/);
 });

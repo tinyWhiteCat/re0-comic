@@ -28,6 +28,8 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 
 家具遮挡、武器与佩戴、身体受限、高处扑击的已确认案例分别用 `--risk space`、`--risk props`、`--risk body`、`--risk fall`。需要核对上表的具体案例时查[第15节制作复盘](../../../docs/productions/chapter070/section15/retrospective.md)。
 
+单查一项心得时，用 `npx tsx .agents/skills/re0-arc7-comic-video/scripts/read-stage.ts --lesson <主题>`，可加 `--stats`。主题包括 `continuity`（跨镜设定）、`motion`（表情与运镜）、`image-quality`（模糊与压缩）、`pronunciation`（读音返修）、`outro`（片尾）和 `covers`（封面）。第16节的镜号、片尾边距和淡入时长留在[本节复盘](../../../docs/productions/chapter070/section16/retrospective.md)。
+
 ## 阶段交接
 
 | 阶段 | 产物与通过条件 |
