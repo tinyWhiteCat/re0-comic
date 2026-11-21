@@ -34,7 +34,7 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 
 | 阶段 | 产物与通过条件 |
 | --- | --- |
-| plan / storyboard | 明确原著事件、人物认知及每镜状态，设置主要动作和注意重点。交审完整编号彩色分镜、逐镜台词、转场与估时，连同字幕和计划裁切查可读性。见[原著对应](references/source-fidelity.md)与[分镜清单](references/quality-checklist.md#分镜)。 |
+| plan / storyboard | 明确原著事件、人物认知及每镜状态，设置主要动作和注意重点。成片要表现的表情、动作或状态变化，在交审分镜的关键画面中体现。交审完整编号彩色分镜、逐镜台词、转场与估时，连同字幕和计划裁切查可读性。见[原著对应](references/source-fidelity.md)与[分镜清单](references/quality-checklist.md#分镜)。 |
 | voice / alignment | 先润色跨句承接、人称与语气，再按完整语义组合成。按片头合同和词组读音核实际音频，反复错读逐处排查。冻结采用音后对齐实测时间，核目标词前后停顿及所属分句。见[配音](references/quality-checklist.md#配音)与[对齐](references/quality-checklist.md#对齐)。 |
 | visuals / sound | 分别按实音对齐生成底片、动效和混音。新动效先做真实镜头短样，营火核火舌、遮挡、光照与运动。脚步、笑声、火声等按本节实际事件锚定，开场保留清晰口播。见[画面与动效](references/quality-checklist.md#画面与动效)与[音效选材与混音](references/quality-checklist.md#音效选材与混音)。 |
 | render / review | 检查最终编码的实际镜头、字幕、品牌片头、片尾字标和音轨。检查覆盖范围、实际听审、技术证据和用户批准分别登记。见[成片终检](references/quality-checklist.md#成片终检)。 |
