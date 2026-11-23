@@ -30,6 +30,21 @@ test('sound and final review include listening checks without pulling them into 
   assert.match(visuals.text, /箭尖、剑轴、手指与接触点/);
   assert.doesNotMatch(visuals.text, /^## 音效选材与混音/m);
 });
+test('prompt, sound timing and render preparation appear only in their production stages', async () => {
+  const stageByTopic = new Map([
+    ['生成提示词', 'storyboard'],
+    ['声音时间线', 'sound'],
+    ['渲染前核对', 'render'],
+  ]);
+
+  for (const stage of Object.keys(routes)) {
+    const context = await buildContext(stage);
+    for (const [topic, owner] of stageByTopic) {
+      const count = context.sections.filter(section => section.topic === topic).length;
+      assert.equal(count, stage === owner ? 1 : 0, `${stage}: ${topic}`);
+    }
+  }
+});
 test('risk lookup and repair are opt-in and deduplicated', async () => {
   const base = await buildContext('storyboard'); assert.doesNotMatch(base.text, /v4虽露出背板/);
   const r = await buildContext('storyboard', { risks: ['space', 'continuity', 'space', 'continuity'], repair: true });
