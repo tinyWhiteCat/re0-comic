@@ -25,10 +25,19 @@ test('sound and final review include listening checks without pulling them into 
     const r = await buildContext(stage);
     assert.match(r.text, /怪物声核物种感、体量和情绪/, stage);
     assert.match(r.text, /分别记录源音、带旁白短混音与最终编码的检查范围/, stage);
+    assert.match(r.text, /循环环境声.*短时峰值/, stage);
   }
   const visuals = await buildContext('visuals');
   assert.match(visuals.text, /箭尖、剑轴、手指与接触点/);
   assert.doesNotMatch(visuals.text, /^## 音效选材与混音/m);
+});
+test('render and final review check the input sequence and the encoded hold', async () => {
+  const render = await buildContext('render');
+  assert.match(render.text, /编码器实际读取的帧、顺序和版本.*当前清单/);
+  for (const stage of ['render', 'review']) {
+    const result = await buildContext(stage);
+    assert.match(result.text, /最终编码查看动作末帧、停留首末帧和下一镜首帧/, stage);
+  }
 });
 test('prompt, sound timing and render preparation appear only in their production stages', async () => {
   const stageByTopic = new Map([
@@ -110,7 +119,9 @@ test('lesson lookup reads only selected guidance and any applicable defaults', a
     continuity: ['跨镜道具与场景连续性', /沿出场镜号复查/],
     motion: ['运镜与表情', /起点和落点/],
     'image-quality': ['画面模糊与压缩块', /最大裁切.*最终MP4/],
-    pronunciation: ['有限语音返修', /实测停顿处接回/],
+    effects: ['局部动效短样', /帧清单提供独立目录或显式文件列表/],
+    pronunciation: ['有限语音返修', /调整口播标点时核实际停顿/],
+    sound: ['环境声与关键动作的瞬态', /同一时间窗对照最终混音和各单独声部/],
     outro: ['片尾放置与抽查', /右下角淡入/],
     covers: ['封面悬念与整套题字', /ImageGen 生成标题字/],
   } as const;

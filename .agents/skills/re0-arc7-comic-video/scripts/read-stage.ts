@@ -31,7 +31,9 @@ const lessons: Record<string, Route> = {
   continuity: { defaults: [], docs: [['production-lessons.md', ['跨镜道具与场景连续性']]] },
   motion: { defaults: [], docs: [['production-lessons.md', ['运镜与表情']]] },
   'image-quality': { defaults: [], docs: [['production-lessons.md', ['画面模糊与压缩块']]] },
+  effects: { defaults: [], docs: [['production-lessons.md', ['局部动效短样']]] },
   pronunciation: { defaults: ['读音'], docs: [['execution.md', ['有限语音返修']]] },
+  sound: { defaults: [], docs: [['production-lessons.md', ['环境声与关键动作的瞬态']]] },
   outro: { defaults: ['片尾'], docs: [['style-reference.md', ['片尾放置与抽查']]] },
   covers: { defaults: ['封面与简介'], docs: [['production-lessons.md', ['封面悬念与整套题字']]] },
 };
