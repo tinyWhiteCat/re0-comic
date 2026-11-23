@@ -70,6 +70,19 @@ test('routes the section 13 checks to the stages that can act on them', async ()
     for (const check of checks) assert.match(text, check, stage);
   }
 });
+test('recent production regressions are addressed before delivery in the default stage context', async () => {
+  const checks = {
+    storyboard: [/跨环境缺图时登记缺项/],
+    voice: [/以批准文稿列出每一处/, /自然连读/],
+    visuals: [/同机位子分镜只替换变化区域/, /所有子分镜切换/, /虚化补边/, /烟雾单独/],
+    sound: [/燃料和声音任务明确/, /关键命中前后与切黑接点/],
+    review: [/最终采用版记录镜号或时间点/, /回查全部相关位置/],
+  };
+  for (const [stage, patterns] of Object.entries(checks)) {
+    const { text } = await buildContext(stage);
+    for (const pattern of patterns) assert.match(text, pattern, stage);
+  }
+});
 test('each production risk adds only the requested lesson to the stage context', async () => {
   const topics = [
     ['storyboard', 'continuity', '跨镜道具与场景连续性'],

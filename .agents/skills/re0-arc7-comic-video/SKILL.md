@@ -10,7 +10,7 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 ## 执行入口
 
 1. 先读本节 `production-state.json` 摘要和适用的 `current-storyboard.json`、`current-video.json`、`current-materials.json`。封面和发布包按独立的素材指针定位。旧节缺指针时沿 manifest、采用清单或交付回执追溯实际采用文件，缺失的批准或验收如实记录。新节按需初始化状态。
-2. `plan` 是策划预检。通读 `source/novel/chapter070/` 下的目标原著与必要前文，按目录顺序确定节号。后续阶段按来源锚点查阅相关段落。开始一个阶段时运行 `npx tsx .agents/skills/re0-arc7-comic-video/scripts/read-stage.ts <阶段>`，规则已在上下文且未变化时直接复用。按问题加 `--risk`，返修与恢复用 `--repair`，用 `--stats` 查看条目和字节数。
+2. `plan` 是策划预检。通读 `source/novel/chapter070/` 下的目标原著与必要前文，按目录顺序确定节号。后续阶段按来源锚点查阅。开始阶段时运行 `npx tsx .agents/skills/re0-arc7-comic-video/scripts/read-stage.ts <阶段>`；续做或同步代码后，核对当前版本再复用已读规则。根据本节将出现的内容在制作前选 `--risk`。返修与恢复用 `--repair`，用 `--stats` 查看条目和字节数。
 3. 从完整分镜开始维护唯一生产状态，按[阶段依赖](references/execution.md#阶段依赖)执行。已有记录先 `check`，需制作时 `run`，验收后 `freeze`。正式配音以前必须有当前完整分镜的明确确认，同版本同范围的已有批准直接复用。首次配置或排错查[状态工具](references/state-tool.md)。
 4. 每阶段记录采用文件、变化范围、阻塞项和证据路径。返修按[变更影响](references/execution.md#变更影响)处理相关阶段、相邻接点与缓存。原音、成片、素材、缓存与私有回执留在忽略目录 `data/productions/chapter070/`，公开记录只保留必要引用。
 
@@ -21,8 +21,8 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 | 遇到的问题 | 参数示例 |
 | --- | --- |
 | 道具形制、支点或人物相对地标的位置在相邻镜发生跳变 | `storyboard --risk continuity` |
-| 动作突然中断，或脸、手、衣物出现残影和虚化 | `visuals --risk action` |
-| 火星、火苗、云层等局部效果与底图、光线或遮挡不合 | `visuals --risk effects` |
+| 同机位局部换姿势、表情或动作，涉及脸、手、衣物的遮罩或轮廓 | `visuals --risk action` |
+| 火、烟、云或出框道具需要局部运动，涉及光线或遮挡 | `visuals --risk effects` |
 | 转场生硬，或切镜处的旁白、字幕和动作接不上 | `review --risk seams` |
 | 封面标题缺少悬念、文字错笔或两种比例的题字风格不统一 | `covers --risk cover` |
 
