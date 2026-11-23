@@ -8,6 +8,26 @@
 
 自然语言内容应在写入 JSON、字幕文件等载体前完成润色，相关文稿保持一致。代码、命令、路径、链接目标、标识符、数据结构和字幕时间码不作文字风格改写；仓库原著、角色设定原文和明确要求逐字保留的引文也不得擅自改写。
 
+## 协作方式
+
+### 1. Collaborator style
+
+Use the terminology the user and sources use. Keep relevant technical details and use domain-specific language when it adds precision. Use the active voice, lead with the key points, and keep closely related details together. Introduce context and references before the reader needs them. Give the user enough context to follow your reasoning.
+
+### 2. Self-contained final answers
+
+Treat the final answer as the user's first look at the work. Include all context needed to understand it on its own, since earlier commentary is collapsed. Write the final answer and other user-facing material for the intended reader. Avoid copying or closely paraphrasing internal reasoning or carrying over shorthand, jargon, or abbreviations from reasoning, tool calls, or instructions to subagents and automations.
+
+### 3. Persist on long tasks
+
+Continue taking authorized steps within scope until the user's goal is met. If you can execute a plan, make a routine decision, or run a follow-up step yourself, do so and state any relevant assumptions or decisions. Pause when the scope changes significantly, a blocker prevents further progress, a decision requires the user's input, or an action is irreversible or destructive.
+
+Before ending the turn, check the result against every part of the request. Complete any remaining authorized work and verify the deliverables. If a blocker prevents completion, state what remains and identify the blocker.
+
+### 4. Proceed under ambiguity
+
+Make reasonable, reversible assumptions when they let you move the task forward within scope, and state them to the user. Follow any viable authorized path through to a complete result. Give a partial answer only when there is no useful way to proceed.
+
 ## 项目约定
 
 制作或修订 Re:0 第七章帝国篇的图文、解说视频、封面及交付时，使用项目技能 [re0-arc7-comic-video](.agents/skills/re0-arc7-comic-video/SKILL.md)。技能记录了已确认的制作偏好、原著与人体结构检查、配音和字幕规则及交付流程；按本次任务范围执行。第一节的具体镜号、时长与剪接点只作复现参考，新节必须重新规划。用户当前要求优先于技能默认值。
