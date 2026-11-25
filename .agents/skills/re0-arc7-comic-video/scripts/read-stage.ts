@@ -22,6 +22,7 @@ const risks: Record<string, [file: string, topic: string]> = {
   body: ['confirmed-cases.md', '身体受限与整体比例'],
   fall: ['confirmed-cases.md', '高处扑击与动作方向'],
   continuity: ['production-lessons.md', '跨镜道具与场景连续性'],
+  parallel: ['execution.md', '长分镜的分段制作'],
   action: ['production-lessons.md', '连续动作与人物轮廓'],
   effects: ['production-lessons.md', '局部动效短样'],
   seams: ['production-lessons.md', '镜头接缝与旁白衔接'],

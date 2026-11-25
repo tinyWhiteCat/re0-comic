@@ -13,13 +13,17 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 2. `plan` 是策划预检。通读 `source/novel/chapter070/` 下的目标原著与必要前文，按目录顺序确定节号。后续阶段按来源锚点查阅。开始阶段时运行 `npx tsx .agents/skills/re0-arc7-comic-video/scripts/read-stage.ts <阶段>`；续做或同步代码后，核对当前版本再复用已读规则。根据本节将出现的内容在制作前选 `--risk`。返修与恢复用 `--repair`，用 `--stats` 查看条目和字节数。
 3. 从完整分镜开始维护唯一生产状态，按[阶段依赖](references/execution.md#阶段依赖)执行。已有记录先 `check`，需制作时 `run`，验收后 `freeze`。正式配音以前必须有当前完整分镜的明确确认，同版本同范围的已有批准直接复用。首次配置或排错查[状态工具](references/state-tool.md)。
 4. 每阶段记录采用文件、变化范围、阻塞项和证据路径。返修按[变更影响](references/execution.md#变更影响)处理相关阶段、相邻接点与缓存。原音、成片、素材、缓存与私有回执留在忽略目录 `data/productions/chapter070/`，公开记录只保留必要引用。
+5. 阶段收尾时，把本节可复用的错误补入[制作错题集](../../../docs/productions/chapter070/error-catalog.md#如何持续更新)。遇到同类问题，给已有条目补充新节次、修法差异和复验结果。
+
+长分镜需要并行出图时，按[长分镜的分段制作](references/execution.md#长分镜的分段制作)分派子 Agent。出图前统一采用设定和跨段状态，主 Agent 负责合稿和交审。
 
 ## 按问题取用
 
-在 `read-stage.ts` 后传入阶段和对应的 `--risk`。同一处有多个问题时可重复传 `--risk`，脚本在阶段规则之外只补充选中的条目。
+开工或返修前，按阶段或症状查[制作错题集](../../../docs/productions/chapter070/error-catalog.md)。在 `read-stage.ts` 后传入阶段和对应的 `--risk`。同一处有多个问题时可重复传 `--risk`，脚本在阶段规则之外只补充选中的条目。
 
 | 遇到的问题 | 参数示例 |
 | --- | --- |
+| 长分镜按场景或连续动作段分给子 Agent | `storyboard --risk parallel` |
 | 道具形制、支点或人物相对地标的位置在相邻镜发生跳变 | `storyboard --risk continuity` |
 | 同机位局部换姿势、表情或动作，涉及脸、手、衣物的遮罩或轮廓 | `visuals --risk action` |
 | 火、烟、云或出框道具需要局部运动，涉及光线或遮挡 | `visuals --risk effects` |
@@ -47,4 +51,4 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 - 分镜生成先实际查看适用的[设定索引](../../../data/source-webp/chapter07/settings/README.md)。帝国旗按[项目旗帜](../../../docs/settings/chapter070/imperial-flag.md)，同一把短刀按[剑狼短刀](../../../data/source-webp/chapter07/settings/props/01-sword-wolf-dagger.md)，昴左手受伤时按[软绷带](references/subaru-left-hand-bandage.md)。优先落实接触、侧别、支撑、遮挡与状态变化，再处理光效与纹理。高风险姿态查[最终案例](references/confirmed-cases.md)。
 - [任务摘要模板](templates/episode-brief.md)记录创作决策、固定设定和逐镜变化。已有事实用原路径引用。[执行规则](references/execution.md)管理短样、返修、证据、复用与中断恢复；[验收清单](references/quality-checklist.md)管理阶段通过条件。
 - 有镜头动效需求时按需查看 video-shotcraft 的相关配方。[制作脚本参考](references/production-pipeline.md)的历史脚本先核路径和接口再复用。阶段与结构工具验证记录及文件；语义、图义、字形和听感由相应实查判断。
-- 具体历史问题按需查[制作心得](references/production-lessons.md)、[旧交付经验](references/delivery-history.md)、[第9节复盘](references/section09-storyboard-lessons.md)、[第10节复盘](../../../docs/productions/chapter070/section10/retrospective.md)、[第11节复盘](../../../docs/productions/chapter070/section11/retrospective.md)、[第12节复盘](../../../docs/productions/chapter070/section12/retrospective.md)和[第13节复盘](../../../docs/productions/chapter070/section13/retrospective.md)。通用做法已归入各阶段。
+- 具体历史问题从[制作错题集](../../../docs/productions/chapter070/error-catalog.md)进入各节复盘，通用做法查[制作心得](references/production-lessons.md)，历史平台操作查[旧交付经验](references/delivery-history.md)。

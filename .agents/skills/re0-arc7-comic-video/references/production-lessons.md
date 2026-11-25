@@ -1,6 +1,6 @@
 # 可复用的制作方法
 
-以下是制作中遇到的典型问题。执行步骤以[阶段规则](execution.md)为准，通过标准查[验收清单](quality-checklist.md)。
+以下是可复用的制作方法。按问题和实际案例查[制作错题集](../../../../docs/productions/chapter070/error-catalog.md)，执行步骤查[阶段规则](execution.md)，通过标准查[验收清单](quality-checklist.md)。
 
 ## 1. 把反馈转成可检查的要求
 

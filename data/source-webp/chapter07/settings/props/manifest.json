@@ -35,6 +35,44 @@
         "dimensionNote": "本项目绘图比例基准，数值约数，不是原著明确尺寸。"
       },
       "sourceAnchors": ["02.md:627", "06.md:353", "09.md:201—227", "09.md:535", "09.md:817—823"]
+    },
+    {
+      "id": "P02-medium-twin-blades",
+      "name": "米迪娅姆的双蛮刀",
+      "status": "registered",
+      "image": "sheets/02-medium-twin-blades.png",
+      "notes": "02-medium-twin-blades.md",
+      "sha256": "7a19812f6b8951502b7c0246fcdb89b98045176dfbc491ec560f5dc86d274f71",
+      "bytes": 1788669,
+      "width": 1774,
+      "height": 887,
+      "viewCount": 2,
+      "viewNote": "同形同长的一对武器，均以侧面展示。",
+      "origin": {
+        "episode": "chapter070-section18",
+        "storyboardVersion": "v2",
+        "sourceImageName": "medium-twin-blades.png",
+        "sourcePreservedByteForByte": true
+      },
+      "registration": {
+        "date": "2026-11-23",
+        "userQuote": "⽶迪娅姆的双刀的形状不稳定，先沉淀成设定图，再更新所有分镜",
+        "scope": "将两把蛮刀的统一侧面轮廓收录为绘图参考。",
+        "episodeStoryboardApprovalGranted": false
+      },
+      "design": {
+        "blade": "深色钢刀身，宽弧刀腹，三条斜短槽及大幅银色刃面",
+        "grip": "短直深色缠柄，刀根窄",
+        "pair": "同形、同长，项目未指定精确尺寸"
+      },
+      "sourceAnchors": [
+        "16.md:273—277",
+        "18.md:659—663",
+        "18.md:719—739",
+        "18.md:849—851",
+        "18.md:885—889",
+        "27-008.jpg"
+      ]
     }
   ]
 }
