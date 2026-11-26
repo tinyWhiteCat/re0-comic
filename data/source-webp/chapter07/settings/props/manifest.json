@@ -124,6 +124,46 @@
         "previousStoryboardVersion": "v2",
         "scope": "依书内黑白插图和角川官方彩色封面复核阳剑，更新第24节第38镜两张采用图。"
       }
+    },
+    {
+      "id": "P04-arakiya-branch",
+      "name": "亚拉基亚的树枝",
+      "status": "registered",
+      "image": "sheets/04-arakiya-branch.png",
+      "notes": "04-arakiya-branch.md",
+      "sha256": "5424163ea8455139f44c234caf7785cae51cee0e09b0df2c02616a214d7e884b",
+      "bytes": 1284568,
+      "width": 1774,
+      "height": 887,
+      "viewCount": 2,
+      "viewNote": "上排长态，下排同一物件折短后的形态；两排共用尺寸比例。",
+      "origin": {
+        "episode": "chapter070-section25",
+        "storyboardVersion": "v3",
+        "method": "ImageGen",
+        "baselineShots": [
+          "v2/22",
+          "v2/23",
+          "v2/24"
+        ]
+      },
+      "registration": {
+        "date": "2026-11-26",
+        "scope": "统一第25节亚拉基亚所持的长枝、短枝与镜中可见状态。",
+        "episodeStoryboardApprovalGranted": false
+      },
+      "design": {
+        "full": "棕色细弯枝身，钝圆握端，近握端浅米褐旧布缠，远端错落分叉。",
+        "short": "保留原握端、布缠和小岔枝，长度约为长态四成，远端有露出木色的断口。",
+        "use": "第03镜落下，第11镜在空中，第12镜回到右手，第24镜进入短态。第26–28镜枝身不出现。"
+      },
+      "sourceAnchors": [
+        "25.md:77",
+        "25.md:207",
+        "25.md:219",
+        "25.md:421",
+        "25.md:433"
+      ]
     }
   ]
 }

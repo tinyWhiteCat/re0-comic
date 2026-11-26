@@ -63,6 +63,7 @@ import art59 from '../../data/source-webp/chapter07/settings/characters/sheets/5
 import art60 from '../../data/source-webp/chapter07/settings/characters/sheets/55-shaula-scorpion.webp?url';
 import swordWolfDagger from '../../data/source-webp/chapter07/settings/props/sheets/01-sword-wolf-dagger.png?url';
 import priscillaSunSword from '../../data/source-webp/chapter07/settings/props/sheets/03-priscilla-sun-sword.png?url';
+import arakiyaBranch from '../../data/source-webp/chapter07/settings/props/sheets/04-arakiya-branch.png?url';
 export const artworks: Artwork[] = [
   { id: '01-subaru', title: 'Subaru', category: 'original', src: art0 },
   { id: '01a-natsumi', title: 'Natsumi', category: 'original', src: art1 },
@@ -127,4 +128,5 @@ export const artworks: Artwork[] = [
   { id: '55-shaula-scorpion', title: 'Shaula Scorpion', category: 'original', src: art60 },
   { id: 'P01-sword-wolf-dagger', title: '剑狼短刀（小刀统一设定）', category: 'prop', src: swordWolfDagger },
   { id: 'P03-priscilla-sun-sword', title: '普莉希拉的阳剑', category: 'prop', src: priscillaSunSword },
+  { id: 'P04-arakiya-branch', title: '亚拉基亚的树枝', category: 'prop', src: arakiyaBranch },
 ];

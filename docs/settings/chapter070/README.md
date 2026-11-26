@@ -10,6 +10,7 @@
 | [剑狼短刀](../../../data/source-webp/chapter07/settings/props/01-sword-wolf-dagger.md) | [P01多视图](../../../data/source-webp/chapter07/settings/props/sheets/01-sword-wolf-dagger.png) · [清单](../../../data/source-webp/chapter07/settings/props/manifest.json) | 固定小刀外形与比例，按身体朝向核对刀伤透视和包扎 |
 | [米迪娅姆的双蛮刀](../../../data/source-webp/chapter07/settings/props/02-medium-twin-blades.md) | [P02设定图](../../../data/source-webp/chapter07/settings/props/sheets/02-medium-twin-blades.png) | 固定双刀外形及持有状态，核对第18节挡斧时昴手里的同一把刀 |
 | [普莉希拉的阳剑](../../../data/source-webp/chapter07/settings/props/03-priscilla-sun-sword.md) | [P03设定图](../../../data/source-webp/chapter07/settings/props/sheets/03-priscilla-sun-sword.png) | 固定宽直剑身、尖端前折角、半日轮护手与尖环柄尾 |
+| [亚拉基亚的树枝](../../../data/source-webp/chapter07/settings/props/04-arakiya-branch.md) | [P04设定图](../../../data/source-webp/chapter07/settings/props/sheets/04-arakiya-branch.png) | 核对长枝的分叉和布缠，以及缩短后留存的握端 |
 | [第18节《要塞都市古拉尔攻防战》](../../../data/source-webp/chapter07/settings/episodes/section18/README.md) | [设定资产与采用范围](../../../data/source-webp/chapter07/settings/episodes/section18/manifest.json) | 查阅本节的角色、兵器、法洛车、物件、场景及定稿用斧 |
 
 图像生成时实际查看对应参考图，并把所用设定版本记入单节制作记录。项目美术补充与原著事实分别登记，避免把新增纹饰写进剧情解说。
