@@ -21,11 +21,15 @@ test('audition instructions are available before asking for voice or sound feedb
   }
 });
 test('sound and final review include listening checks without pulling them into visual work', async () => {
+  const plan = await buildContext('plan');
+  assert.match(plan.text, /每集正式成片默认包含按剧情编排的配乐/);
   for (const stage of ['sound', 'render', 'review']) {
     const r = await buildContext(stage);
     assert.match(r.text, /怪物声核物种感、体量和情绪/, stage);
     assert.match(r.text, /分别记录源音、带旁白短混音与最终编码的检查范围/, stage);
     assert.match(r.text, /循环环境声.*短时峰值/, stage);
+    assert.match(r.text, /计划配乐段已混入最终 AAC/, stage);
+    if (stage === 'sound') assert.match(r.text, /^## 场景配乐$/m);
   }
   const visuals = await buildContext('visuals');
   assert.match(visuals.text, /箭尖、剑轴、手指与接触点/);

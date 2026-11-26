@@ -40,7 +40,7 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 | --- | --- |
 | plan / storyboard | 核原著与共享素材，写明每镜的叙事任务和交接状态。成片要表现的表情、动作或状态变化，在交审分镜的关键画面中体现。交审完整编号彩图、逐镜台词、转场与估时，检查字幕与计划裁切。见[原著对应](references/source-fidelity.md)和[分镜清单](references/quality-checklist.md#分镜)。 |
 | voice / alignment | 先润色跨句承接、人称与语气，再按完整语义组合成。按片头合同和词组读音核实际音频，反复错读逐处排查。冻结采用音后对齐实测时间，核目标词前后停顿及所属分句。见[配音](references/quality-checklist.md#配音)与[对齐](references/quality-checklist.md#对齐)。 |
-| visuals / sound | 按实音对齐制作底片、动效和混音。新动效先做真实镜头短样，配乐进出与同步音效按[声音时间线](references/execution.md#声音时间线)落位。按[画面与动效](references/quality-checklist.md#画面与动效)和[混音清单](references/quality-checklist.md#音效选材与混音)验收。 |
+| visuals / sound | 按实音对齐制作底片、动效和混音。新动效先做真实镜头短样。按[场景配乐](references/style-reference.md#场景配乐)分段选曲，按[声音时间线](references/execution.md#声音时间线)安排配乐进出与同步音效。按[画面与动效](references/quality-checklist.md#画面与动效)和[混音清单](references/quality-checklist.md#音效选材与混音)验收。 |
 | render / review | 按[渲染前核对](references/quality-checklist.md#渲染前核对)查时间线，按[成片终检](references/quality-checklist.md#成片终检)查最终编码。分别记录覆盖范围、看图听审、技术证据和用户批准。 |
 | covers | 先锁定同一剧情切入点和采用标题，再独立排版 4:3 和 16:9。对照同系列采用参考，并排检查缩略图与原尺寸字形；改单字时核相邻笔画和底图。见[风格参考](references/style-reference.md)和[封面清单](references/quality-checklist.md#封面与简介)。 |
 | package / delivery | 核实际 ZIP 与文案。完整交付的视频走 Wormhole，发布素材走 Gmail；局部任务按授权更新相应指针。见[默认规格](references/production-defaults.md)与[交付操作](references/delivery-and-publishing.md)。 |
