@@ -9,6 +9,7 @@
 | 旗帜 | [帝国旗资产清单](flags/manifest.json) · [视觉说明](../../../../docs/settings/chapter070/imperial-flag.md) | 沿用蓝底、剑贯黑狼、金色月桂环等项目设定，医帐红旗按原文区分。 |
 | 道具 P01 | [剑狼短刀多视图](props/sheets/01-sword-wolf-dagger.png) · [制作说明](props/01-sword-wolf-dagger.md) | 本项目小刀的统一外形参考，沿用第9节分镜v2；包括比例与伤势连续性。 |
 | 道具 P02 | [米迪娅姆的双蛮刀](props/sheets/02-medium-twin-blades.png) · [制作说明](props/02-medium-twin-blades.md) | 第18节分镜 V2 统一的双刀外形，也用于昴捡起其中一把挡斧的镜头。 |
+| 道具 P03 | [普莉希拉的阳剑](props/sheets/03-priscilla-sun-sword.png) · [制作说明](props/03-priscilla-sun-sword.md) | 按第27、30卷插图及第37卷彩色封面复核，采用第24节分镜 V3 的形制。 |
 | 第18节整套设定 | [要塞都市古拉尔攻防战](episodes/section18/README.md) · [资产清单](episodes/section18/manifest.json) | 13 张人物、兵器、法洛车、物件和场景参考图，来源为分镜 V3。 |
 
-道具索引及文件哈希保存在 [props/manifest.json](props/manifest.json)。画廊 `/gallery` 的“道具设定”分类可查看和放大已收录的道具图。
+道具索引及文件哈希保存在 [props/manifest.json](props/manifest.json)。画廊 `/gallery` 的“道具设定”分类可查看和放大剑狼短刀与阳剑参考图。

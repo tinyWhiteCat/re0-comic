@@ -73,6 +73,57 @@
         "18.md:885—889",
         "27-008.jpg"
       ]
+    },
+    {
+      "id": "P03-priscilla-sun-sword",
+      "name": "普莉希拉的阳剑",
+      "status": "registered",
+      "image": "sheets/03-priscilla-sun-sword.png",
+      "notes": "03-priscilla-sun-sword.md",
+      "sha256": "0918335b18524400982cd3e5a7e408baca3873a98b00328ea88b8b0a1cd87124",
+      "bytes": 1537262,
+      "width": 2172,
+      "height": 724,
+      "viewCount": 2,
+      "viewNote": "上排全剑侧视。下排放大同一把剑的柄尾、护手及剑根。",
+      "origin": {
+        "episode": "chapter070-section24",
+        "storyboardVersion": "v3",
+        "method": "ImageGen",
+        "sourceIllustration": "https://github.com/re-zero-khis/re0-web/blob/master/mdbook/src/res/imgs/article/chapter070/27-014.jpg",
+        "secondaryIllustration": "https://raw.githubusercontent.com/re-zero-khis/re0-web/master/mdbook/src/res/imgs/article/chapter070/30-009.jpg",
+        "colorCover": "https://cdn.kdkw.jp/cover_1000/322311/322311001287.webp"
+      },
+      "registration": {
+        "date": "2026-11-26",
+        "userQuote": "普莉希拉的赤剑需要在设定里形成稳定的设定图，现在的剑的形态不稳定",
+        "scope": "建立可复用的阳剑设定图，统一第24节第38镜的背影、回眸画面。",
+        "episodeStoryboardApprovalGranted": false
+      },
+      "design": {
+        "blade": "中段宽直，深色剑面与两侧宽赤红刃面分明。剑根外扩，靠剑尖处再外扩为一对短折角，随后沿中轴收尖。",
+        "guard": "金色护手中央有体积，两翼收尖。后接有厚半弧、三角放射纹及中央凸饰的半日轮。",
+        "grip": "细长直握柄，深褐近黑。",
+        "pommel": "金色尖环柄尾，深色凹面内有小凸饰。",
+        "glow": "赤色光从刃面透出，保留宽直轮廓与厚度。",
+        "colorNotes": "深色剑面、赤红刃面与金色配件以书籍版彩绘为准。第37卷封面最末一点被火光盖住，按可见轮廓收尖。"
+      },
+      "sourceAnchors": [
+        "24.md:1175",
+        "25.md:7",
+        "25.md:41",
+        "26.md:55",
+        "92.md:539—541",
+        "27-014.jpg",
+        "57-B.md:471—473",
+        "30-009.jpg",
+        "角川第37卷封面"
+      ],
+      "revision": {
+        "date": "2026-11-26",
+        "previousStoryboardVersion": "v2",
+        "scope": "依书内黑白插图和角川官方彩色封面复核阳剑，更新第24节第38镜两张采用图。"
+      }
     }
   ]
 }
