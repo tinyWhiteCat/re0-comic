@@ -12,5 +12,6 @@
 | 道具 P03 | [普莉希拉的阳剑](props/sheets/03-priscilla-sun-sword.png) · [制作说明](props/03-priscilla-sun-sword.md) | 按第27、30卷插图及第37卷彩色封面复核，采用第24节分镜 V3 的形制。 |
 | 道具 P04 | [亚拉基亚的树枝](props/sheets/04-arakiya-branch.png) · [制作说明](props/04-arakiya-branch.md) | 统一第25节用到的长枝、短枝及持有状态。 |
 | 第18节整套设定 | [要塞都市古拉尔攻防战](episodes/section18/README.md) · [资产清单](episodes/section18/manifest.json) | 13 张人物、兵器、法洛车、物件和场景参考图，来源为分镜 V3。 |
+| 第25节末镜 | [结晶灯上的阿尔](episodes/section25/sheets/storyboard-v7-shot-35.png) | 成片采用的 V7 第 35 镜无字原图。续接时参考阿尔悬在都市厅外墙结晶灯支架下的位置，以及外墙、破损露台与夜空的关系。 |
 
 道具索引及文件哈希保存在 [props/manifest.json](props/manifest.json)。画廊 `/gallery` 的“道具设定”分类可查看和放大剑狼短刀、阳剑和亚拉基亚的树枝参考图。
