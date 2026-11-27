@@ -85,11 +85,22 @@ test('routes the section 13 checks to the stages that can act on them', async ()
 });
 test('recent production regressions are addressed before delivery in the default stage context', async () => {
   const checks = {
-    storyboard: [/跨环境缺图时登记缺项/],
-    voice: [/以批准文稿列出每一处/, /自然连读/],
-    visuals: [/同机位子分镜只替换变化区域/, /所有子分镜切换/, /虚化补边/, /烟雾单独/],
+    plan: [/尾帧、本节首帧和动作完成帧/, /俯视图.*正反打/, /尚未到场.*定妆插画.*切回现场/],
+    storyboard: [
+      /跨环境缺图时登记缺项/, /正反打各一张/, /近景母图.*侧身、背影和远景/,
+      /全程固定在画面底部正中/, /首版预览就叠本镜中英台词/, /后排人物逐人核手脚/, /原图透明通道/,
+    ],
+    voice: [/以批准文稿列出每一处/, /自然连读/, /九神将.*jiàng/, /叠词逐个核音节/, /和前一句连听/],
+    alignment: [/全程固定在画面底部正中/],
+    visuals: [/同机位子分镜只替换变化区域/, /所有子分镜切换/, /虚化补边/, /烟雾单独/, /全程固定在画面底部正中/],
     sound: [/燃料和声音任务明确/, /关键命中前后与切黑接点/],
-    review: [/最终采用版记录镜号或时间点/, /回查全部相关位置/],
+    render: [/每条中英文字幕的实际对齐方式和横坐标/, /实际送入滤镜的 ASS 文件/, /check-caption-layout\.ts/],
+    review: [
+      /最终采用版记录镜号或时间点/, /回查全部相关位置/, /可见图形核右侧与底部的留边/,
+      /最终 AAC 连听前一句和目标句/,
+    ],
+    package: [/实际出现的曲目和音效.*ZIP 内文案/],
+    delivery: [/打开 ZIP 内的发布文案，用最终混音清单核必要署名/],
   };
   for (const [stage, patterns] of Object.entries(checks)) {
     const { text } = await buildContext(stage);
