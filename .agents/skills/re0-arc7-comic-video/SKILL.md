@@ -15,7 +15,7 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 4. 每阶段记录采用文件、变化范围、阻塞项和证据路径。返修按[变更影响](references/execution.md#变更影响)处理相关阶段、相邻接点与缓存。原音、成片、素材、缓存与私有回执留在忽略目录 `data/productions/chapter070/`，公开记录只保留必要引用。
 5. 阶段收尾时，把本节可复用的错误补入[制作错题集](../../../docs/productions/chapter070/error-catalog.md#如何持续更新)。遇到同类问题，给已有条目补充新节次、修法差异和复验结果。
 
-策划时按场景判断空间复杂度。复杂段落用 `plan --risk scene` 读取[按需场景构建](references/execution.md#按需场景构建)，由独立场景 Agent 在出图前统一相关镜头的空间和动作状态。常规参考能交代清楚的段落走常规分镜。
+策划时按场景或连续动作段判断是否需要草图。多人走位、跨层视线、地形变化或接触前后难以从现有参考判定时，用 `plan --risk scene`。独立场景 Agent 先画共用简图，关键动作按需加小草图，由主 Agent 核对后，相关镜头再出图。有足够参考的固定站位和简单动作直接做分镜。见[按需场景构建](references/execution.md#按需场景构建)。
 
 长分镜需要并行出图时，按[长分镜的分段制作](references/execution.md#长分镜的分段制作)分派子 Agent。出图前统一采用设定和跨段状态，主 Agent 负责合稿和交审。
 
@@ -25,7 +25,7 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 
 | 遇到的问题 | 参数示例 |
 | --- | --- |
-| 多人交错移动、换机位后空间难读，或悬吊、坠落和地形变化影响后续动作 | `plan --risk scene` |
+| 多人交错、跨层视线难读，或地形、接触、支点和持物变化影响后续动作 | `plan --risk scene` |
 | 长分镜按场景或连续动作段分给子 Agent | `storyboard --risk parallel` |
 | 换机位时站位、地标或受力点跳变，或跨节同场接不上 | `storyboard --risk continuity` |
 | 台词首次提到一位角色，定妆插画没能表现他的能力 | `--lesson motion` |
@@ -44,7 +44,7 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 
 | 阶段 | 产物与通过条件 |
 | --- | --- |
-| plan / storyboard | 按原著定镜头任务。跨节核采用尾帧，多人对话核座位和正反打。复杂动作先统一地标和支点，成组连看起势到结果。首版关键图就叠双语字幕查运镜终点和遮挡，再交审完整编号彩图、台词、转场和估时。见[原著对应](references/source-fidelity.md)和[分镜清单](references/quality-checklist.md#分镜)。 |
+| plan / storyboard | 按原著定镜头任务。跨节核采用尾帧，多人对话核座位和正反打。需要场景草图的段落先核共用参考，再出正式图。成组连看关键动作从起势到结果。首版关键图就叠双语字幕查运镜终点和遮挡，再交审完整编号彩图、台词、转场和估时。见[原著对应](references/source-fidelity.md)和[分镜清单](references/quality-checklist.md#分镜)。 |
 | voice / alignment | 先润色跨句承接、人称与语气，再按完整语义组合成。按片头合同和词组读音核实际音频，易错词查全片每次出现，语气转折连前一句试听。冻结采用音后用实测时间核停顿与分句。见[配音](references/quality-checklist.md#配音)与[对齐](references/quality-checklist.md#对齐)。 |
 | visuals / sound | 按实音对齐制作底片、动效和混音。新动效先做真实镜头短样。按[场景配乐](references/style-reference.md#场景配乐)分段选曲，按[声音时间线](references/execution.md#声音时间线)安排配乐进出与同步音效。按[画面与动效](references/quality-checklist.md#画面与动效)和[混音清单](references/quality-checklist.md#音效选材与混音)验收。 |
 | render / review | 按[渲染前核对](references/quality-checklist.md#渲染前核对)查实际烧录字幕，按[成片终检](references/quality-checklist.md#成片终检)看片中遮挡和片尾字标完全显影时的右、下留边。分别记录覆盖范围、看图听审、技术证据和用户批准。 |

@@ -93,6 +93,8 @@ V3交付后，用户再次指出巨蛇声音怪异，程序气流版本未获听
 
 故事分镜默认按原文顺序展开，先交代本节开场、地点和人物位置。不要为了悬念自行把中段提到开头；跨场景要交代时间关系，人物位置或动作发生明显变化时补足关键画面。保留原文有意省略的过程，不用虚构情节填补。
 
+正式出分镜前按场景或连续动作段判断是否要画草图。已有参考能说明站位、视线和动作接点时，直接做分镜。多人交错、楼层或地形变化、换机位等情况让这些关系难以判断时，先用草图定空间和关键动作。相关镜头共用核过原著、设定和采用邻镜的版本。 [按需场景构建](.agents/skills/re0-arc7-comic-video/references/execution.md#按需场景构建)
+
 角色与道具先查[设定集索引](data/source-webp/chapter07/settings/README.md)。2026-11-12，用户要求将第9节v2的小刀收入设定集；后续出现同一把剑狼短刀时，统一引用[道具多视图](data/source-webp/chapter07/settings/props/sheets/01-sword-wolf-dagger.png)和[制作说明](data/source-webp/chapter07/settings/props/01-sword-wolf-dagger.md)，保持刀刃、握柄、护手、柄尾及比例。伤势左右按角色身体判断，不能随画面转向换肩；第9节的右肩伤与后背新伤分开核对。本次设定入库不代表第9节完整分镜已获确认。
 
 帝国初期昴的左手三指伤沿用用户指定的[软绷带画法](.agents/skills/re0-arc7-comic-video/references/subaru-left-hand-bandage.md)：中指、无名指、小指及手掌包扎，拇指食指裸露、右手不包扎，取消夹板；相关改编台词同步，原著不改。复杂动作先确定相机、胸背、来向及遮挡，不能把画面左右当作解剖左右。返修对照清晰母图，检查人物与环境没有退化；具体方法已接入技能的[制作心得](.agents/skills/re0-arc7-comic-video/references/production-lessons.md)。
