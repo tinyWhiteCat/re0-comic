@@ -129,13 +129,13 @@
           "id": "P03-priscilla-sun-sword-swing",
           "name": "普莉希拉的阳剑 · 挥剑效果",
           "image": "sheets/03-priscilla-sun-sword-swing.png",
-          "sha256": "4f3a44a8ee53f5559faabec56302bc98a40864df09c413cce2c3f247f46fca60",
-          "bytes": 2201864,
+          "sha256": "b4fd429b53310c56576150abe4163a902b46792c492e58ca9e61b1d053c008d4",
+          "bytes": 2169449,
           "width": 1672,
           "height": 941,
           "purpose": "全身挥剑姿态、剑尖余光轨迹和前景遮挡参考。",
           "origin": { "method": "ImageGen", "sourcePreservedByteForByte": true },
-          "registration": { "date": "2026-11-28", "scope": "用户确认收录全身挥剑效果图。" }
+          "registration": { "date": "2026-11-28", "scope": "采用用户确认的新版全身挥剑效果图，参考转身、重心和右手握剑姿态。" }
         }
       ]
     },

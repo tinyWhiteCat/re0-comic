@@ -134,7 +134,7 @@ export const artworks: Artwork[] = [
     title: '普莉希拉的阳剑 · 挥剑效果',
     category: 'prop',
     src: priscillaSunSwordSwing,
-    description: '普莉希拉右手挥剑，赤金光幕沿剑尖划过的浅弧掠过身前。',
+    description: '普莉希拉转身送出阳剑，赤金光幕沿剑尖划过的浅弧掠过身前。',
   },
   { id: 'P04-arakiya-branch', title: '亚拉基亚的树枝', category: 'prop', src: arakiyaBranch },
 ];
