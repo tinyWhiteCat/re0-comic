@@ -18,6 +18,12 @@ test('gallery displays artwork, filters, previews and adapts to mobile', async (
   await page.getByRole('button', { name: '清除搜索' }).click();
   await page.locator('.ant-pagination-item-6').click();
   await expect(page.locator('.art-card')).toHaveCount(1);
+  await page.getByText('道具设定', { exact: true }).first().click();
+  const swing = page.getByRole('article').filter({ has: page.getByRole('heading', { name: '普莉希拉的阳剑 · 挥剑效果' }) });
+  await expect(swing.getByText('赤金光幕沿剑尖划过的浅弧掠过身前', { exact: false })).toBeVisible();
+  const swingImage = swing.getByRole('img');
+  await swingImage.scrollIntoViewIfNeeded();
+  await expect.poll(() => swingImage.evaluate(image => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   await page.getByText('漫画彩图', { exact: true }).first().click();
   await expect(page.getByText('漫画彩图尚未收录。后续将在这里按顺序展示故事画面。')).toBeVisible();
   await page.getByText('角色原画', { exact: true }).first().click();

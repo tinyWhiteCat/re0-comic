@@ -36,7 +36,8 @@
 .art-caption { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #e0e2d6; }
 .art-number { font-size: 9px; color: #868e7a; letter-spacing: 1.4px; }
 .art-caption h3 { margin: 5px 0 0; font-family: Georgia, serif; font-weight: 400; font-size: 21px; }
-.art-kind { font-size: 10px; color: #858c7b; }
+.art-description { margin: 6px 12px 0 0; color: #58604e; font-size: 13px; line-height: 1.5; }
+.art-kind { flex-shrink: 0; font-size: 10px; color: #858c7b; }
 .gallery-pagination { justify-content: center; padding: 32px 0; }
 .gallery-empty { padding: 70px 10px; border: 1px dashed #d8ddce; border-radius: 6px; }
 .gallery-footer { display: flex; justify-content: space-between; gap: 15px; padding: 28px 0; margin-top: 38px; border-top: 1px solid #dedfd3; font-size: 11px; color: #8b9182; }

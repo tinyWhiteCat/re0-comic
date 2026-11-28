@@ -123,7 +123,21 @@
         "date": "2026-11-26",
         "previousStoryboardVersion": "v2",
         "scope": "依书内黑白插图和角川官方彩色封面复核阳剑，更新第24节第38镜两张采用图。"
-      }
+      },
+      "references": [
+        {
+          "id": "P03-priscilla-sun-sword-swing",
+          "name": "普莉希拉的阳剑 · 挥剑效果",
+          "image": "sheets/03-priscilla-sun-sword-swing.png",
+          "sha256": "4f3a44a8ee53f5559faabec56302bc98a40864df09c413cce2c3f247f46fca60",
+          "bytes": 2201864,
+          "width": 1672,
+          "height": 941,
+          "purpose": "全身挥剑姿态、剑尖余光轨迹和前景遮挡参考。",
+          "origin": { "method": "ImageGen", "sourcePreservedByteForByte": true },
+          "registration": { "date": "2026-11-28", "scope": "用户确认收录全身挥剑效果图。" }
+        }
+      ]
     },
     {
       "id": "P04-arakiya-branch",

@@ -67,7 +67,14 @@ export function Gallery() {
               <img src={item.src} alt={`${item.title} ${categoryLabels[item.category]}`} loading="lazy" decoding="async" />
               <span className="art-open">查看大图 ↗</span>
             </Button>
-            <div className="art-caption"><div><span className="art-number">NO. {item.id.split('-')[0].toUpperCase()}</span><h3>{item.title}</h3></div><span className="art-kind">{kindLabels[item.category]}</span></div>
+            <div className="art-caption">
+              <div>
+                <span className="art-number">NO. {item.id.split('-')[0].toUpperCase()}</span>
+                <h3>{item.title}</h3>
+                {item.description && <p className="art-description">{item.description}</p>}
+              </div>
+              <span className="art-kind">{kindLabels[item.category]}</span>
+            </div>
           </article>)}
         </div> : <div className="gallery-empty"><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={collection.length ? '没有找到匹配的画作，试试其他名字或编号。' : '漫画彩图尚未收录。后续将在这里按顺序展示故事画面。'}>{query && <Button onClick={() => { setQuery(''); setPage(1); }}>清除搜索</Button>}</Empty></div>}
         {filtered.length > pageSize && <Pagination className="gallery-pagination" current={page} total={filtered.length} pageSize={pageSize} showSizeChanger={false} onChange={value => { setPage(value); document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' }); }} />}
