@@ -17,6 +17,7 @@ export const routes: Record<string, Route> = {
   delivery: { defaults: ['交付', '封面与简介'], docs: [['delivery-and-publishing.md', ['短样交付', '上传与核验', '仅素材邮件', '完成交付']]] },
 };
 const risks: Record<string, [file: string, topic: string]> = {
+  scene: ['execution.md', '按需场景构建'],
   space: ['confirmed-cases.md', '家具背后与观察视线'],
   props: ['confirmed-cases.md', '刀、鞭与佩戴状态'],
   body: ['confirmed-cases.md', '身体受限与整体比例'],

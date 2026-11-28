@@ -15,6 +15,8 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 4. 每阶段记录采用文件、变化范围、阻塞项和证据路径。返修按[变更影响](references/execution.md#变更影响)处理相关阶段、相邻接点与缓存。原音、成片、素材、缓存与私有回执留在忽略目录 `data/productions/chapter070/`，公开记录只保留必要引用。
 5. 阶段收尾时，把本节可复用的错误补入[制作错题集](../../../docs/productions/chapter070/error-catalog.md#如何持续更新)。遇到同类问题，给已有条目补充新节次、修法差异和复验结果。
 
+策划时按场景判断空间复杂度。复杂段落用 `plan --risk scene` 读取[按需场景构建](references/execution.md#按需场景构建)，由独立场景 Agent 在出图前统一相关镜头的空间和动作状态。常规参考能交代清楚的段落走常规分镜。
+
 长分镜需要并行出图时，按[长分镜的分段制作](references/execution.md#长分镜的分段制作)分派子 Agent。出图前统一采用设定和跨段状态，主 Agent 负责合稿和交审。
 
 ## 按问题取用
@@ -23,15 +25,16 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 
 | 遇到的问题 | 参数示例 |
 | --- | --- |
+| 多人交错移动、换机位后空间难读，或悬吊、坠落和地形变化影响后续动作 | `plan --risk scene` |
 | 长分镜按场景或连续动作段分给子 Agent | `storyboard --risk parallel` |
-| 群像正反打时座位跳变，或跨节同场的地标、道具支点接不上 | `storyboard --risk continuity` |
+| 换机位时站位、地标或受力点跳变，或跨节同场接不上 | `storyboard --risk continuity` |
 | 台词首次提到一位角色，定妆插画没能表现他的能力 | `--lesson motion` |
 | 同机位局部换姿势、表情或动作，涉及脸、手、衣物的遮罩或轮廓 | `visuals --risk action` |
 | 火、烟、云或出框道具需要局部运动，涉及光线或遮挡 | `visuals --risk effects` |
 | 重复称谓读错声调，或重复呼唤缺少惊讶感 | `--lesson pronunciation` |
 | 片尾字标已经设在右下，成片看起来仍离右缘很远 | `--lesson outro` |
 | 转场生硬，或切镜处的旁白、字幕和动作接不上 | `review --risk seams` |
-| 封面标题缺少悬念、文字错笔或两种比例的题字风格不统一 | `covers --risk cover` |
+| 封面标题缺少悬念、文字错笔或被特效拆散 | `covers --risk cover` |
 
 家具遮挡、武器与佩戴、身体受限、高处扑击的已确认案例分别用 `--risk space`、`--risk props`、`--risk body`、`--risk fall`。需要核对上表的具体案例时查[第15节制作复盘](../../../docs/productions/chapter070/section15/retrospective.md)。
 
@@ -41,12 +44,12 @@ description: 制作或修订 Re:0 第七章帝国篇漫画解说视频。按原�
 
 | 阶段 | 产物与通过条件 |
 | --- | --- |
-| plan / storyboard | 按原著定镜头任务。跨节先核尾帧到动作完成的接续，多人对话先核座位和正反打，人物按当期设定核各次出场。首版关键图就叠本镜双语字幕查运镜终点、人体支撑和遮挡，再用完整编号彩图、台词、转场和估时交审。见[原著对应](references/source-fidelity.md)和[分镜清单](references/quality-checklist.md#分镜)。 |
+| plan / storyboard | 按原著定镜头任务。跨节核采用尾帧，多人对话核座位和正反打。复杂动作先统一地标和支点，成组连看起势到结果。首版关键图就叠双语字幕查运镜终点和遮挡，再交审完整编号彩图、台词、转场和估时。见[原著对应](references/source-fidelity.md)和[分镜清单](references/quality-checklist.md#分镜)。 |
 | voice / alignment | 先润色跨句承接、人称与语气，再按完整语义组合成。按片头合同和词组读音核实际音频，易错词查全片每次出现，语气转折连前一句试听。冻结采用音后用实测时间核停顿与分句。见[配音](references/quality-checklist.md#配音)与[对齐](references/quality-checklist.md#对齐)。 |
 | visuals / sound | 按实音对齐制作底片、动效和混音。新动效先做真实镜头短样。按[场景配乐](references/style-reference.md#场景配乐)分段选曲，按[声音时间线](references/execution.md#声音时间线)安排配乐进出与同步音效。按[画面与动效](references/quality-checklist.md#画面与动效)和[混音清单](references/quality-checklist.md#音效选材与混音)验收。 |
 | render / review | 按[渲染前核对](references/quality-checklist.md#渲染前核对)查实际烧录字幕，按[成片终检](references/quality-checklist.md#成片终检)看片中遮挡和片尾字标完全显影时的右、下留边。分别记录覆盖范围、看图听审、技术证据和用户批准。 |
 | covers | 先锁定同一剧情切入点和采用标题，再独立排版 4:3 和 16:9。对照同系列采用参考，并排检查缩略图与原尺寸字形；改单字时核相邻笔画和底图。见[风格参考](references/style-reference.md)和[封面清单](references/quality-checklist.md#封面与简介)。 |
-| package / delivery | 打开待发 ZIP，用最终混音清单核文案署名。完整交付的视频走 Wormhole，发布素材走 Gmail。局部交付更新相应指针。见[默认规格](references/production-defaults.md)与[交付操作](references/delivery-and-publishing.md)。 |
+| package / delivery | 打开待发 ZIP，用最终混音清单核文案署名。按本轮授权交付，默认视频走 Wormhole，发布素材走 Gmail。各自核验后更新对应指针。见[默认规格](references/production-defaults.md)与[交付操作](references/delivery-and-publishing.md)。 |
 
 ## 规则与参考
 

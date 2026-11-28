@@ -67,6 +67,23 @@ test('risk lookup and repair are opt-in and deduplicated', async () => {
   assert.equal(r.sections.filter(s => s.topic === '跨镜道具与场景连续性').length, 1);
   assert.equal(r.sections.filter(s => s.topic === '变更影响').length, 1);
 });
+test('scene construction guidance loads only when the scene risk is selected', async () => {
+  const topic = '按需场景构建';
+  for (const stage of ['plan', 'storyboard']) {
+    const base = await buildContext(stage);
+    assert.match(base.text, /启用\[按需场景构建\]/, stage);
+    assert.equal(base.sections.some(s => s.topic === topic), false, stage);
+
+    const selected = await buildContext(stage, { risks: ['scene', 'scene'] });
+    assert.equal(selected.sections.filter(s => s.topic === topic).length, 1, stage);
+    assert.match(selected.text, /场景 Agent 交付共用参考/, stage);
+  }
+
+  const parallel = await buildContext('storyboard', { risks: ['parallel'] });
+  assert.equal(parallel.sections.some(s => s.topic === topic), false);
+  const combined = await buildContext('storyboard', { risks: ['parallel', 'scene'] });
+  assert.deepEqual(combined.sections.slice(-2).map(s => s.topic), ['长分镜的分段制作', topic]);
+});
 test('routes the section 13 checks to the stages that can act on them', async () => {
   const cases = {
     storyboard: [/\| 字幕 \|/, /\| 运镜与视频 \|/, /助词是否自然/],
