@@ -1,4 +1,4 @@
-import { projectSchema, renderOptionsSchema, type Project, type RenderOptions, type RenderProvider, type SaveProject } from '../shared/project';
+import { narrationOptionsSchema, projectSchema, renderOptionsSchema, type NarrationOptions, type NarrationVoice, type Project, type RenderOptions, type RenderProvider, type SaveProject } from '../shared/project';
 
 async function request(url: string, body?: unknown): Promise<unknown> {
   const response = await fetch(url, body === undefined ? undefined : {
@@ -24,6 +24,15 @@ export const api = {
   },
   async render(id: string, provider?: RenderProvider): Promise<Project> {
     return projectSchema.parse(await request(endpoint(id, 'render'), provider === 'openai' ? { provider } : {}));
+  },
+  async narrationOptions(): Promise<NarrationOptions> {
+    return narrationOptionsSchema.parse(await request('/api/tts-options'));
+  },
+  async setNarrationVoice(id: string, voice: NarrationVoice): Promise<Project> {
+    return projectSchema.parse(await request(endpoint(id, 'narration-voice'), { voice }));
+  },
+  async generateNarration(id: string, voice: NarrationVoice): Promise<Project> {
+    return projectSchema.parse(await request(endpoint(id, 'narration'), { voice }));
   },
   async upload(id: string, file: File): Promise<Project> {
     const content = await new Promise<string>((resolve, reject) => {

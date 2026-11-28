@@ -21,6 +21,7 @@ body { margin: 0; }
 .output-panel { background: #edf1e5; }
 .output-panel .ant-card-body { overflow-wrap: anywhere; }
 .output-panel .ant-upload-wrapper { display: block; }
+.narration-voice-field { margin-bottom: 12px; }
 .audio-status { margin-top: 14px; }
 .audio-preview, .video-preview { width: 100%; }
 .video-preview { max-height: 450px; background: #12151c; border-radius: 6px; }

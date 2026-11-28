@@ -1,11 +1,13 @@
 import express, { type ErrorRequestHandler } from 'express';
 import { createHash, randomUUID } from 'node:crypto';
-import { access, mkdir, readFile, readdir, rename, stat, unlink, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, readdir, rename, rm, stat, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { z } from 'zod';
 import { cameraPlanSchema, type CameraPlan } from '../shared/camera.js';
-import { projectSchema, renderProviderSchema, saveSchema, type Project } from '../shared/project.js';
+import { narrationVoiceSelectionSchema, projectSchema, renderProviderSchema, saveSchema, type NarrationVoice, type Project } from '../shared/project.js';
+import { defaultGeminiTts } from './gemini-tts.js';
 import { renderVideo, validateMedia } from './media.js';
+import { writeNarration, type SpeechSynthesizer } from './narration.js';
 import { openAICameraProfile, type CameraPlanner } from './openai-camera.js';
 
 class HttpError extends Error {
@@ -18,10 +20,24 @@ const uploadSchema = z.object({
   content: z.string().min(4).refine(value => value.length % 4 === 0 && !/[^A-Za-z0-9+/=]/.test(value), '无效的 Base64 文件'),
 });
 const renderSchema = z.object({ provider: renderProviderSchema.default('local') });
+const narrationSchema = narrationVoiceSelectionSchema.partial();
 const cachedPlanSchema = z.object({ signature: z.string(), plan: cameraPlanSchema });
+const narrationTempName = 'narration.tmp';
 
-export async function createApp(options: { dataDir: string; webDir?: string; openai?: { model: string; plan: CameraPlanner } }) {
-  const { dataDir, openai } = options;
+export async function createApp(options: {
+  dataDir: string;
+  webDir?: string;
+  openai?: { model: string; plan: CameraPlanner };
+  gemini?: { model: string; synthesize: SpeechSynthesizer };
+  mimo?: SpeechSynthesizer;
+}) {
+  const { dataDir, openai, gemini, mimo } = options;
+  const synthesizers: Record<NarrationVoice, SpeechSynthesizer | undefined> = { Leda: gemini?.synthesize, 冰糖: mimo };
+  const voiceOptions = [
+    { value: 'Leda', label: 'Leda · Gemini', configured: !!gemini },
+    { value: '冰糖', label: '冰糖 · 小米 MiMo', configured: !!mimo },
+  ] satisfies Array<{ value: NarrationVoice; label: string; configured: boolean }>;
+  const defaultVoice = voiceOptions.find(option => option.configured)?.value ?? 'Leda';
   await mkdir(dataDir, { recursive: true });
   const app = express();
   app.disable('x-powered-by');
@@ -76,9 +92,56 @@ export async function createApp(options: { dataDir: string; webDir?: string; ope
     await rename(`${cache}.tmp`, cache);
     return result.data;
   }
-  // Live encoders do not survive a service restart. Preserve interrupted drafts.
+  async function finishRender(project: Project) {
+    let error: string | null = null;
+    try {
+      const dir = directory(project.id);
+      const plan = project.renderProvider === 'openai' ? await planCamera(dir, project) : undefined;
+      await renderVideo(dir, project, plan);
+    } catch (cause) { error = cause instanceof Error ? cause.message : '合成失败'; }
+    await serialize(project.id, async () => {
+      await save({ ...project, status: error ? 'failed' : 'done', error });
+    });
+  }
+  function narrationFailed(project: Project, error: string): Project {
+    const job = { status: 'failed' as const, error };
+    return { ...project, narrationJob: job, geminiTts: project.geminiTts ? job : undefined };
+  }
+  async function finishNarration(project: Project, synthesize: SpeechSynthesizer) {
+    const dir = directory(project.id);
+    const temp = path.join(dir, narrationTempName);
+    try {
+      const scenes = await writeNarration(temp, project.scenes, synthesize);
+      const audio = `${randomUUID().replaceAll('-', '')}.wav`;
+      const file = path.join(dir, audio);
+      await serialize(project.id, async () => {
+        await rename(temp, file);
+        try {
+          await save({
+            ...project, scenes, audio, narrationAudioVoice: project.narrationVoice,
+            status: 'draft', renderProvider: undefined, error: null, narrationJob: undefined, geminiTts: undefined,
+          });
+        } catch (error) {
+          await rm(file, { force: true }).catch(console.error);
+          throw error;
+        }
+      });
+    } catch (cause) {
+      await rm(temp, { force: true }).catch(console.error);
+      const systemError = !!(cause as NodeJS.ErrnoException | null)?.code;
+      if (systemError) console.error(cause);
+      const error = cause instanceof Error && !systemError ? cause.message : '无法保存配音，请重试。';
+      await serialize(project.id, () => save(narrationFailed(project, error)));
+    }
+  }
+  // Generation jobs do not survive a service restart. Preserve interrupted drafts.
   for (const project of await list()) {
     if (project.status === 'rendering') await save({ ...project, status: 'failed', error: '服务已重启，请重新合成' });
+    else if ((project.narrationJob ?? project.geminiTts)?.status === 'generating') {
+      const tempName = project.narrationJob ? narrationTempName : 'gemini-tts.tmp';
+      await rm(path.join(directory(project.id), tempName), { force: true });
+      await save(narrationFailed(project, '服务已重启，请重新生成配音。'));
+    }
   }
   app.use((req, res, next) => {
     const origin = req.get('origin');
@@ -93,6 +156,12 @@ export async function createApp(options: { dataDir: string; webDir?: string; ope
   app.get('/api/render-options', (_req, res) => {
     res.json({ openai: { configured: !!openai, model: openai?.model ?? null } });
   });
+  app.get('/api/tts-options', (_req, res) => {
+    res.json({
+      configured: !!gemini, model: gemini?.model ?? defaultGeminiTts.model, voice: defaultGeminiTts.voice,
+      defaultVoice, voices: voiceOptions,
+    });
+  });
   app.get('/api/projects', async (_req, res) => { res.json(await list()); });
   app.post('/api/projects', async (req, res) => {
     const { title } = z.object({ title: z.string().max(100).default('未命名作品') }).parse(req.body);
@@ -106,10 +175,15 @@ export async function createApp(options: { dataDir: string; webDir?: string; ope
     const result = await serialize(id, async () => {
       let project = await read(id);
       if (project.status === 'rendering') throw new HttpError(409, '正在合成，请完成后再修改');
+      if ((project.narrationJob ?? project.geminiTts)?.status === 'generating') throw new HttpError(409, '正在生成配音，请完成后再修改');
+      project.narrationJob = undefined;
+      project.geminiTts = undefined;
+      let runJob: ((snapshot: Project) => Promise<void>) | undefined;
       switch (req.params.action) {
         case 'save': {
           const { removeAudio, ...values } = saveSchema.parse(req.body);
           project = { ...project, ...values, audio: removeAudio ? null : project.audio, status: 'draft', renderProvider: undefined, error: null };
+          if (removeAudio) project.narrationAudioVoice = undefined;
           await checkAssets(project);
           break;
         }
@@ -127,7 +201,10 @@ export async function createApp(options: { dataDir: string; webDir?: string; ope
           try { await validateMedia(file, isImage); }
           catch { await unlink(file); throw new HttpError(400, '无法读取媒体文件，请检查格式或图片尺寸'); }
           if (isImage) project.scenes.push({ image: name, text: '', duration: 4 });
-          else project.audio = name;
+          else {
+            project.audio = name;
+            project.narrationAudioVoice = undefined;
+          }
           project.status = 'draft';
           project.renderProvider = undefined;
           project.error = null;
@@ -141,26 +218,32 @@ export async function createApp(options: { dataDir: string; webDir?: string; ope
           project.status = 'rendering';
           project.renderProvider = provider;
           project.error = null;
+          runJob = finishRender;
+          break;
+        }
+        case 'narration-voice': {
+          const { voice } = narrationVoiceSelectionSchema.parse(req.body);
+          project.narrationVoice = voice;
+          break;
+        }
+        case 'narration':
+        case 'gemini-tts': {
+          const legacy = req.params.action === 'gemini-tts';
+          const voice = legacy ? 'Leda' : narrationSchema.parse(req.body ?? {}).voice ?? project.narrationVoice ?? defaultVoice;
+          const synthesize = synthesizers[voice];
+          if (!synthesize) throw new HttpError(503, voice === 'Leda' ? '服务器尚未配置 GEMINI_API_KEY' : '服务器尚未配置 MIMO_API_KEY');
+          if (!project.scenes.some(scene => scene.text)) throw new HttpError(400, '请先为至少一个分镜填写解说');
+          project.narrationVoice = voice;
+          project.narrationJob = { status: 'generating' };
+          if (legacy) project.geminiTts = project.narrationJob;
+          runJob = snapshot => finishNarration(snapshot, synthesize);
           break;
         }
         default: throw new HttpError(404, '未知操作');
       }
       await save(project);
-      if (req.params.action === 'render') {
-        const snapshot = structuredClone(project);
-        const job = (async () => {
-          let error: string | null = null;
-          try {
-            const dir = directory(id);
-            const plan = snapshot.renderProvider === 'openai' ? await planCamera(dir, snapshot) : undefined;
-            await renderVideo(dir, snapshot, plan);
-          }
-          catch (cause) { error = cause instanceof Error ? cause.message : '合成失败'; }
-          await serialize(id, async () => {
-            const latest = await read(id);
-            await save({ ...latest, status: error ? 'failed' : 'done', error });
-          });
-        })();
+      if (runJob) {
+        const job = runJob(structuredClone(project));
         jobs.add(job);
         void job.finally(() => jobs.delete(job)).catch(console.error);
       }

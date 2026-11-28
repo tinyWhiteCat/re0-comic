@@ -8,7 +8,7 @@ import {
   AudioOutlined, DownloadOutlined, FileImageOutlined, PlayCircleOutlined,
   PlusOutlined, SaveOutlined, VideoCameraOutlined,
 } from '@ant-design/icons';
-import type { Project, RenderOptions, RenderProvider, Scene } from '../shared/project';
+import type { NarrationOptions, NarrationVoice, Project, RenderOptions, RenderProvider, Scene } from '../shared/project';
 import { api, mediaUrl } from './api';
 import { SceneCard } from './SceneCard';
 
@@ -21,17 +21,25 @@ export function Workbench() {
   const [busy, setBusy] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [openAi, setOpenAi] = useState<RenderOptions['openai'] | 'unavailable' | null>(null);
+  const [narration, setNarration] = useState<NarrationOptions | 'unavailable' | null>(null);
   const current = useRef<Project | null>(null);
   const dirty = useRef(false);
   const actionLock = useRef(false);
   const uploadQueue = useRef<Promise<void>>(Promise.resolve());
   const pendingUploads = useRef(0);
   const rendering = project?.status === 'rendering';
-  const locked = busy || rendering;
+  const narrationJob = project?.narrationJob ?? project?.geminiTts;
+  const narrating = narrationJob?.status === 'generating';
+  const processing = rendering || narrating;
+  const locked = busy || processing;
   const openAiRendering = rendering && project?.renderProvider === 'openai';
   const openAiConfigured = openAi !== 'unavailable' && openAi?.configured === true;
-  const renderDisabled = busy || !project?.scenes.length;
+  const renderDisabled = busy || narrating || !project?.scenes.length;
   const openAiDisabled = renderDisabled || rendering || !openAiConfigured;
+  const narrationOptions = narration === 'unavailable' ? null : narration;
+  const selectedVoice = project?.narrationVoice ?? narrationOptions?.defaultVoice;
+  const voiceConfigured = narrationOptions?.voices.find(option => option.value === selectedVoice)?.configured;
+  const narrationDisabled = locked || !voiceConfigured || !project?.scenes.some(scene => scene.text.trim());
 
   function select(value: Project) {
     current.current = value;
@@ -77,10 +85,15 @@ export function Workbench() {
     }).catch(() => {
       if (active) setOpenAi('unavailable');
     });
+    void api.narrationOptions().then(options => {
+      if (active) setNarration(options);
+    }).catch(() => {
+      if (active) setNarration('unavailable');
+    });
     return () => { active = false; };
   }, []);
   useEffect(() => {
-    if (!rendering || !project) return;
+    if (!processing || !project) return;
     const id = project.id;
     const timer = window.setInterval(() => {
       void api.list().then(list => {
@@ -89,7 +102,7 @@ export function Workbench() {
       }).catch(() => { /* The next poll retries; don't overwrite the editor on a transient failure. */ });
     }, 1500);
     return () => window.clearInterval(timer);
-  }, [project?.id, rendering]);
+  }, [project?.id, processing]);
   useEffect(() => {
     const handler = (event: BeforeUnloadEvent) => {
       if (dirty.current || pendingUploads.current) { event.preventDefault(); }
@@ -107,6 +120,15 @@ export function Workbench() {
     if (current.current?.status === 'rendering') return;
     const saved = await persist();
     if (saved) select(await api.render(saved.id, provider));
+  });
+  const changeNarrationVoice = (voice: NarrationVoice) => act(async () => {
+    const saved = await persist();
+    if (saved) select(await api.setNarrationVoice(saved.id, voice));
+  });
+  const generateNarration = () => act(async () => {
+    if (narrationDisabled || !selectedVoice) return;
+    const saved = await persist();
+    if (saved) select(await api.generateNarration(saved.id, selectedVoice));
   });
   const upload: UploadProps['customRequest'] = options => {
     const file = options.file as File;
@@ -201,9 +223,43 @@ export function Workbench() {
               </Col>
               <Col xs={24} xl={7}><Card title="声音与输出" className="output-panel">
                 <Paragraph type="secondary">导入整段配音，按分镜时长编排节奏。过长裁切，过短补静音。</Paragraph>
-                <Upload accept=".mp3,.wav,.m4a" showUploadList={false} customRequest={upload} beforeUpload={beforeUpload} disabled={locked}><Button icon={<AudioOutlined />} disabled={locked}>导入配音</Button></Upload>
-                <Paragraph type="secondary" className="audio-status">{project.audio ? '配音已导入' : '未添加配音，导出为无声视频'}</Paragraph>
+                {narrationOptions && <Flex vertical gap={6} className="narration-voice-field">
+                  <label htmlFor="narration-voice">配音音色</label>
+                  <Select
+                    id="narration-voice"
+                    aria-label="配音音色"
+                    value={selectedVoice}
+                    options={narrationOptions.voices.map(({ configured, ...option }) => ({ ...option, disabled: !configured }))}
+                    disabled={locked}
+                    onChange={voice => void changeNarrationVoice(voice)}
+                  />
+                </Flex>}
+                <Flex gap={8} wrap>
+                  <Upload accept=".mp3,.wav,.m4a" showUploadList={false} customRequest={upload} beforeUpload={beforeUpload} disabled={locked}><Button icon={<AudioOutlined />} disabled={locked}>导入配音</Button></Upload>
+                  <Popconfirm
+                    key={project.id}
+                    title={selectedVoice ? `用 ${selectedVoice} 生成配音？` : '生成配音？'}
+                    description={`分镜解说会发送给${selectedVoice === '冰糖' ? '小米 MiMo' : ' Google'}。若配音比镜头长，会延长该镜头。${project.audio ? '生成成功后将替换当前配音。' : ''}`}
+                    okText="确认生成"
+                    cancelText="取消"
+                    placement="bottomRight"
+                    disabled={narrationDisabled}
+                    okButtonProps={{ disabled: narrationDisabled }}
+                    onConfirm={generateNarration}
+                  >
+                    <Button loading={narrating} disabled={narrationDisabled}>生成配音</Button>
+                  </Popconfirm>
+                </Flex>
+                {narration === 'unavailable' && <Text type="secondary">暂时无法读取配音配置。</Text>}
+                {narrationOptions && !voiceConfigured && <Text type="secondary">在服务端设置 <Text code>{selectedVoice === '冰糖' ? 'MIMO_API_KEY' : 'GEMINI_API_KEY'}</Text> 后可使用该音色。</Text>}
+                <Paragraph type="secondary" className="audio-status">
+                  {project.audio ? project.narrationAudioVoice ? `当前配音 · ${project.narrationAudioVoice}` : '已添加配音' : '未添加配音，导出为无声视频'}
+                </Paragraph>
+                {project.audio && project.narrationAudioVoice && voiceConfigured && project.narrationAudioVoice !== selectedVoice &&
+                  <Paragraph type="secondary">点击「生成配音」更换音色。</Paragraph>}
                 {project.audio && <><audio aria-label="配音预览" controls src={mediaUrl(project.id, project.audio)} className="audio-preview" /><Button type="text" danger disabled={locked} onClick={() => void act(async () => { await persist(true); })}>移除配音</Button></>}
+                {narrating && <Alert type="info" title="正在生成配音" description="可以切换到其他作品，生成后回来试听。" showIcon icon={<Spin size="small" />} />}
+                {narrationJob?.status === 'failed' && <Alert type="error" title="配音生成失败" description={narrationJob.error} showIcon />}
                 <Divider />
                 <Statistic title="预计时长" value={project.scenes.reduce((total, scene) => total + scene.duration, 0)} precision={1} suffix="秒" />
                 <Paragraph type="secondary" className="export-spec">720p / 24 fps / MP4<br />自动生成并烧录中文字幕</Paragraph>
