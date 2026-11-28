@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "id": "gurall-council-room",
+  "version": "gurall-council-room-v1",
+  "title": "古拉尔都市厅会议室",
+  "status": "adopted-project-design",
+  "pathBase": "repository-root",
+  "specification": "docs/settings/chapter070/gurall-council-room.md",
+  "adoption": {
+    "date": "2026-11-28",
+    "timezone": "Asia/Shanghai",
+    "scope": "reusable-room-visual-setting"
+  },
+  "sources": {
+    "continuity": "docs/productions/chapter070/section26/retrospective.md#开场与圆桌",
+    "referenceEpisode": "chapter070-section28",
+    "referenceEdition": "storyboard-v4"
+  },
+  "assets": [
+    {
+      "role": "empty-room-reference",
+      "purpose": "南机位朝北的空景母图，供出图引用门窗、圆桌与夜间照明",
+      "path": "data/source-webp/chapter07/settings/scenes/gurall-council-room/north-facing.webp",
+      "mediaType": "image/webp",
+      "width": 1672,
+      "height": 941,
+      "bytes": 1736610,
+      "sha256": "53fdeb3354fe5f6996aad1a1b0c2f8bfd629ffe1928ca8eb57933eae3aaa6a3e",
+      "localInput": "data/productions/chapter070/section28/plan/council-background.png",
+      "inputSha256": "e56a1e98fa18c07eaa578fbabfac1e5785d0e5489404c8a5ee107a224edd3f5b",
+      "losslessPixelsVerified": true
+    },
+    {
+      "role": "floor-plan",
+      "purpose": "北朝上的通用平面示意，供核对地标、通道与机位",
+      "path": "data/source-webp/chapter07/settings/scenes/gurall-council-room/floor-plan.svg",
+      "mediaType": "image/svg+xml",
+      "width": 960,
+      "height": 680,
+      "bytes": 4331,
+      "sha256": "38a178957c1bd3c3163fb8acf95c24ceb69a46252e36533a10344958256a4d53",
+      "localInput": "data/productions/chapter070/section28/plan/council-floorplan.svg"
+    },
+    {
+      "role": "adopted-reverse-angle",
+      "purpose": "第 28 节 V4 第 17 镜，供核对北机位朝南的照明、桌椅比例与遮挡",
+      "path": "data/source-webp/chapter07/settings/scenes/gurall-council-room/south-facing-section28-shot17.webp",
+      "mediaType": "image/webp",
+      "width": 1671,
+      "height": 941,
+      "bytes": 1746046,
+      "sha256": "d5c2229851968a00b052b8b518d4adee1a2c709e16427c54ba8bda40a06732eb",
+      "localInput": "data/productions/chapter070/section28/storyboard-v4/images/shot-17.png",
+      "inputSha256": "2d9b964d753ab36ebfa24ee62e1cba07c61903b04dfe123565ebc87cc8ddef13",
+      "losslessPixelsVerified": true
+    }
+  ]
+}

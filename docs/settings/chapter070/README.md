@@ -11,6 +11,7 @@
 | [米迪娅姆的双蛮刀](../../../data/source-webp/chapter07/settings/props/02-medium-twin-blades.md) | [P02设定图](../../../data/source-webp/chapter07/settings/props/sheets/02-medium-twin-blades.png) | 固定双刀外形及持有状态，核对第18节挡斧时昴手里的同一把刀 |
 | [普莉希拉的阳剑](../../../data/source-webp/chapter07/settings/props/03-priscilla-sun-sword.md) | [P03设定图](../../../data/source-webp/chapter07/settings/props/sheets/03-priscilla-sun-sword.png) · [挥剑效果图与说明](../../../data/source-webp/chapter07/settings/props/03-priscilla-sun-sword.md#挥剑效果) | 核对剑身形制、全身挥剑姿态及赤金光幕的轨迹和遮挡 |
 | [亚拉基亚的树枝](../../../data/source-webp/chapter07/settings/props/04-arakiya-branch.md) | [P04设定图](../../../data/source-webp/chapter07/settings/props/sheets/04-arakiya-branch.png) | 核对长枝的分叉和布缠，以及缩短后留存的握端 |
+| [古拉尔都市厅会议室](gurall-council-room.md) | [场景资产清单](../../../data/source-webp/chapter07/settings/scenes/gurall-council-room/manifest.json) | 沿用圆桌、门窗和灯位，核对正反打及地图位置 |
 | [第18节《要塞都市古拉尔攻防战》](../../../data/source-webp/chapter07/settings/episodes/section18/README.md) | [设定资产与采用范围](../../../data/source-webp/chapter07/settings/episodes/section18/manifest.json) | 查阅本节的角色、兵器、法洛车、物件、场景及定稿用斧 |
 
-图像生成时实际查看对应参考图，并把所用设定版本记入单节制作记录。项目美术补充与原著事实分别登记，避免把新增纹饰写进剧情解说。
+图像生成时实际查看对应参考图，并把所用设定版本记入单节制作记录。项目美术补充与原著事实分别登记，剧情解说以原著为据。制作中发现缺项时，按[新设定入库](../../../.agents/skills/re0-arc7-comic-video/references/source-fidelity.md#新设定入库)整理图片、说明和提交清单。

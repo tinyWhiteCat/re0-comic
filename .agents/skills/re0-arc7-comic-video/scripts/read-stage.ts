@@ -4,13 +4,13 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 type Route = { defaults: string[]; docs: Array<[string, string[]]>; style?: { rows: string[]; sections: string[] } };
 export const routes: Record<string, Route> = {
-  plan: { defaults: ['图稿与故事', '审稿', '配乐音效', '封面与简介'], docs: [['source-fidelity.md', ['本节只建立一次的资料', '共享素材与逐镜状态', '每镜五项信息', '两次检查，各有范围']], ['execution.md', ['阶段依赖', '生成前先固定约束', '外部模型与成片来源']]], style: { rows: ['自然解说与情绪衔接'], sections: ['解说：原因接动作，冲突带情绪'] } },
+  plan: { defaults: ['图稿与故事', '审稿', '配乐音效'], docs: [['source-fidelity.md', ['本节只建立一次的资料', '共享素材与逐镜状态', '每镜五项信息', '两次检查，各有范围']], ['execution.md', ['阶段依赖', '生成前先固定约束', '外部模型与成片来源']]], style: { rows: ['自然解说与情绪衔接'], sections: ['解说：原因接动作，冲突带情绪'] } },
   storyboard: { defaults: ['图稿与故事', '审稿', '运镜与视频', '字幕'], docs: [['source-fidelity.md', ['共享素材与逐镜状态', '结构检查工具']], ['execution.md', ['阶段依赖', '生成前先固定约束', '生成提示词']], ['quality-checklist.md', ['分镜']]], style: { rows: ['日常/回忆彩图', '对话/人物关系彩图', '动作/冲击彩图'], sections: ['彩图：动画插画质感与可读的动作'] } },
   voice: { defaults: ['声线', '人声处理', '读音', '片头'], docs: [['execution.md', ['有限语音返修']], ['quality-checklist.md', ['配音']], ['delivery-and-publishing.md', ['短样交付']]], style: { rows: ['已确认音色', '已确认RE0连读'], sections: ['声音：保留已确认自然说话方式'] } },
   alignment: { defaults: ['字幕', '读音'], docs: [['quality-checklist.md', ['对齐']]] },
   visuals: { defaults: ['运镜与视频', '字幕', '片头', '片尾'], docs: [['quality-checklist.md', ['画面与动效']], ['execution.md', ['外部模型与成片来源']]], style: { rows: ['字幕与片头片尾实现'], sections: ['运镜、字幕与片头片尾', '片尾放置与抽查'] } },
   sound: { defaults: ['配乐音效', '人声处理'], docs: [['execution.md', ['声音时间线']], ['quality-checklist.md', ['音效选材与混音']], ['delivery-and-publishing.md', ['短样交付']]], style: { rows: ['已确认音色'], sections: ['场景配乐', '声音：保留已确认自然说话方式'] } },
-  render: { defaults: ['运镜与视频', '字幕', '片头', '片尾', '人声处理'], docs: [['quality-checklist.md', ['渲染前核对', '画面与动效', '音效选材与混音', '成片终检']]] },
+  render: { defaults: ['运镜与视频', '字幕', '片头', '片尾', '人声处理'], docs: [['quality-checklist.md', ['渲染前核对', '音效选材与混音', '成片终检']]] },
   review: { defaults: ['运镜与视频', '字幕', '片头', '片尾', '人声处理'], docs: [['quality-checklist.md', ['成片终检', '音效选材与混音']], ['execution.md', ['证据复用与交接']]] },
   covers: { defaults: ['封面与简介'], docs: [['quality-checklist.md', ['封面与简介']]], style: { rows: ['封面与标题'], sections: ['封面与标题：人物冲突与悬念'] } },
   package: { defaults: ['交付', '封面与简介'], docs: [['quality-checklist.md', ['打包与交付']], ['delivery-and-publishing.md', ['打包']]] },

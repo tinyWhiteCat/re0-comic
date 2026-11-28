@@ -1,6 +1,6 @@
 # 第七章设定集
 
-角色与道具参考用于保持后续分镜的外形一致。开始绘图前实际查看对应设定图，并核对本节的剧情阶段、伤势和前后镜头。
+角色、道具和场景设定供后续分镜沿用。开始绘图前查看对应设定图，核对剧情阶段、人物伤势和前后镜头的变化。
 
 | 类别 | 入口 | 说明 |
 | --- | --- | --- |
@@ -11,6 +11,7 @@
 | 道具 P02 | [米迪娅姆的双蛮刀](props/sheets/02-medium-twin-blades.png) · [制作说明](props/02-medium-twin-blades.md) | 第18节分镜 V2 统一的双刀外形，也用于昴捡起其中一把挡斧的镜头。 |
 | 道具 P03 | [普莉希拉的阳剑](props/sheets/03-priscilla-sun-sword.png) · [挥剑效果图与说明](props/03-priscilla-sun-sword.md#挥剑效果) · [制作说明](props/03-priscilla-sun-sword.md) | 剑型采用第24节分镜 V3 的形制。全身效果图供后续分镜参考挥剑姿态和赤金余光。 |
 | 道具 P04 | [亚拉基亚的树枝](props/sheets/04-arakiya-branch.png) · [制作说明](props/04-arakiya-branch.md) | 统一第25节用到的长枝、短枝及持有状态。 |
+| 场景 · 古拉尔都市厅会议室 | [布置与机位](../../../../docs/settings/chapter070/gurall-council-room.md) · [场景资产清单](scenes/gurall-council-room/manifest.json) | 对照圆桌、门窗、灯位和会谈中地图的位置。 |
 | 第18节整套设定 | [要塞都市古拉尔攻防战](episodes/section18/README.md) · [资产清单](episodes/section18/manifest.json) | 13 张人物、兵器、法洛车、物件和场景参考图，来源为分镜 V3。 |
 | 第25节末镜 | [结晶灯上的阿尔](episodes/section25/sheets/storyboard-v7-shot-35.png) | 成片采用的 V7 第 35 镜无字原图。续接时参考阿尔悬在都市厅外墙结晶灯支架下的位置，以及外墙、破损露台与夜空的关系。 |
 

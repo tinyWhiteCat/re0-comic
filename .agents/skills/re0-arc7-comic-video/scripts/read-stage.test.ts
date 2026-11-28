@@ -43,9 +43,10 @@ test('render and final review check the input sequence and the encoded hold', as
     assert.match(result.text, /最终编码查看动作末帧、停留首末帧和下一镜首帧/, stage);
   }
 });
-test('prompt, sound timing and render preparation appear only in their production stages', async () => {
+test('stage-specific production rules stay at their entry points', async () => {
   const stageByTopic = new Map([
     ['生成提示词', 'storyboard'],
+    ['画面与动效', 'visuals'],
     ['声音时间线', 'sound'],
     ['渲染前核对', 'render'],
   ]);
@@ -56,6 +57,7 @@ test('prompt, sound timing and render preparation appear only in their productio
       const count = context.sections.filter(section => section.topic === topic).length;
       assert.equal(count, stage === owner ? 1 : 0, `${stage}: ${topic}`);
     }
+    if (stage === 'plan') assert.doesNotMatch(context.text, /\| 封面与简介 \|/);
   }
 });
 test('risk lookup and repair are opt-in and deduplicated', async () => {

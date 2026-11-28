@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" width="960" height="680" role="img" aria-labelledby="plan-title plan-description">
+  <title id="plan-title">古拉尔都市厅会议室平面图</title>
+  <desc id="plan-description">北朝上。双开门在北，拱窗在西，暖灯和挂图在东。大圆桌四周留有通道，椅位和墙面物件位置均为示意。</desc>
+  <defs>
+    <marker id="camera-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 Z" fill="#527488"/>
+    </marker>
+    <style>
+      text { font-family: 'Noto Sans CJK SC', sans-serif; fill: #3b413e; }
+      .heading { font-size: 28px; font-weight: 700; }
+      .label { font-size: 16px; }
+      .camera-label { font-size: 15px; fill: #456676; }
+      .wall { fill: none; stroke: #655a4a; stroke-width: 8; stroke-linejoin: round; stroke-linecap: round; }
+      .leader { fill: none; stroke: #9e927e; stroke-width: 1.4; }
+      .camera { fill: none; stroke: #527488; stroke-width: 2; stroke-dasharray: 5 4; marker-end: url(#camera-arrow); }
+    </style>
+  </defs>
+
+  <rect width="960" height="680" fill="#faf8f2"/>
+  <text x="48" y="58" class="heading">古拉尔都市厅会议室平面图</text>
+  <path d="M 868 79 V 50 M 861 58 L 868 49 L 875 58" fill="none" stroke="#716b5e" stroke-width="2"/>
+  <text x="886" y="68" class="label">北</text>
+
+  <rect x="155" y="130" width="640" height="475" fill="#f3eee1"/>
+  <path d="M 155 298 L 295 323 L 295 395 L 155 413 Z" fill="#dce9eb" opacity="0.72"/>
+  <path d="M 795 379 L 664 346 L 664 424 L 795 390 Z" fill="#f3dfb7" opacity="0.72"/>
+  <path d="M 418 130 H 155 V 289 M 155 420 V 605 H 795 V 130 H 532" class="wall"/>
+
+  <g fill="none" stroke="#9a7a59" stroke-width="2.1">
+    <path d="M 418 130 L 449 175 M 532 130 L 501 175"/>
+    <path d="M 475 130 Q 473 159 449 175 M 475 130 Q 477 159 501 175" stroke-dasharray="4 4" opacity="0.8"/>
+  </g>
+  <text x="475" y="110" class="label" text-anchor="middle">北侧双开门</text>
+
+  <rect x="149" y="289" width="12" height="131" rx="3" fill="#b4cdd8" stroke="#708f9e" stroke-width="2"/>
+  <path d="M 155 301 V 408 M 150 332 H 160 M 150 377 H 160" stroke="#6a8999" stroke-width="1.4"/>
+  <path d="M 123 350 H 148" class="leader"/>
+  <text x="113" y="355" class="label" text-anchor="end">西侧拱窗</text>
+
+  <rect x="775" y="222" width="14" height="66" rx="2" fill="#dfc594" stroke="#a38159" stroke-width="1.6"/>
+  <path d="M 772 221 H 792 M 772 289 H 792" stroke="#a38159" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 800 255 H 818" class="leader"/>
+  <text x="828" y="260" class="label">墙上挂图</text>
+  <path d="M 791 385 H 780" stroke="#9b7948" stroke-width="2"/>
+  <circle cx="771" cy="385" r="9" fill="#e4bd68" stroke="#a9824b" stroke-width="1.8"/>
+  <path d="M 800 385 H 818" class="leader"/>
+  <text x="828" y="390" class="label">东侧暖灯</text>
+
+  <g transform="translate(475 368)" fill="#ebdfc8" stroke="#ad9675" stroke-width="1.8">
+    <rect x="-18" y="-152" width="36" height="26" rx="6" transform="rotate(-141)"/>
+    <rect x="-18" y="-152" width="36" height="26" rx="6" transform="rotate(-101)"/>
+    <rect x="-18" y="-152" width="36" height="26" rx="6" transform="rotate(-61)"/>
+    <rect x="-18" y="-152" width="36" height="26" rx="6" transform="rotate(-28)"/>
+    <rect x="-18" y="-152" width="36" height="26" rx="6" transform="rotate(28)"/>
+    <rect x="-18" y="-152" width="36" height="26" rx="6" transform="rotate(61)"/>
+    <rect x="-18" y="-152" width="36" height="26" rx="6" transform="rotate(101)"/>
+    <rect x="-18" y="-152" width="36" height="26" rx="6" transform="rotate(141)"/>
+  </g>
+  <circle cx="475" cy="368" r="111" fill="#dcc6a5" stroke="#997d58" stroke-width="2.8"/>
+  <circle cx="475" cy="368" r="103" fill="none" stroke="#bf9d75" stroke-width="1.1"/>
+  <text x="475" y="373" class="label" text-anchor="middle">圆桌</text>
+
+  <path d="M 206 495 H 332 M 206 490 V 500 M 332 490 V 500" class="leader"/>
+  <text x="269" y="522" class="label" text-anchor="middle">桌椅外通道</text>
+
+  <path d="M 475 176 V 234" class="camera"/>
+  <text x="490" y="206" class="camera-label">B 朝南</text>
+  <path d="M 475 575 V 510" class="camera"/>
+  <text x="490" y="555" class="camera-label">A 朝北</text>
+</svg>
